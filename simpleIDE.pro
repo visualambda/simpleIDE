@@ -27,9 +27,11 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     liteapi.cpp \
-    filemanager.cpp
+    filemanager.cpp \
+    multifolderwindow.cpp
 
 HEADERS += \
         mainwindow.h \
     liteapi.h \
-    filemanager.h
+    filemanager.h \
+    multifolderwindow.h

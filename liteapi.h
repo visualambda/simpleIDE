@@ -5,7 +5,7 @@
 #include <QMainWindow>
 
 
-
+namespace LiteApi {
 
 class IObject;
 class IExtension
@@ -173,12 +173,6 @@ signals:
 };
 
 
-
-
-class LiteApi
-{
-public:
-    LiteApi();
-};
+}
 
 #endif // LITEAPI_H

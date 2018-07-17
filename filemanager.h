@@ -7,6 +7,10 @@
 #include <QVBoxLayout>
 #include <QMap>
 
+
+using namespace LiteApi;
+
+
 class IFolderWindow : public QObject
 {
 public:
