@@ -28,10 +28,14 @@ SOURCES += \
         mainwindow.cpp \
     liteapi.cpp \
     filemanager.cpp \
-    multifolderwindow.cpp
+    multifolderwindow.cpp \
+    symboltreeview.cpp \
+    basefolderview.cpp
 
 HEADERS += \
         mainwindow.h \
     liteapi.h \
     filemanager.h \
-    multifolderwindow.h
+    multifolderwindow.h \
+    symboltreeview.h \
+    basefolderview.h

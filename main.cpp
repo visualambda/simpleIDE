@@ -3,6 +3,8 @@
 
 #include "filemanager.h"
 #include "multifolderwindow.h"
+#include "symboltreeview.h"
+#include "basefolderview.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -10,5 +12,7 @@ int main(int argc, char *argv[])
     w.show();
     FileManager f;
     MultiFolderWindow mfw(nullptr);
+    SymbolTreeView stv;
+    BaseFolderView bfv(nullptr);
     return a.exec();
 }
