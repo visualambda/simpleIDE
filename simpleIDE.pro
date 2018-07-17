@@ -26,8 +26,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    liteapi.cpp
+    liteapi.cpp \
+    filemanager.cpp
 
 HEADERS += \
         mainwindow.h \
-    liteapi.h
+    liteapi.h \
+    filemanager.h

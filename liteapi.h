@@ -2,7 +2,7 @@
 #define LITEAPI_H
 
 #include <QObject>
-
+#include <QMainWindow>
 
 
 
@@ -136,7 +136,7 @@ public:
 //    virtual IHtmlWidgetManager *htmlWidgetManager() = 0;
 //    virtual IRecentManager *recentManager() = 0;
 
-//    virtual QMainWindow *mainWindow() const = 0;
+    virtual QMainWindow *mainWindow() const = 0;
 //    virtual QSettings *settings() = 0;
     virtual QMap<QString,QVariant> &globalCookie() = 0; //global cookie
 
