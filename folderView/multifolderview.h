@@ -3,7 +3,7 @@
 #include "basefolderview.h"
 
 #include "basefolderview.h"
-#include "multifoldermodel.h"
+#include "folderModel/multifoldermodel.h"
 
 class MultiFolderView : public BaseFolderView
 {

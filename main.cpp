@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include <multifolderview.h>
+#include <folderView/multifolderview.h>
 #include <QVBoxLayout>
 int main(int argc, char *argv[])
 {
