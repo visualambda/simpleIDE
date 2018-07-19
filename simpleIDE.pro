@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-07-17T17:10:09
+# Project created by QtCreator 2018-07-19T21:21:50
 #
 #-------------------------------------------------
 
@@ -25,17 +25,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    liteapi.cpp \
-    filemanager.cpp \
-    multifolderwindow.cpp \
-    symboltreeview.cpp \
-    basefolderview.cpp
+        mainwindow.cpp
 
 HEADERS += \
-        mainwindow.h \
-    liteapi.h \
-    filemanager.h \
-    multifolderwindow.h \
-    symboltreeview.h \
-    basefolderview.h
+        mainwindow.h
+
+FORMS += \
+        mainwindow.ui
