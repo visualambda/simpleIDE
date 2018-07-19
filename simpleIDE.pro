@@ -25,10 +25,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    symboltreeview.cpp \
+    basefolderview.cpp \
+    multifolderview.cpp \
+    abstractmultiproxymodel.cpp \
+    multiindexmodel.cpp \
+    multifoldermodel.cpp \
+    filesystemmodelex.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    symboltreeview.h \
+    basefolderview.h \
+    multifolderview.h \
+    abstractmultiproxymodel.h \
+    abstractmultiproxymodel_p.h \
+    multiindexmodel.h \
+    multiindexmodel_p.h \
+    multifoldermodel.h \
+    filesystemmodelex.h
 
 FORMS += \
         mainwindow.ui
