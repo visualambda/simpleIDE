@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 
     w.centralWidget()->setLayout(layout);
     w.show();
+    w.resize(QSize(1080, 800));
 
     return a.exec();
 }
