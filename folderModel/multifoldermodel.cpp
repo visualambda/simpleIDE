@@ -139,6 +139,7 @@ public:
     {
         roleMap.remove(role);
     }
+
     QVariant data(const QModelIndex &index, int role) const
     {
         if (rootIndex == index) {
@@ -147,14 +148,29 @@ public:
                 return it.value();
             }
         }
-        QVariant var = FileSystemModelEx::data(index,role);
-        if(index.column() > 0  && var.type() == QMetaType::QString)
+        if(index.column() > 0)
         {
-            var = ".";
+            // 显示名称，可以为空。
+            if (role == Qt::DisplayRole) {
+                return ".";
+            }
+            return QVariant();
         }
-         return var;
+        return FileSystemModelEx::data(index,role);
+    }
 
-//        return FileSystemModelEx::data(index,role);
+    //控制列名的显示
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const
+    {
+        if (section > 0) {
+            return ".";
+        }
+        return FileSystemModelEx::headerData(section,orientation,role);
+    }
+    //控制几列显示
+    int columnCount(const QModelIndex &/*parent*/) const
+    {
+        return 6;
     }
 
 protected:

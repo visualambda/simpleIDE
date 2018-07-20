@@ -6,7 +6,6 @@ ItemDelegate::ItemDelegate()
 }
 void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-
     if (option.state & QStyle::State_MouseOver ) {
         if(index.column() == 1)
         {
@@ -32,8 +31,6 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
                 16,
                 QPixmap(":icon/icon/error.png"));
         }
-
     }
-
     QStyledItemDelegate::paint( painter, option, index );
 }
