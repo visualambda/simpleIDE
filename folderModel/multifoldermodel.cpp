@@ -147,7 +147,14 @@ public:
                 return it.value();
             }
         }
-        return FileSystemModelEx::data(index,role);
+        QVariant var = FileSystemModelEx::data(index,role);
+        if(index.column() > 0  && var.type() == QMetaType::QString)
+        {
+            var = ".";
+        }
+         return var;
+
+//        return FileSystemModelEx::data(index,role);
     }
 
 protected:

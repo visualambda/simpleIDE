@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <folderView/multifolderview.h>
+#include <folderView/itemdelegate.h>
 #include <QVBoxLayout>
 int main(int argc, char *argv[])
 {
@@ -8,6 +9,12 @@ int main(int argc, char *argv[])
     MainWindow w;
 
     MultiFolderView *mfv = new MultiFolderView(&w);
+
+    ItemDelegate * id = new ItemDelegate();
+    mfv->setItemDelegate(id);
+
+
+    mfv->addRootPath("/Applications");
     mfv->addRootPath("/Applications");
 
 

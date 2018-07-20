@@ -32,7 +32,8 @@ SOURCES += \
     folderModel/multiindexmodel.cpp \
     folderView/basefolderview.cpp \
     folderView/multifolderview.cpp \
-    folderView/symboltreeview.cpp
+    folderView/symboltreeview.cpp \
+    folderView/itemdelegate.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +45,11 @@ HEADERS += \
     folderModel/multiindexmodel_p.h \
     folderView/basefolderview.h \
     folderView/multifolderview.h \
-    folderView/symboltreeview.h
+    folderView/symboltreeview.h \
+    folderView/itemdelegate.h
 
 FORMS += \
         mainwindow.ui
+
+RESOURCES += \
+    iconsres.qrc
