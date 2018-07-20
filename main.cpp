@@ -33,12 +33,15 @@ int main(int argc, char *argv[])
     );
 
 
-    ItemDelegate * id = new ItemDelegate();
+    ItemDelegate * id = new ItemDelegate(mfv->model());
     mfv->setItemDelegate(id);
 
 
     mfv->addRootPath("/Applications");
     mfv->addRootPath("/Applications");
+    // 设置名称
+    mfv->setRootRole("/Applications",Qt::DisplayRole,"Applications [Project]");
+    mfv->setRootRole("/Applications",Qt::ToolTipRole,"AppName Project ToolTip");
 
 
     QVBoxLayout *layout = new QVBoxLayout;
