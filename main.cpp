@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
 
     mfv->addRootPath("/Applications");
-    mfv->addRootPath("/Applications");
+    mfv->addRootPath("/Library");
     // 设置名称
     mfv->setRootRole("/Applications",Qt::DisplayRole,"Applications [Project]");
     mfv->setRootRole("/Applications",Qt::ToolTipRole,"AppName Project ToolTip");

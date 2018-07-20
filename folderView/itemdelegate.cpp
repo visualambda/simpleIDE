@@ -9,7 +9,8 @@ ItemDelegate::ItemDelegate(QAbstractItemModel *model)
 
 void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (option.state & QStyle::State_MouseOver ) {
+    QStyledItemDelegate::paint( painter, option, index );
+    if ( (option.state & QStyle::State_MouseOver)) {
             QString id;
             int column = index.column();
             if (column == 1) {
@@ -32,5 +33,4 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
                     QPixmap(id));
             }
     }
-    QStyledItemDelegate::paint( painter, option, index );
 }
