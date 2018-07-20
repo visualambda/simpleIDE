@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
                 &MultiFolderView::clicked /*SIGNAL( clicked( QModelIndex ) )*/,
                 [=] (QModelIndex i) -> void
                     {
-                        QMessageBox::question(0, QString::number(i.row()), QString::number(i.column()), QMessageBox::Question);
+                        QMessageBox::question(0, QString::number(i.row()),   mfv->fileRootPath(i), QMessageBox::Question);
                     }
     );
 
