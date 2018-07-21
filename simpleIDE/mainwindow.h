@@ -3,6 +3,13 @@
 
 #include <QMainWindow>
 
+
+#include "DockManager.h"
+#include "DockWidget.h"
+#include "DockAreaWidget.h"
+
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,6 +24,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    ads::CDockManager* _dockManager = nullptr;
 };
 
 #endif // MAINWINDOW_H
