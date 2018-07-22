@@ -295,8 +295,6 @@ protected:
     PluginInfo *m_info;
 };
 
-
-
 template <typename T>
 class PluginFactoryT : public IPluginFactoryImpl
 {
@@ -307,21 +305,7 @@ public:
     }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Q_DECLARE_INTERFACE(IPluginFactory,"LiteApi.IPluginFactory.X33")
 
 #endif //LITEAPI_H
 

@@ -136,7 +136,6 @@ IEditor *LiteEditorFileFactory::open(const QString &fileName, const QString &mim
 //        return 0;
 //    }
 //    return setupEditor(editor,mimeType);
-
     return (IEditor *)editor;
 }
 
@@ -150,7 +149,6 @@ IEditor *LiteEditorFileFactory::create(const QString &contents, const QString &m
 //    }
 
 //    return setupEditor(editor,mimeType);
-
     return (IEditor *)editor;
 }
 
