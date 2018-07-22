@@ -14,7 +14,6 @@ ADS_ROOT = $${PWD}/..
 ADS_OUT_ROOT = $${OUT_PWD}/../..
 DESTDIR = $${ADS_OUT_ROOT}/lib
 
-
 include (../../api/api.pri)
 
 DEFINES += LITEEDITOR_LIBRARY
@@ -40,8 +39,7 @@ HEADERS += \
         liteeditorplugin.h \
         liteeditor_global.h \ 
     liteeditorfilefactory.h \
-    liteeditor.h \
-    ../../api/liteapi.h
+    liteeditor.h
 
 unix {
     target.path = /usr/lib

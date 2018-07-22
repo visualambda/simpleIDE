@@ -1,10 +1,6 @@
 #include "liteeditorplugin.h"
 #include "liteeditorfilefactory.h"
 
-LiteEditorPlugin::LiteEditorPlugin()
-{
-}
-
 bool LiteEditorPlugin::load(IApplication *app)
 {
 //    QString style = app->settings()->value(EDITOR_STYLE,"default.xml").toString();

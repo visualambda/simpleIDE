@@ -12,8 +12,8 @@ public:
     virtual IEditor *create(const QString &contents,const QString &mimeType);
 //    IEditor *setupEditor(LiteEditor *editor,const QString &mimeType);
 public slots:
-//    void colorStyleChanged();
-//    void tabSettingChanged(int);
+    void colorStyleChanged();
+    void tabSettingChanged(int);
 protected:
     IApplication *m_liteApp;
 //    EditorApiManager *m_wordApiManager;
