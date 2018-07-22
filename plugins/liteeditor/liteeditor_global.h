@@ -1,0 +1,12 @@
+#ifndef LITEEDITOR_GLOBAL_H
+#define LITEEDITOR_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(LITEEDITOR_LIBRARY)
+#  define LITEEDITORSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define LITEEDITORSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // LITEEDITOR_GLOBAL_H
