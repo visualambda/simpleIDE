@@ -100,8 +100,8 @@ QStringList LiteEditorFileFactory::mimeTypes() const
     return m_mimeTypes;
 }
 
-//void LiteEditorFileFactory::colorStyleChanged()
-//{
+void LiteEditorFileFactory::colorStyleChanged()
+{
 //    LiteEditor *editor = static_cast<LiteEditor *>(sender());
 //    if (!editor) {
 //        return;
@@ -110,10 +110,10 @@ QStringList LiteEditorFileFactory::mimeTypes() const
 //    if (h) {
 //        m_highlighterManager->setColorStyle(h,m_liteApp->editorManager()->colorStyleScheme());
 //    }
-//}
+}
 
-//void LiteEditorFileFactory::tabSettingChanged(int tabSize)
-//{
+void LiteEditorFileFactory::tabSettingChanged(int tabSize)
+{
 //    LiteEditor *editor = static_cast<LiteEditor *>(sender());
 //    if (!editor) {
 //        return;
@@ -122,7 +122,7 @@ QStringList LiteEditorFileFactory::mimeTypes() const
 //    if (h) {
 //        m_highlighterManager->setTabSize(h,tabSize);
 //    }
-//}
+}
 
 IEditor *LiteEditorFileFactory::open(const QString &fileName, const QString &mimeType)
 {
