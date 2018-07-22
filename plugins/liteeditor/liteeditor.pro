@@ -32,7 +32,8 @@ HEADERS += \
         liteeditorplugin.h \
         liteeditor_global.h \ 
     liteeditorfilefactory.h \
-    liteeditor.h
+    liteeditor.h \
+    ../../api/liteapi.h
 
 unix {
     target.path = /usr/lib
