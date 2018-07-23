@@ -17,7 +17,7 @@ MainWindow::MainWindow(IApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_liteApp = app;
+    m_liteApp=app;
 
     _dockManager = new ads::CDockManager(this);
 
@@ -58,10 +58,11 @@ MainWindow::MainWindow(IApplication *app, QWidget *parent) :
     ProjectExplorerDocker->setWidget(mfv);
     ads::CDockAreaWidget*  ProjectExplorerArea = _dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
 
-    QPlainTextEdit * edit = new QPlainTextEdit;
-    ads::CDockWidget* EditorDocker = new ads::CDockWidget(QString("Editors"));
-    EditorDocker->setWidget(edit);
-    ads::CDockAreaWidget*  EditorArea = _dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
+//    QPlainTextEdit * edit = new QPlainTextEdit;
+//    ads::CDockWidget* EditorDocker = new ads::CDockWidget(QString("Editors Main"));
+//    EditorDocker->setWidget(edit);
+
+//    _editorArea = _dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
 
 
 

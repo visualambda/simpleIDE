@@ -104,7 +104,7 @@ class IView : public IObject
 public:
     IView(QObject *parent = 0) : IObject(parent) {}
     virtual QWidget *widget() = 0;
-    virtual QString name() const = 0;
+//    virtual QString name() const = 0;
 //    virtual QIcon icon() const { return QIcon(); }
 };
 
@@ -114,21 +114,21 @@ class IEditor : public IView
 public:
     IEditor(QObject *parent = 0) : IView(parent) {}
     virtual bool open(const QString &filePath,const QString &mimeType) = 0;
-    virtual bool reload() = 0;
-    virtual bool save() = 0;
-    virtual bool saveAs(const QString &filePath) = 0;
-    virtual void setReadOnly(bool b) = 0;
-    virtual bool isReadOnly() const = 0;
-    virtual bool isModified() const = 0;
-    virtual QString filePath() const = 0;
-    virtual QString mimeType() const = 0;
-    virtual QByteArray saveState() const = 0;
-    virtual bool restoreState(const QByteArray &array) = 0;
-    virtual void onActive() = 0;
-signals:
-    void modificationChanged(bool);
-    void contentsChanged();
-    void reloaded();
+//    virtual bool reload() = 0;
+//    virtual bool save() = 0;
+//    virtual bool saveAs(const QString &filePath) = 0;
+//    virtual void setReadOnly(bool b) = 0;
+//    virtual bool isReadOnly() const = 0;
+//    virtual bool isModified() const = 0;
+//    virtual QString filePath() const = 0;
+//    virtual QString mimeType() const = 0;
+//    virtual QByteArray saveState() const = 0;
+//    virtual bool restoreState(const QByteArray &array) = 0;
+//    virtual void onActive() = 0;
+//signals:
+//    void modificationChanged(bool);
+//    void contentsChanged();
+//    void reloaded();
 };
 
 
@@ -197,6 +197,7 @@ public:
 //    virtual IGoProxy *createGoProxy(QObject *parent) = 0;
 //    virtual IProjectManager *projectManager() = 0;
     virtual IEditorManager  *editorManager() = 0;
+    virtual void addEditorWidget(QWidget * w) = 0;
     virtual IFileManager    *fileManager() = 0;
 //    virtual IActionManager  *actionManager() = 0;
 //    virtual IMimeTypeManager *mimeTypeManager() = 0;

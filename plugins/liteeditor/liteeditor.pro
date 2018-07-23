@@ -33,13 +33,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         liteeditorplugin.cpp \
     liteeditorfilefactory.cpp \
-    liteeditor.cpp
+    liteeditor.cpp \
+    liteeditorwidget.cpp
 
 HEADERS += \
         liteeditorplugin.h \
         liteeditor_global.h \ 
     liteeditorfilefactory.h \
-    liteeditor.h
+    liteeditor.h \
+    liteeditorwidget.h
 
 unix {
     target.path = /usr/lib

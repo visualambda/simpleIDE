@@ -1,7 +1,13 @@
 #include "liteapp.h"
 
-#include <QProcessEnvironment>
 #include <QApplication>
+#include <QLayout>
+#include <QProcessEnvironment>
+
+//#include "DockManager.h"
+//#include "DockWidget.h"
+//#include "DockAreaWidget.h"
+
 
 IApplication *LiteApp::NewApplication()
 {
@@ -40,16 +46,39 @@ QString LiteApp::getRootPath()
 
 
 
-
-
 LiteApp::LiteApp() : m_pluginPath(LiteApp::getPluginPath())
 {
+    m_mainwindow = new MainWindow(this, nullptr);
+
     m_editorManager = new EditorManager;
 
     m_editorManager->initWithApp(this);
+/*
+    m_mainwindow->layout()->addWidget(m_editorManager->widget());
+
+    QPlainTextEdit * edit = new QPlainTextEdit;
+    ads::CDockWidget* EditorDocker = new ads::CDockWidget(QString("Editors"));
+    EditorDocker->setWidget(edit);
+
+    _editorArea = _dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
+*/
+
 
     m_fileManager = new FileManager;
     m_fileManager->initWithApp(this);
+
+    m_mainwindow->show();
+    m_mainwindow->resize(QSize(1080, 800));
+}
+
+
+void LiteApp::addEditorWidget(QWidget *w)
+{
+
+    ads::CDockWidget* EditorDocker = new ads::CDockWidget(QString("Editors"));
+    EditorDocker->setWidget(w);
+
+    m_mainwindow->_dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
 }
 
 void LiteApp::load()
@@ -57,7 +86,7 @@ void LiteApp::load()
     loadPlugins();
     initPlugins();
 
-//     m_fileManager->openEditor(fileName,false);
+    m_fileManager->openEditor("c:/test.txt",true);
 }
 
 void LiteApp::loadPlugins()
@@ -92,3 +121,4 @@ IFileManager *LiteApp::fileManager()
 {
     return m_fileManager;
 }
+

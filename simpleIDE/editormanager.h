@@ -6,6 +6,7 @@ class EditorManager : public IEditorManager
 {
 public:
     EditorManager();
+    ~EditorManager();
 
     virtual bool initWithApp(IApplication *app);
 
@@ -21,7 +22,7 @@ public:
 
     QList<IEditorFactory*>    m_factoryList;
 
-    QWidget      *m_widget;
+    QWidget      *m_widget  {nullptr};
 
 };
 

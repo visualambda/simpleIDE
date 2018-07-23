@@ -1,6 +1,8 @@
 #ifndef LITEAPP_H
 #define LITEAPP_H
-#include "liteapi.h"
+#include "liteapp.h"
+
+#include "mainwindow.h"
 
 #include "editormanager.h"
 #include "filemanager.h"
@@ -28,15 +30,18 @@ public:
 
     virtual IFileManager    *fileManager();
 
+    virtual void addEditorWidget(QWidget * w);
+
+
+
 
 
 public:
     QString         m_pluginPath;
     QList<IPlugin*> m_pluginList;
-
     EditorManager   *m_editorManager;
     FileManager     *m_fileManager;
-
+    MainWindow      *m_mainwindow;
 };
 
 #endif // LITEAPP_H
