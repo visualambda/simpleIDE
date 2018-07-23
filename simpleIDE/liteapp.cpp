@@ -25,16 +25,16 @@ QString LiteApp::getPluginPath()
     }
     QString root = getRootPath();
 #ifdef Q_OS_MAC
-    return root+"/PlugIns";
+    return root;//+"/PlugIns";
 #else
-    return root+"/lib/liteide/plugins";
+    return root;//+"/lib/liteide/plugins";
 #endif
 }
 
 QString LiteApp::getRootPath()
 {
     QDir rootDir = QApplication::applicationDirPath();
-    rootDir.cdUp();
+//    rootDir.cdUp();
     return rootDir.canonicalPath();
 }
 
@@ -44,7 +44,7 @@ QString LiteApp::getRootPath()
 
 LiteApp::LiteApp() : m_pluginPath(LiteApp::getPluginPath())
 {
-
+    m_editorManager = new EditorManager;
 }
 
 void LiteApp::load()
@@ -78,6 +78,5 @@ void LiteApp::initPlugins()
 
 IEditorManager *LiteApp::editorManager()
 {
-
-    return nullptr;
+    return m_editorManager;
 }

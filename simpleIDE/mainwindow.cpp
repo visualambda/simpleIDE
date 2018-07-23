@@ -11,13 +11,15 @@
 #include <QCalendarWidget>
 #include <QPlainTextEdit>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(IApplication *app, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    _dockManager = new ads::CDockManager(this);
 
+    m_liteApp = app;
+
+    _dockManager = new ads::CDockManager(this);
 
     MultiFolderView *mfv = new MultiFolderView();
 

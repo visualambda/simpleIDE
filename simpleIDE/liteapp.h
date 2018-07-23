@@ -1,6 +1,7 @@
 #ifndef LITEAPP_H
 #define LITEAPP_H
 #include "liteapi.h"
+#include "editormanager.h"
 #include "pluginmanager.h"
 class LiteApp : public IApplication
 {
@@ -28,6 +29,8 @@ public:
 public:
     QString         m_pluginPath;
     QList<IPlugin*> m_pluginList;
+
+    EditorManager   *m_editorManager;
 
 
 };
