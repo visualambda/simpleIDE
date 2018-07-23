@@ -38,6 +38,7 @@
 #include <QFileInfo>
 //#include "mimetype/mimetype.h"
 #include <QDebug>
+#include <QMessageBox>
 //lite_memory_check_begin
 //#if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
 //     #define _CRTDBG_MAP_ALLOC
@@ -126,6 +127,7 @@ void LiteEditorFileFactory::tabSettingChanged(int tabSize)
 
 IEditor *LiteEditorFileFactory::open(const QString &fileName, const QString &mimeType)
 {
+    QMessageBox::question(nullptr, "open", fileName,  QMessageBox::Yes );
    // m_liteApp->editorManager()->cutForwardNavigationHistory();
     //m_liteApp->editorManager()->addNavigationHistory();
 
