@@ -38,7 +38,12 @@ SOURCES += \
     folderView/basefolderview.cpp \
     folderView/multifolderview.cpp \
     folderView/symboltreeview.cpp \
-    folderView/itemdelegate.cpp
+    folderView/itemdelegate.cpp \
+    liteapp.cpp \
+    editormanager.cpp \
+    pluginmanager.cpp \
+    pluginmanager.cpp \
+    pluginmanager.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -51,7 +56,10 @@ HEADERS += \
     folderView/basefolderview.h \
     folderView/multifolderview.h \
     folderView/symboltreeview.h \
-    folderView/itemdelegate.h
+    folderView/itemdelegate.h \
+    liteapp.h \
+    editormanager.h \
+    pluginmanager.h
 
 FORMS += \
         mainwindow.ui
@@ -67,6 +75,12 @@ else:win32:CONFIG(debug, debug|release): LIBS += -lAdvancedDockingSystemd
 else:unix: LIBS += -lAdvancedDockingSystem_debug.1.0.0
 
 INCLUDEPATH += ../dockerLib
+INCLUDEPATH += $${PWD}/../api/
+
+# add api lib,
+include (../api/api.pri)
+
+
 DEPENDPATH += ../dockerLib
 
 
