@@ -2,8 +2,8 @@ TEMPLATE = subdirs
 
 SUBDIRS = \
         $$PWD/dockerLib/dockerLib.pro \
+        api \
         $$PWD/simpleIDE/simpleIDE.pro \
-    api \
     plugins
 
 CONFIG += ordered

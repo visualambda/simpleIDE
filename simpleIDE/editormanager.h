@@ -7,9 +7,14 @@ class EditorManager : public IEditorManager
 public:
     EditorManager();
 
+    virtual bool initWithApp(IApplication *app);
+
     virtual void addFactory(IEditorFactory *factory);
 
     virtual IEditor *openEditor(const QString &fileName, const QString &mimeType);
+
+    virtual void setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory = false);
+
 
     virtual QWidget *widget();
 

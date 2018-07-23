@@ -63,6 +63,41 @@ protected:
     IApplication *m_liteApp;
 };
 
+
+
+class IEditor;
+class IFileManager : public IManager
+{
+    Q_OBJECT
+public:
+    IFileManager(QObject *parent = 0) : IManager(parent) {}
+
+//    virtual void execFileWizard(const QString &projPath, const QString &filePath, const QString &gopath = QString()) = 0;
+//    virtual bool openFile(const QString &fileName) = 0;
+    virtual IEditor *openEditor(const QString &fileName, bool bActive = true, bool ignoreNavigationHistory = false) = 0;
+//    virtual IEditor *createEditor(const QString &contents, const QString &_mimeType) = 0;
+//    virtual IEditor *createEditor(const QString &fileName) = 0;
+//    virtual IProject *openProject(const QString &fileName) = 0;
+//    virtual IProject *openProjectScheme(const QString &fileName, const QString &scheme) = 0;
+//    virtual bool findProjectTargetInfo(const QString &fileName, QMap<QString,QString>& targetInfo) const = 0;
+//    //virtual IApplication* openFolderEx(const QString &folder) = 0;
+//    virtual QStringList folderList() const = 0;
+//    virtual void setFolderList(const QStringList &folders) = 0;
+//    virtual void addFolderList(const QString &folders) = 0;
+//    virtual IApplication* openFolderInNewWindow(const QString &folder) = 0;
+//signals:
+//    void fileListChanged();
+//    void fileWizardFinished(const QString &type, const QString &scheme, const QString &location);
+//    void aboutToShowFolderContextMenu(QMenu *menu, LiteApi::FILESYSTEM_CONTEXT_FLAG flag, const QFileInfo &info);
+//public slots:
+//    virtual void newFile() = 0;
+//    virtual void openFiles() = 0;
+//    virtual void openFolder() = 0;
+//    virtual void openEditors() = 0;
+//    virtual void openProjects() = 0;
+};
+
+
 class IView : public IObject
 {
     Q_OBJECT
@@ -119,7 +154,7 @@ public:
 //    virtual QStringList mimeTypeList() const = 0;
     virtual QWidget *widget() = 0;
 //    virtual IEditor *currentEditor() const = 0;
-//    virtual void setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory = false) = 0;
+    virtual void setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory = false) = 0;
 //    virtual IEditor *findEditor(const QString &fileName, bool canonical) const = 0;
 //    virtual QList<IEditor*> editorList() const = 0;
 //    virtual QAction *registerBrowser(IEditor *editor) = 0;
@@ -162,7 +197,7 @@ public:
 //    virtual IGoProxy *createGoProxy(QObject *parent) = 0;
 //    virtual IProjectManager *projectManager() = 0;
     virtual IEditorManager  *editorManager() = 0;
-//    virtual IFileManager    *fileManager() = 0;
+    virtual IFileManager    *fileManager() = 0;
 //    virtual IActionManager  *actionManager() = 0;
 //    virtual IMimeTypeManager *mimeTypeManager() = 0;
 //    virtual IOptionManager  *optionManager() = 0;

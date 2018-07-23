@@ -43,7 +43,8 @@ SOURCES += \
     editormanager.cpp \
     pluginmanager.cpp \
     pluginmanager.cpp \
-    pluginmanager.cpp
+    pluginmanager.cpp \
+    filemanager.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -59,7 +60,8 @@ HEADERS += \
     folderView/itemdelegate.h \
     liteapp.h \
     editormanager.h \
-    pluginmanager.h
+    pluginmanager.h \
+    filemanager.h
 
 FORMS += \
         mainwindow.ui

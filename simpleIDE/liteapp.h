@@ -1,8 +1,11 @@
 #ifndef LITEAPP_H
 #define LITEAPP_H
 #include "liteapi.h"
+
 #include "editormanager.h"
+#include "filemanager.h"
 #include "pluginmanager.h"
+
 class LiteApp : public IApplication
 {
 public:
@@ -23,6 +26,7 @@ public:
 
     virtual IEditorManager  *editorManager();
 
+    virtual IFileManager    *fileManager();
 
 
 
@@ -31,7 +35,7 @@ public:
     QList<IPlugin*> m_pluginList;
 
     EditorManager   *m_editorManager;
-
+    FileManager     *m_fileManager;
 
 };
 

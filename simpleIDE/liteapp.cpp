@@ -45,12 +45,19 @@ QString LiteApp::getRootPath()
 LiteApp::LiteApp() : m_pluginPath(LiteApp::getPluginPath())
 {
     m_editorManager = new EditorManager;
+
+    m_editorManager->initWithApp(this);
+
+    m_fileManager = new FileManager;
+    m_fileManager->initWithApp(this);
 }
 
 void LiteApp::load()
 {
     loadPlugins();
     initPlugins();
+
+//     m_fileManager->openEditor(fileName,false);
 }
 
 void LiteApp::loadPlugins()
@@ -79,4 +86,9 @@ void LiteApp::initPlugins()
 IEditorManager *LiteApp::editorManager()
 {
     return m_editorManager;
+}
+
+IFileManager *LiteApp::fileManager()
+{
+    return m_fileManager;
 }
