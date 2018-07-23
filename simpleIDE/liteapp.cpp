@@ -41,6 +41,11 @@ QString LiteApp::getRootPath()
 {
     QDir rootDir = QApplication::applicationDirPath();
 //    rootDir.cdUp();
+    #ifdef Q_OS_MAC
+    rootDir.cdUp();
+    rootDir.cdUp();
+    rootDir.cdUp();
+    #endif
     return rootDir.canonicalPath();
 }
 

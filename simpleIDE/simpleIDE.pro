@@ -42,8 +42,6 @@ SOURCES += \
     liteapp.cpp \
     editormanager.cpp \
     pluginmanager.cpp \
-    pluginmanager.cpp \
-    pluginmanager.cpp \
     filemanager.cpp
 
 HEADERS += \
