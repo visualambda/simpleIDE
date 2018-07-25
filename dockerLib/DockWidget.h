@@ -117,6 +117,15 @@ public:
 		StateFloating
 	};
 
+    enum dockType
+    {
+        dockNone,
+        dockProjectExplorer,
+        dockEditor
+    };
+
+    int dockType = CDockWidget::dockType::dockNone;
+
 	/**
 	 * This mode configures the behavior of the toggle view action.
 	 * If the mode if ActionModeToggle, then the toggle view action is

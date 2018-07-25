@@ -90,8 +90,20 @@ void LiteApp::addEditorWidget(QWidget *w)
         {
             QList<ads::CDockAreaWidget*> oda = dc->openedDockAreas();
             foreach (ads::CDockAreaWidget* daw, oda) {
+
+                bool canDockEditor = false;
+                QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
+                foreach (ads::CDockWidget* daw, odws)
+                {
+                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+                    {
+                        canDockEditor = true;
+                        break;
+                    }
+                }
+
                 int order = daw->zOrderIndex();
-                if(order > maxZorder)
+                if(order > maxZorder && canDockEditor)
                 {
                     maxZorder = order;
                     curArea = daw;
@@ -100,21 +112,29 @@ void LiteApp::addEditorWidget(QWidget *w)
             }
         }
     }
-    QRect r = curArea->titleAreaGeometry();
 
-    QRect g = curArea->contentAreaGeometry();
 
     ads::CDockWidget* EditorDocker = new ads::CDockWidget(QString("Editors"));
+    EditorDocker->dockType = ads::CDockWidget::dockType::dockEditor;
     EditorDocker->setWidget(w);
 
 
-    if(maxZorder != -1 && curArea != nullptr && r.width() > 0 && r.height() > 0)
+    if(maxZorder != -1 && curArea != nullptr )
     {
-        m_mainwindow->_dockManager->addDockWidget(ads::CenterDockWidgetArea, EditorDocker, curArea);
+        QRect r = curArea->titleAreaGeometry();
+        QRect g = curArea->contentAreaGeometry();
+        if(r.width() > 0 && r.height() > 0)
+        {
+            m_mainwindow->_dockManager->addDockWidget(ads::CenterDockWidgetArea, EditorDocker, curArea);
+        }
+        else
+        {
+            m_mainwindow->_dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
+        }
     }
     else
     {
-        m_mainwindow->_dockManager->addDockWidget(ads::CenterDockWidgetArea, EditorDocker);
+        m_mainwindow->_dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
     }
 
 }

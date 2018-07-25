@@ -93,6 +93,7 @@ MainWindow::MainWindow(IApplication *app, QWidget *parent) :
 
     ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
     ProjectExplorerDocker->setWidget(mfv);
+    ProjectExplorerDocker->dockType = ads::CDockWidget::dockType::dockProjectExplorer;
     ads::CDockAreaWidget*  ProjectExplorerArea = _dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
 
 //    QPlainTextEdit * edit = new QPlainTextEdit;
