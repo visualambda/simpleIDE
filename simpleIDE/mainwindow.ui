@@ -24,7 +24,7 @@
     </rect>
    </property>
    <property name="nativeMenuBar">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
