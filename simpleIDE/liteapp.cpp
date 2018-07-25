@@ -4,9 +4,10 @@
 #include <QLayout>
 #include <QProcessEnvironment>
 
-//#include "DockManager.h"
-//#include "DockWidget.h"
-//#include "DockAreaWidget.h"
+#include <QDebug>
+#include "DockManager.h"
+#include "DockWidget.h"
+#include "DockAreaWidget.h"
 
 
 IApplication *LiteApp::NewApplication()
@@ -80,10 +81,42 @@ LiteApp::LiteApp() : m_pluginPath(LiteApp::getPluginPath())
 void LiteApp::addEditorWidget(QWidget *w)
 {
 
+    int maxZorder = -1;
+    ads::CDockAreaWidget* curArea = nullptr;
+
+    foreach (ads::CDockContainerWidget* dc, m_mainwindow->_dockManager->dockContainers())
+    {
+//        if(dc->zOrderIndex() == 0) // is the main window!
+        {
+            QList<ads::CDockAreaWidget*> oda = dc->openedDockAreas();
+            foreach (ads::CDockAreaWidget* daw, oda) {
+                int order = daw->zOrderIndex();
+                if(order > maxZorder)
+                {
+                    maxZorder = order;
+                    curArea = daw;
+                }
+
+            }
+        }
+    }
+    QRect r = curArea->titleAreaGeometry();
+
+    QRect g = curArea->contentAreaGeometry();
+
     ads::CDockWidget* EditorDocker = new ads::CDockWidget(QString("Editors"));
     EditorDocker->setWidget(w);
 
-    m_mainwindow->_dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
+
+    if(maxZorder != -1 && curArea != nullptr && r.width() > 0 && r.height() > 0)
+    {
+        m_mainwindow->_dockManager->addDockWidget(ads::CenterDockWidgetArea, EditorDocker, curArea);
+    }
+    else
+    {
+        m_mainwindow->_dockManager->addDockWidget(ads::CenterDockWidgetArea, EditorDocker);
+    }
+
 }
 
 void LiteApp::load()

@@ -342,7 +342,8 @@ void DockAreaWidgetPrivate::updateTabBar()
 
 	if (Container->isFloating() && (Container->dockAreaCount() == 1) && (_this->count() == 1))
 	{
-		TitleBar->setVisible(false);
+        //test
+        TitleBar->setVisible(true);
 	}
 	else
 	{

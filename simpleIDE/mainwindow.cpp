@@ -18,7 +18,9 @@
 
 void MainWindow::open()
 {
-    QMessageBox::information(this, tr("Information"), tr("Open"));
+
+    m_liteApp->fileManager()->openEditor("c:/test.txt",true);
+//    QMessageBox::information(this, tr("Information"), tr("Open"));
 }
 QMenu * file_menu;
 
