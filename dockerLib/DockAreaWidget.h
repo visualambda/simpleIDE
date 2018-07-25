@@ -56,6 +56,13 @@ private:
 	DockAreaWidgetPrivate* d; ///< private data (pimpl)
 	friend struct DockAreaWidgetPrivate;
 
+protected:
+    /**
+     * Handles activation events to update zOrderIndex
+     */
+    virtual bool event(QEvent *e) override;
+
+
 private slots:
 	void onDockWidgetTitleClicked();
 	void onTabsMenuActionTriggered(QAction* Action);

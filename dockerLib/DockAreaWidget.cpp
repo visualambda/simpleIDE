@@ -380,6 +380,25 @@ void DockAreaWidgetPrivate::updateTabsMenu()
 	}
 }
 
+bool CDockAreaWidget::event(QEvent *e)
+{
+    qDebug() << "CDockAreaWidget::event(QEvent *e)"<</*this <<*/ e->type();
+    bool Result = QWidget::event(e);
+
+    if(e->type() != QEvent::MouseButtonRelease)
+    {
+
+
+        qDebug() << "all widget!  QEvent::MouseButtonRelease ---------------";
+        CDockWidget * w = dockWidget(0);
+        if(w)
+            qDebug() << "w->windowTitle" <<  w->windowTitle();
+
+        qDebug() << "---------------------------";
+    }
+
+    return Result;
+}
 
 //============================================================================
 CDockAreaWidget::CDockAreaWidget(CDockManager* DockManager, CDockContainerWidget* parent) :

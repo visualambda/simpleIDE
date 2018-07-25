@@ -127,7 +127,7 @@ void LiteEditorFileFactory::tabSettingChanged(int tabSize)
 
 IEditor *LiteEditorFileFactory::open(const QString &fileName, const QString &mimeType)
 {
-    QMessageBox::question(nullptr, "open", fileName,  QMessageBox::Yes );
+   // QMessageBox::question(nullptr, "open", fileName,  QMessageBox::Yes );
    // m_liteApp->editorManager()->cutForwardNavigationHistory();
     //m_liteApp->editorManager()->addNavigationHistory();
 
