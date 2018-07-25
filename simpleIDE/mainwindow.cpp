@@ -11,6 +11,17 @@
 #include <QCalendarWidget>
 #include <QPlainTextEdit>
 
+#include <QToolBar>
+#include <QPushButton>
+#include <QVBoxLayout>
+
+
+void MainWindow::open()
+{
+    QMessageBox::information(this, tr("Information"), tr("Open"));
+}
+QMenu * file_menu;
+
 MainWindow::MainWindow(IApplication *app, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -19,7 +30,31 @@ MainWindow::MainWindow(IApplication *app, QWidget *parent) :
 
     m_liteApp=app;
 
-    _dockManager = new ads::CDockManager(this);
+    openAction = new QAction(QIcon(":/icon/icon/status-green.png"), tr("&Open..."), this);
+    openAction->setShortcuts(QKeySequence::Open);
+    openAction->setStatusTip(tr("Open an existing file"));
+    connect(openAction, &QAction::triggered, this, &MainWindow::open);
+
+
+    QMenu *editMenu = ui->menuBar->addMenu(tr("编辑(&E)"));
+    editMenu->addAction(openAction);
+    ui->menuBar->addMenu(editMenu);
+
+
+
+
+
+    this->ui->mainToolBar->addAction(openAction);
+
+
+
+
+
+    _dockManager = new ads::CDockManager(nullptr);
+
+    QVBoxLayout *vl = new QVBoxLayout(this);
+    vl->addWidget(_dockManager);
+    this->centralWidget()->setLayout(vl);
 
     MultiFolderView *mfv = new MultiFolderView();
 

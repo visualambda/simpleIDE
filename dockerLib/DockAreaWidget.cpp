@@ -52,6 +52,7 @@
 
 namespace ads
 {
+static unsigned int zOrderCounter = 0;
 static const char* const INDEX_PROPERTY = "index";
 static const char* const ACTION_PROPERTY = "action";
 static const int APPEND = -1;
@@ -196,6 +197,7 @@ protected:
  */
 struct DockAreaWidgetPrivate
 {
+    unsigned int zOrderIndex = 0;
 	CDockAreaWidget* _this;
 	QBoxLayout* Layout;
 	QFrame* TitleBar;
@@ -380,6 +382,14 @@ void DockAreaWidgetPrivate::updateTabsMenu()
 	}
 }
 
+
+//============================================================================
+unsigned int CDockAreaWidget::zOrderIndex() const
+{
+    return d->zOrderIndex;
+}
+
+
 bool CDockAreaWidget::event(QEvent *e)
 {
     qDebug() << "CDockAreaWidget::event(QEvent *e)"<</*this <<*/ e->type();
@@ -387,8 +397,7 @@ bool CDockAreaWidget::event(QEvent *e)
 
     if(e->type() == QEvent::MouseButtonRelease)
     {
-
-
+        d->zOrderIndex = ++zOrderCounter;
         qDebug() << "all widget!  QEvent::MouseButtonRelease ---------------";
         CDockWidget * w = dockWidget(0);
         if(w)
@@ -508,6 +517,8 @@ void CDockAreaWidget::removeDockWidget(CDockWidget* DockWidget)
 //============================================================================
 void CDockAreaWidget::onDockWidgetTitleClicked()
 {
+    d->zOrderIndex = ++zOrderCounter;
+
 	CDockWidgetTitleBar* TitleWidget = qobject_cast<CDockWidgetTitleBar*>(sender());
 	if (!TitleWidget)
 	{

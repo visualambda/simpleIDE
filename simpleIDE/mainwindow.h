@@ -22,11 +22,13 @@ public:
     explicit MainWindow(IApplication *app, QWidget *parent = 0);
     ~MainWindow();
 
+    void open();
+
     ads::CDockManager* _dockManager = nullptr;
     ads::CDockAreaWidget*  _editorArea;
 private:
     Ui::MainWindow *ui;
-
+    QAction *openAction;
 
 protected:
     IApplication *m_liteApp;

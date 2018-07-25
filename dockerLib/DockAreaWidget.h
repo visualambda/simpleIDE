@@ -84,6 +84,12 @@ public:
 	 */
 	CDockManager* dockManager() const;
 
+    /**
+     * Returns the current zOrderIndex
+     */
+    virtual unsigned int zOrderIndex() const;
+
+
 	/**
 	 * Returns the dock container widget this dock area widget belongs to or 0
 	 * if there is no
