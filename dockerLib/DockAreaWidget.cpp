@@ -385,7 +385,7 @@ bool CDockAreaWidget::event(QEvent *e)
     qDebug() << "CDockAreaWidget::event(QEvent *e)"<</*this <<*/ e->type();
     bool Result = QWidget::event(e);
 
-    if(e->type() != QEvent::MouseButtonRelease)
+    if(e->type() == QEvent::MouseButtonRelease)
     {
 
 
