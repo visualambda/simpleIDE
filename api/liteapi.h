@@ -25,6 +25,22 @@
 #define LITEAPI_H
 #include <QObject>
 
+
+#include <QWidget>
+#include <QMenu>
+#include <QToolBar>
+#include <QPlainTextEdit>
+#include <QSettings>
+#include <QMainWindow>
+#include <QDockWidget>
+#include <QFlags>
+#include <QUrl>
+#include <QDir>
+#include <QFileInfo>
+#include <QDesktopServices>
+#include <QTextCursor>
+#include <QAbstractItemModel>
+
 class IExtension
 {
 public:
@@ -132,6 +148,16 @@ public:
 };
 
 
+struct FindOption {
+    QString findText;
+    bool    useRegexp;
+    bool    matchWord;
+    bool    matchCase;
+    bool    wrapAround;
+    bool    backWard;
+};
+
+
 class IEditorFactory : public QObject
 {
     Q_OBJECT
@@ -185,6 +211,59 @@ public:
 
 
 
+class ITextEditor : public IEditor
+{
+    Q_OBJECT
+public:
+    enum PositionOperation {
+        Current = 1,
+        EndOfLine = 2,
+        StartOfLine = 3,
+        Anchor = 4,
+        EndOfDoc = 5
+    };
+    ITextEditor(QObject *parent = 0) : IEditor(parent) {}
+    virtual int line() const = 0;
+    virtual int column() const = 0;
+    virtual int utf8Position(bool realFile = false, int pos = -1) const = 0;
+    virtual QByteArray utf8Data() const = 0;
+    virtual void setWordWrap(bool wrap) = 0;
+    virtual bool wordWrap() const = 0;
+    virtual void gotoLine(int blockNumber, int column, bool center = false, int selection = 0) = 0;
+    virtual void setFindOption(FindOption *opt) = 0;
+    virtual int position(PositionOperation posOp = Current, int at = -1) const = 0;
+    virtual QString textAt(int pos, int length) const = 0;
+    virtual QRect cursorRect(int pos = -1) const = 0;
+    virtual QTextCursor textCursor() const = 0;
+    virtual QTextDocument *document() const = 0;
+};
+class ILiteEditor : public ITextEditor
+{
+    Q_OBJECT
+public:
+    ILiteEditor(QObject *parent = 0) : ITextEditor(parent) {}
+    virtual QTextDocument* document() const = 0;
+//    virtual void setCompleter(ICompleter *complter) = 0;
+//    virtual void setEditorMark(IEditorMark *mark) = 0;
+//    virtual void setTextLexer(ITextLexer *lexer) = 0;
+    virtual void setSpellCheckZoneDontComplete(bool b) = 0;
+//    virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const QString &tag = "", int offset = 0, int selection = 0) = 0;
+    virtual void clearNavigateMarak(int line) = 0;
+    virtual void clearAllNavigateMarks() = 0;
+//    virtual void clearAllNavigateMark(EditorNaviagteType types, const QString &tag = "") = 0;
+//    virtual void setNavigateHead(EditorNaviagteType type, const QString &msg) = 0;
+//    virtual void showLink(const Link &link) = 0;
+    virtual void clearLink() = 0;
+    virtual void setTabOption(int tabSize, bool tabToSpace) = 0;
+    virtual void setEnableAutoIndentAction(bool b) = 0;
+    virtual bool isLineEndUnix() const = 0;
+    virtual void setLineEndUnix(bool b) = 0;
+    virtual void showToolTipInfo(const QPoint & pos, const QString & text) = 0;
+    virtual void loadDiff(const QString &diff) = 0;
+    virtual void loadTextUseDiff(const QString &text) = 0;
+signals:
+    void updateLink(const QTextCursor &cursor, const QPoint &pos, bool nav);
+};
 
 class IApplication : public IObject
 {
