@@ -572,6 +572,7 @@ CDockAreaWidget* DockContainerWidgetPrivate::dockWidgetIntoContainer(DockWidgetA
 //============================================================================
 void DockContainerWidgetPrivate::addDockArea(CDockAreaWidget* NewDockArea, DockWidgetArea area)
 {
+    //todo
 	auto InsertParam = internal::dockAreaInsertParameters(area);
 	// As long as we have only one dock area in the splitter we can adjust
 	// its orientation
