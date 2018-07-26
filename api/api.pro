@@ -3,7 +3,8 @@ TEMPLATE  = subdirs
 CONFIG   += ordered
 
 SUBDIRS = \
-    liteapi
+    liteapi \
+    LiteEditorApi
 #    liteeditorapi \
 
 

@@ -2,25 +2,9 @@
 #define LITEAPI_H
 
 #include <QObject>
+#include <QTextCursor>
+#include "liteobj.h"
 
-class IExtension
-{
-public:
-    virtual ~IExtension() {}
-    virtual void addObject(const QString &meta, QObject *obj) = 0;
-    virtual void removeObject(const QString &meta) = 0;
-    virtual QObject *findObject(const QString &meta) const = 0;
-    virtual QStringList objectMetaList() const = 0;
-};
-
-
-class IObject : public QObject
-{
-public:
-    IObject(QObject *parent = 0) : QObject(parent) {}
-    virtual ~IObject() {}
-    virtual IExtension *extension() { return 0; }
-};
 
 class IApplication;
 class IManager : public QObject
@@ -109,6 +93,41 @@ public:
 //    void reloaded();
 };
 
+struct FindOption {
+    QString findText;
+    bool    useRegexp;
+    bool    matchWord;
+    bool    matchCase;
+    bool    wrapAround;
+    bool    backWard;
+};
+
+class ITextEditor : public IEditor
+{
+    Q_OBJECT
+public:
+    enum PositionOperation {
+        Current = 1,
+        EndOfLine = 2,
+        StartOfLine = 3,
+        Anchor = 4,
+        EndOfDoc = 5
+    };
+    ITextEditor(QObject *parent = 0) : IEditor(parent) {}
+    virtual int line() const = 0;
+    virtual int column() const = 0;
+    virtual int utf8Position(bool realFile = false, int pos = -1) const = 0;
+    virtual QByteArray utf8Data() const = 0;
+    virtual void setWordWrap(bool wrap) = 0;
+    virtual bool wordWrap() const = 0;
+    virtual void gotoLine(int blockNumber, int column, bool center = false, int selection = 0) = 0;
+    virtual void setFindOption(FindOption *opt) = 0;
+    virtual int position(PositionOperation posOp = Current, int at = -1) const = 0;
+    virtual QString textAt(int pos, int length) const = 0;
+    virtual QRect cursorRect(int pos = -1) const = 0;
+    virtual QTextCursor textCursor() const = 0;
+    virtual QTextDocument *document() const = 0;
+};
 
 class IEditorFactory : public QObject
 {

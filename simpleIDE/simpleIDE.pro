@@ -77,7 +77,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += -lAdvancedDockingSystemd
 else:unix: LIBS += -lAdvancedDockingSystem_debug.1.0.0
 
 INCLUDEPATH += ../dockerLib
-INCLUDEPATH += $${PWD}/../api/
+INCLUDEPATH += $${PWD}/../api/LiteApi
 
 # add api lib,
 include (../api/api.pri)

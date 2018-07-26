@@ -9,4 +9,5 @@ CONFIG += staticlib
 
 DEFINES += LITEAPI_LIBRARY
 
-HEADERS += liteapi.h
+HEADERS += liteapi.h \
+    liteobj.h

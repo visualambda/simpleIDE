@@ -7,7 +7,7 @@
 #include <QTextDocument>
 #include <QPlainTextEdit>
 
-
+//todo
 class LiteEditor : IEditor
 {
 public:
