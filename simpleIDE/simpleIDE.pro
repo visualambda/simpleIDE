@@ -42,7 +42,8 @@ SOURCES += \
     liteapp.cpp \
     editormanager.cpp \
     pluginmanager.cpp \
-    filemanager.cpp
+    filemanager.cpp \
+    folderView/multifolderwindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -59,7 +60,8 @@ HEADERS += \
     liteapp.h \
     editormanager.h \
     pluginmanager.h \
-    filemanager.h
+    filemanager.h \
+    folderView/multifolderwindow.h
 
 FORMS += \
         mainwindow.ui

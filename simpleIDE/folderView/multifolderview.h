@@ -10,7 +10,7 @@ class MultiFolderView : public BaseFolderView
 public:
     Q_OBJECT
 public:
-    explicit MultiFolderView(/*LiteApi::IApplication *app,*/ QWidget *parent = 0);
+    explicit MultiFolderView(IApplication *app, QWidget *parent = 0);
     virtual ~MultiFolderView();
     void setFilter(QDir::Filters filters);
     QDir::Filters filter() const;

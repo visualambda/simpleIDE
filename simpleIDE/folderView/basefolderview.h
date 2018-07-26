@@ -2,7 +2,7 @@
 #define BASEFOLDERVIEW_H
 
 
-//#include "liteapi/liteapi.h"
+#include "liteapi.h"
 #include "symboltreeview.h"
 #include <QTreeView>
 #include <QDir>
@@ -10,7 +10,7 @@ class BaseFolderView : public SymbolTreeView
 {
     Q_OBJECT
 public:
-    explicit BaseFolderView(/*LiteApi::IApplication *app,*/QWidget *parent = 0);
+    explicit BaseFolderView(IApplication *app,QWidget *parent = 0);
     QDir contextDir() const;
     QFileInfo contextFileInfo() const;
 signals:
@@ -33,7 +33,7 @@ public slots:
     virtual void reloadFolder();
     virtual void closeAllFolders();
 protected:
-//    LiteApi::IApplication *m_liteApp;
+    IApplication *m_liteApp;
     QFileInfo m_contextInfo;
     QModelIndex m_contextIndex;
     QAction *m_openInNewWindowAct;
