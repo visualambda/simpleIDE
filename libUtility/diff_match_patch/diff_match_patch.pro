@@ -2,7 +2,8 @@ ADS_ROOT = $${PWD}/..
 ADS_OUT_ROOT = $${OUT_PWD}/../..
 DESTDIR = $${ADS_OUT_ROOT}/lib
 
-TARGET = diff_match_pitch
+TARGET = $$qtLibraryTarget(diff_match_pitch)
+
 TEMPLATE = lib
 
 CONFIG += staticlib

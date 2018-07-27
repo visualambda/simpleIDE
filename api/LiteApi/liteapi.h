@@ -3,8 +3,10 @@
 
 #include <QObject>
 #include <QTextCursor>
+#include <QMenu>
+#include <QToolBar>
 #include "liteobj.h"
-
+#include "QPlainTextEdit"
 
 class IApplication;
 class IManager : public QObject
@@ -76,6 +78,18 @@ public:
 //    virtual void openEditors() = 0;
 //    virtual void openProjects() = 0;
 };
+
+
+class IEditContext : public QObject
+{
+    Q_OBJECT
+public:
+    IEditContext(QObject *parent) : QObject(parent) {}
+    virtual QWidget *focusWidget() const = 0;
+    virtual QMenu   *focusMenu() const = 0;
+    virtual QToolBar *focusToolBar() const = 0;
+};
+
 
 
 class IView : public IObject
@@ -173,6 +187,67 @@ public:
     virtual IEditor *create(const QString &contents, const QString &mimeType) = 0;
 };
 
+
+inline ITextEditor *getTextEditor(IEditor *editor)
+{
+    if (editor && editor->extension()) {
+        return findExtensionObject<ITextEditor*>(editor->extension(),"LiteApi.ITextEditor");
+    }
+    return 0;
+}
+
+inline QMenu *getMenu(IObject *obj, const QString &id)
+{
+    if (obj && obj->extension()) {
+        return findExtensionObject<QMenu*>(obj->extension(),QString("LiteApi.Menu.%1").arg(id));
+    }
+    return 0;
+}
+
+inline IEditContext *getEditContext(IObject *obj)
+{
+    if (obj && obj->extension()) {
+        return findExtensionObject<IEditContext*>(obj->extension(),"LiteApi.IEditContext");
+    }
+    return 0;
+}
+
+inline QMenu *getEditMenu(IObject *obj)
+{
+    return getMenu(obj,"Edit");
+}
+
+inline QMenu *getContextMenu(IObject *obj)
+{
+    if (obj && obj->extension()) {
+        return findExtensionObject<QMenu*>(obj->extension(),"LiteApi.ContextMenu");
+    }
+    return 0;
+}
+
+inline QPlainTextEdit *getPlainTextEdit(IEditor *editor) {
+    if (editor && editor->extension()) {
+        return findExtensionObject<QPlainTextEdit*>(editor->extension(),"LiteApi.QPlainTextEdit");
+    }
+    return 0;
+}
+
+inline QToolBar *getEditToolBar(IEditor *editor) {
+    if (editor && editor->extension()) {
+        return findExtensionObject<QToolBar*>(editor->extension(),"LiteApi.QToolBar.Edit");
+    }
+    return 0;
+}
+
+inline QToolBar *getBuildToolBar(IEditor *editor) {
+    if (editor && editor->extension()) {
+        return findExtensionObject<QToolBar*>(editor->extension(),"LiteApi.QToolBar.Build");
+    }
+    return 0;
+}
+
+
+
 class IEditorManager : public IManager
 {
     Q_OBJECT
@@ -242,7 +317,7 @@ public:
 //    virtual QMap<QString,QVariant> &globalCookie() = 0; //global cookie
 
 //    virtual QString rootPath() const = 0;
-//    virtual QString applicationPath() const = 0;
+    virtual QString applicationPath() const = 0;
 //    virtual QString toolPath() const = 0;
 //    virtual QString resourcePath() const = 0;
 //    virtual QString pluginPath() const = 0;

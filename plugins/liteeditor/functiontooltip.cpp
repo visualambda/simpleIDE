@@ -19,7 +19,7 @@
 #endif
 //lite_memory_check_end
 
-FunctionTooltip::FunctionTooltip(LiteApi::IApplication *app, ITextEditor *editor, LiteApi::ITextLexer *lexer, int maxTipCount, QObject *parent)
+FunctionTooltip::FunctionTooltip(IApplication *app, ITextEditor *editor, ITextLexer *lexer, int maxTipCount, QObject *parent)
     : QObject(parent), m_liteApp(app), m_editor(editor), m_lexer(lexer), m_maxTipCount(maxTipCount)
 {
     m_editWidget = getPlainTextEdit(editor);

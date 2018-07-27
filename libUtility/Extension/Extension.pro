@@ -37,8 +37,8 @@ ADS_ROOT = $${PWD}/..
 ADS_OUT_ROOT = $${OUT_PWD}/../..
 DESTDIR = $${ADS_OUT_ROOT}/lib
 
+TARGET = $$qtLibraryTarget(extension)
 
-TARGET = extension
 TEMPLATE = lib
 
 

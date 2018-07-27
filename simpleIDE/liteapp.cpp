@@ -144,6 +144,11 @@ void LiteApp::appendLog(const QString &model, const QString &log, bool error)
 
 }
 
+QString LiteApp::applicationPath() const
+{
+    return m_applicationPath;
+}
+
 void LiteApp::load()
 {
     loadPlugins();

@@ -4,7 +4,8 @@ CONFIG   += ordered
 
 SUBDIRS = \
     liteapi \
-    LiteEditorApi
+    LiteEditorApi \
+    quickopenapi
 #    liteeditorapi \
 
 

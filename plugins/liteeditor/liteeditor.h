@@ -12,11 +12,26 @@
 
 #include <QTextDocument>
 #include <QToolBar>
+#include <QPrinter>
+
+
+class QLabelEx : public QLabel
+{
+    Q_OBJECT
+public:
+    QLabelEx(const QString &text, QWidget *parent = 0);
+signals:
+    void doubleClickEvent();
+protected:
+    virtual void mouseDoubleClickEvent(QMouseEvent *event);
+};
+
 
 
 //todo
 class LiteEditor : ILiteEditor
 {
+   Q_OBJECT
 public:
     LiteEditor(IApplication * app);
 
@@ -27,10 +42,122 @@ public:
 
     virtual QWidget *widget();
 
+    //////////////////////////
+    ///
+    //////////////////////////
+    virtual QTextDocument* document() const;
+    virtual void setCompleter(ICompleter *complter);
+    virtual void setEditorMark(IEditorMark *mark);
+    virtual void setTextLexer(ITextLexer *lexer);
+    void setSyntaxHighlighter(TextEditor::SyntaxHighlighter *syntax);
+    TextEditor::SyntaxHighlighter *syntaxHighlighter() const;
+    void createActions();
+    void createToolBars();
+    void createMenu();
+    virtual IExtension *extension();
+    virtual QString name() const;
+    virtual QIcon icon() const;
+    virtual bool createNew(const QString &contents, const QString &mimeType);
+    virtual bool reload();
+    virtual bool save();
+    virtual bool saveAs(const QString &filePath);
+    virtual void setReadOnly(bool b);
+    virtual bool isReadOnly() const;
+    virtual bool isModified() const;
+    virtual QString filePath() const;
+    virtual QString mimeType() const;
+    virtual IFile *file();
+    virtual int line() const;
+    virtual int column() const;
+    virtual int utf8Position(bool realFile, int pos = -1) const;
+    virtual QByteArray utf8Data() const;
+    virtual void setWordWrap(bool wrap);
+    virtual bool wordWrap() const;
+    virtual void gotoLine(int blockNumber, int column, bool center, int selection = 0);
+    virtual int position(PositionOperation posOp = Current, int at = -1) const;
+    virtual QString textAt(int pos, int length) const;
+    virtual QRect cursorRect(int pos = -1) const;
+    virtual QTextCursor textCursor() const;
+    virtual LiteEditorWidget *editorWidget() const;
+    virtual QString textCodec() const;
+    virtual void setTextCodec(const QString &codec);
+    virtual QByteArray saveState() const;
+    virtual bool restoreState(const QByteArray &state);
+    virtual void onActive();
+    virtual void setFindOption(FindOption *opt);
+    virtual void setSpellCheckZoneDontComplete(bool b);
+    virtual void setNavigateHead(EditorNaviagteType type, const QString &msg);
+    virtual void insertNavigateMark(int line, EditorNaviagteType type, const QString &msg, const QString &tag = "", int offset = 0, int selection = 0);
+    virtual void clearNavigateMarak(int line);
+    virtual void clearAllNavigateMarks();
+    virtual void clearAllNavigateMark(EditorNaviagteType types, const QString &tag = "");
+    virtual void showLink(const Link &link);
+    virtual void clearLink();
+    virtual void setTabOption(int tabSize, bool tabToSpace);
+    virtual void setEnableAutoIndentAction(bool b);
+    virtual bool isLineEndUnix() const;
+    virtual void setLineEndUnix(bool b);
+    virtual void showToolTipInfo(const QPoint & pos, const QString & text);
+    virtual void loadDiff(const QString &diff);
+    virtual void loadTextUseDiff(const QString &text);
+    virtual QMenu *editorMenu() const;
+signals:
+    void colorStyleChanged();
+    void tabSettingChanged(int);
+public slots:
+    void requestFontZoom(int zoom);
+    void loadColorStyleScheme();
+    void applyOption(QString);
+    void clipbordDataChanged();
+#ifdef LITEEDITOR_FIND
+    void findNextText();
+#endif
+    void updateTip(const QString &func,const QString &kind,const QString &info);
+    void exportPdf();
+    void exportHtml();
+    void filePrint();
+    void filePrintPreview();
+    void printPreview(QPrinter *printer);
+    void codecComboBoxChanged(QString);
+    void editPositionChanged();
+    void navigationStateChanged(const QByteArray &state);
+    void gotoLine();
+    void selectNextParam();
+    void increaseFontSize();
+    void decreaseFontSize();
+    void resetFontSize();
+    void setEditToolbarVisible(bool visible);
+    void comment();
+    void blockComment();
+    void autoIndent();
+    void tabToSpacesToggled(bool b);
+    void toggledVisualizeWhitespace(bool b);
+    void triggeredLineEnding(QAction *action);
+    void broadcast(const QString &module, const QString &id, const QString &param);
+public:
+    void updateFont();
+    void sendUpdateFont();
+    void initLoad();
+    void updateEditorInfo();
+    void findCodecs();
+
+    ////////////////////////////////
+    ///
+    ///////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
     QWidget *m_widget;
-
-
-
     LiteEditorWidget    *m_editorWidget;
     QTextDocument       *m_document;
 
@@ -122,6 +249,20 @@ protected:
     QAction *m_convertCaseLowerAct;
     QAction *m_convertCaseSwapAct;
 
+};
+
+
+
+class EditContext : public IEditContext
+{
+    Q_OBJECT
+public:
+    EditContext(LiteEditor *editor, QObject *parent);
+    virtual QWidget *focusWidget() const;
+    virtual QMenu   *focusMenu() const;
+    virtual QToolBar *focusToolBar() const;
+protected:
+    LiteEditor  *m_editor;
 };
 
 #endif // LITEEDITOR_H

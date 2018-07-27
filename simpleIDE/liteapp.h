@@ -34,7 +34,7 @@ public:
 
     virtual void appendLog(const QString &model, const QString &log = QString(), bool error = false);
 
-
+    virtual QString applicationPath() const;
 
 
 public:
@@ -43,6 +43,9 @@ public:
     EditorManager   *m_editorManager;
     FileManager     *m_fileManager;
     MainWindow      *m_mainwindow;
+
+    QString         m_applicationPath;
+
 };
 
 #endif // LITEAPP_H

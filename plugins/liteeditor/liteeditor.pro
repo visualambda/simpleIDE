@@ -6,8 +6,8 @@
 
 QT       -= gui
 QT += widgets
-
-TARGET = liteeditor
+qtHaveModule(printsupport): QT += printsupport
+TARGET = $$qtLibraryTarget(liteeditor)
 TEMPLATE = lib
 
 ADS_ROOT = $${PWD}/..
@@ -20,9 +20,11 @@ LIBS += -L$${ADS_OUT_ROOT}/lib
 DEFINES += LITEEDITOR_LIBRARY
 INCLUDEPATH += $${PWD}/../../api/liteapi
 INCLUDEPATH += $${PWD}/../../api/liteEditorApi
+INCLUDEPATH += $${PWD}/../../api/quickopenapi
 INCLUDEPATH += $${PWD}/../../libUtility/Extension
 INCLUDEPATH += $${PWD}/../../libUtility/EditorUtil
 INCLUDEPATH += $${PWD}/../../libUtility/libucd
+INCLUDEPATH += $${PWD}/../../libUtility/
 
 
 # The following define makes your compiler emit warnings if you use
@@ -43,7 +45,8 @@ SOURCES += \
     liteeditorwidget.cpp \
     functiontooltip.cpp \
     faketooltip.cpp \
-    liteeditorfile.cpp
+    liteeditorfile.cpp \
+    liteeditorwidgetbase.cpp
 
 HEADERS += \
         liteeditorplugin.h \
@@ -53,7 +56,8 @@ HEADERS += \
     liteeditorwidget.h \
     functiontooltip.h \
     faketooltip.h \
-    liteeditorfile.h
+    liteeditorfile.h \
+    liteeditorwidgetbase.h
 
 unix {
     target.path = /usr/lib

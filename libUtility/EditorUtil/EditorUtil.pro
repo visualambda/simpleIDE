@@ -40,8 +40,8 @@ ADS_ROOT = $${PWD}/..
 ADS_OUT_ROOT = $${OUT_PWD}/../..
 DESTDIR = $${ADS_OUT_ROOT}/lib
 
+TARGET = $$qtLibraryTarget(editorutil)
 
-TARGET = editorutil
 TEMPLATE = lib
 CONFIG += staticlib
 QT += core widgets

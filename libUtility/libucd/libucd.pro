@@ -7,7 +7,7 @@ TARGET = libucd
 TEMPLATE = lib
 CONFIG += staticlib
 
-include (../../liteideutils.pri)
+#include (../../liteideutils.pri)
 
 INCLUDEPATH += include
 

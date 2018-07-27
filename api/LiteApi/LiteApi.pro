@@ -1,6 +1,8 @@
 ADS_ROOT = $${PWD}/..
 ADS_OUT_ROOT = $${OUT_PWD}/../..
 
+QT += gui widgets
+
 TARGET = $$qtLibraryTarget(api)
 TEMPLATE = lib
 

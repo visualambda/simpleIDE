@@ -35,13 +35,14 @@
 
 ADS_ROOT = $${PWD}/..
 ADS_OUT_ROOT = $${OUT_PWD}/../..
+DESTDIR = $${ADS_OUT_ROOT}/lib
 
-TARGET = liteeditorapi
+TARGET = $$qtLibraryTarget(liteeditorapi)
 TEMPLATE = lib
 
 QT += core gui widgets
 
-DESTDIR = $${ADS_OUT_ROOT}/lib
+
 CONFIG += staticlib
 
 DEFINES += LITEAPI_LIBRARY
