@@ -15,10 +15,16 @@ ADS_OUT_ROOT = $${OUT_PWD}/../..
 DESTDIR = $${ADS_OUT_ROOT}/lib
 
 include (../../api/api.pri)
+LIBS += -L$${ADS_OUT_ROOT}/lib
 
 DEFINES += LITEEDITOR_LIBRARY
 INCLUDEPATH += $${PWD}/../../api/liteapi
-LIBS += -L$${ADS_OUT_ROOT}/lib
+INCLUDEPATH += $${PWD}/../../api/liteEditorApi
+INCLUDEPATH += $${PWD}/../../libUtility/Extension
+INCLUDEPATH += $${PWD}/../../libUtility/EditorUtil
+INCLUDEPATH += $${PWD}/../../libUtility/libucd
+
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -34,14 +40,20 @@ SOURCES += \
         liteeditorplugin.cpp \
     liteeditorfilefactory.cpp \
     liteeditor.cpp \
-    liteeditorwidget.cpp
+    liteeditorwidget.cpp \
+    functiontooltip.cpp \
+    faketooltip.cpp \
+    liteeditorfile.cpp
 
 HEADERS += \
         liteeditorplugin.h \
         liteeditor_global.h \ 
     liteeditorfilefactory.h \
     liteeditor.h \
-    liteeditorwidget.h
+    liteeditorwidget.h \
+    functiontooltip.h \
+    faketooltip.h \
+    liteeditorfile.h
 
 unix {
     target.path = /usr/lib

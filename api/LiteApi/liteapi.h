@@ -27,6 +27,24 @@ protected:
 
 
 
+class IMimeType
+{
+public:
+    virtual ~IMimeType() {}
+
+    virtual QString package() const = 0;
+    virtual QString type() const = 0;
+    virtual QString scheme() const = 0;
+    virtual QString comment() const = 0;
+    virtual QString codec() const = 0;
+    virtual QStringList globPatterns() const = 0;
+    virtual QStringList subClassesOf() const = 0;
+    virtual void merge(const IMimeType *mimeType) = 0;
+    virtual void setCustomPatterns(const QStringList &custom) = 0;
+    virtual QStringList customPatterns() const = 0;
+    virtual QStringList allPatterns() const = 0;
+};
+
 class IEditor;
 class IFileManager : public IManager
 {
@@ -129,6 +147,22 @@ public:
     virtual QTextDocument *document() const = 0;
 };
 
+
+class IFile : public QObject
+{
+    Q_OBJECT
+public:
+    IFile(QObject *parent = 0) : QObject(parent) {}
+    virtual ~IFile() { }
+    virtual bool loadText(const QString &filePath, const QString &mimeType, QString &outText) = 0;
+    virtual bool reloadText(QString &outText) = 0;
+    virtual bool saveText(const QString &filePath, const QString &text) = 0;
+    virtual bool isReadOnly() const = 0;
+    virtual QString filePath() const = 0;
+    virtual QString mimeType() const = 0;
+};
+
+
 class IEditorFactory : public QObject
 {
     Q_OBJECT
@@ -229,7 +263,7 @@ public:
 //    virtual void loadState() = 0;
 //    virtual void saveState() = 0;
 
-//    virtual void appendLog(const QString &model, const QString &log, bool error = false) = 0;
+    virtual void appendLog(const QString &model, const QString &log, bool error = false) = 0;
 //    virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString()) = 0;
 //signals:
 //    void loaded();

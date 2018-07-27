@@ -139,6 +139,11 @@ void LiteApp::addEditorWidget(QWidget *w)
 
 }
 
+void LiteApp::appendLog(const QString &model, const QString &log, bool error)
+{
+
+}
+
 void LiteApp::load()
 {
     loadPlugins();

@@ -32,6 +32,7 @@ public:
 
     virtual void addEditorWidget(QWidget * w);
 
+    virtual void appendLog(const QString &model, const QString &log = QString(), bool error = false);
 
 
 

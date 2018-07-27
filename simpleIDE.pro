@@ -4,6 +4,7 @@ SUBDIRS = \
         $$PWD/dockerLib/dockerLib.pro \
         api \
         $$PWD/simpleIDE/simpleIDE.pro \
-    plugins
+    plugins \
+    libUtility
 
 CONFIG += ordered
