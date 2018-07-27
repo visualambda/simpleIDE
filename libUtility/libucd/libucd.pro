@@ -3,7 +3,7 @@ ADS_OUT_ROOT = $${OUT_PWD}/../..
 DESTDIR = $${ADS_OUT_ROOT}/lib
 
 
-TARGET = libucd
+TARGET = $$qtLibraryTarget(libucd)
 TEMPLATE = lib
 CONFIG += staticlib
 

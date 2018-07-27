@@ -25,7 +25,7 @@
 #define QUICKOPENWIDGET_H
 
 #include "liteapi.h"
-#include "../3rdparty/qtc_editutil/filterlineedit.h"
+#include "filterlineedit.h"
 #include <QAbstractItemModel>
 
 class QTreeView;
@@ -33,7 +33,7 @@ class QuickOpenWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent = 0);
+    explicit QuickOpenWidget( IApplication *app, QWidget *parent = 0);
     void setModel(QAbstractItemModel *model);
     QLineEdit *editor();
     QTreeView *view();
@@ -47,7 +47,7 @@ public:
 protected:
     virtual bool eventFilter(QObject *o, QEvent *e);
 protected:
-    LiteApi::IApplication *m_liteApp;
+     IApplication *m_liteApp;
     Utils::FilterLineEdit *m_edit;
     QTreeView   *m_view;
     bool         m_wrap;

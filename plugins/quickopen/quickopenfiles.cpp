@@ -41,8 +41,8 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenFiles::QuickOpenFiles(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IQuickOpen(parent), m_liteApp(app)
+QuickOpenFiles::QuickOpenFiles( IApplication *app, QObject *parent)
+    :  IQuickOpen(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
     m_filesModel = new QStandardItemModel(this);
@@ -88,63 +88,63 @@ QAbstractItemModel *QuickOpenFiles::model() const
 
 void QuickOpenFiles::updateModel()
 {
-    m_maxCount = m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
-    m_matchCase = m_liteApp->settings()->value(QUICKOPNE_FILES_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+//    m_maxCount = m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
+//    m_matchCase = m_liteApp->settings()->value(QUICKOPNE_FILES_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
-    m_model->clear();
-    m_filesModel->clear();
-    m_proxyModel->setSourceModel(m_model);
-    m_proxyModel->setFilterFixedString("");
-    m_proxyModel->setFilterKeyColumn(2);
-    m_proxyModel->setFilterCaseSensitivity(m_matchCase);
+//    m_model->clear();
+//    m_filesModel->clear();
+//    m_proxyModel->setSourceModel(m_model);
+//    m_proxyModel->setFilterFixedString("");
+//    m_proxyModel->setFilterKeyColumn(2);
+//    m_proxyModel->setFilterCaseSensitivity(m_matchCase);
 
-    m_editors.clear();
-    QStringList names;
-    foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
-        if (editor->filePath().isEmpty()) {
-            continue;
-        }
-        names.push_back(editor->name()+";"+editor->filePath());
-        m_editors.push_back(editor->filePath());
-    }
-    qSort(names);
-    foreach (QString text, names) {
-        QStringList ar = text.split(";");
-        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]));
-        m_filesModel->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]));
-    }
+//    m_editors.clear();
+//    QStringList names;
+//    foreach( IEditor *editor, m_liteApp->editorManager()->editorList()) {
+//        if (editor->filePath().isEmpty()) {
+//            continue;
+//        }
+//        names.push_back(editor->name()+";"+editor->filePath());
+//        m_editors.push_back(editor->filePath());
+//    }
+//    qSort(names);
+//    foreach (QString text, names) {
+//        QStringList ar = text.split(";");
+//        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]));
+//        m_filesModel->appendRow(QList<QStandardItem*>() << new QStandardItem("*") << new QStandardItem(ar[0]) << new QStandardItem(ar[1]));
+//    }
 
-    startFindThread();
+//    startFindThread();
 }
 
 void QuickOpenFiles::startFindThread()
 {
-    QSet<QString> extSet;
-    foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
-        foreach (QString ext, type->allPatterns()) {
-            if (ext.startsWith(".")) {
-                extSet << ext.mid(1);
-            } else if (ext.startsWith("*.")) {
-                extSet << ext.mid(2);
-            }
-        }
-    }
+//    QSet<QString> extSet;
+//    foreach( IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
+//        foreach (QString ext, type->allPatterns()) {
+//            if (ext.startsWith(".")) {
+//                extSet << ext.mid(1);
+//            } else if (ext.startsWith("*.")) {
+//                extSet << ext.mid(2);
+//            }
+//        }
+//    }
 
-    int count = m_model->rowCount();
-    int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
-    QSet<QString> editorSet = m_editors.toSet();
+//    int count = m_model->rowCount();
+//    int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FILES_MAXCOUNT,100000).toInt();
+//    QSet<QString> editorSet = m_editors.toSet();
 
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    QStringList folderList;
-    if (editor && !editor->filePath().isEmpty()) {
-        folderList << QFileInfo(editor->filePath()).path();
-    }
-    folderList << m_liteApp->fileManager()->folderList();
+//     IEditor *editor = m_liteApp->editorManager()->currentEditor();
+//    QStringList folderList;
+//    if (editor && !editor->filePath().isEmpty()) {
+//        folderList << QFileInfo(editor->filePath()).path();
+//    }
+//    folderList << m_liteApp->fileManager()->folderList();
 
-    m_thread->setFolderList(folderList,extSet,editorSet,maxcount);
+//    m_thread->setFolderList(folderList,extSet,editorSet,maxcount);
 
-    m_thread->stop();
-    m_thread->start();
+//    m_thread->stop();
+//    m_thread->start();
 }
 
 void QuickOpenFiles::findResult(const QStringList &fileList)
@@ -181,13 +181,13 @@ void QuickOpenFiles::indexChanged(const QModelIndex &/*index*/)
 
 bool QuickOpenFiles::selected(const QString &/*text*/, const QModelIndex &index)
 {
-    if (!index.isValid()) {
-        return false;
-    }
-    QString filePath = m_proxyModel->index(index.row(),2).data().toString();
-    if (!m_liteApp->fileManager()->openFile(filePath)) {
-        return false;
-    }
+//    if (!index.isValid()) {
+//        return false;
+//    }
+//    QString filePath = m_proxyModel->index(index.row(),2).data().toString();
+//    if (!m_liteApp->fileManager()->openFile(filePath)) {
+//        return false;
+//    }
     return true;
 }
 

@@ -41,7 +41,7 @@ QuickOpenPlugin::QuickOpenPlugin()
 {
 }
 
-bool QuickOpenPlugin::load(LiteApi::IApplication *app)
+bool QuickOpenPlugin::load( IApplication *app)
 {
     QuickOpenManager *manager = new QuickOpenManager(app);
     if (!manager->initWithApp(app)) {
@@ -49,7 +49,7 @@ bool QuickOpenPlugin::load(LiteApi::IApplication *app)
     }
     manager->addFilter(":",new QuickOpenLines(app,this));
 
-    app->optionManager()->addFactory(new QuickOpenOptionFactory(app,this));
+//    app->optionManager()->addFactory(new QuickOpenOptionFactory(app,this));
 
     return true;
 }

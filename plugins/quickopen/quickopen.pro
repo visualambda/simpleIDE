@@ -43,11 +43,17 @@ FORMS += \
     quickopenoption.ui
 
 
+LIBS += -L$${ADS_OUT_ROOT}/lib
+LIBS *= -l$$qtLibraryTarget(api)
+LIBS *= -l$$qtLibraryTarget(quickopenapi)
+LIBS *= -l$$qtLibraryTarget(fileutil)
+LIBS *= -l$$qtLibraryTarget(qtc_editutil)
 
 
 INCLUDEPATH += $${PWD}/../../api/quickopenapi
 INCLUDEPATH += $${PWD}/../../api/liteapi
 INCLUDEPATH += $${PWD}/../../libUtility/fileutil
+INCLUDEPATH += $${PWD}/../../libUtility/qtc_editutil
 #INCLUDEPATH += $${PWD}/../../api/liteEditorApi
 
 

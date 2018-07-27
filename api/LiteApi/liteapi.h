@@ -291,6 +291,39 @@ public:
 
 
 
+class IOption : public IView
+{
+    Q_OBJECT
+public:
+    IOption(QObject *parent = 0) : IView(parent) {}
+    virtual QString mimeType() const = 0;
+    virtual void apply() = 0;
+    virtual void active() {}
+};
+
+class IOptionFactory : public QObject
+{
+    Q_OBJECT
+public:
+    IOptionFactory(QObject *parent = 0) : QObject(parent) {}
+    virtual QStringList mimeTypes() const = 0;
+    virtual IOption *create(const QString &mimeType) = 0;
+};
+
+class IOptionManager : public IManager
+{
+    Q_OBJECT
+public:
+    IOptionManager(QObject *parent = 0) : IManager(parent) {}
+    virtual void addFactory(IOptionFactory *factory) = 0;
+    virtual void removeFactory(IOptionFactory *factory) = 0;
+    virtual QList<IOptionFactory*> factoryList() const = 0;
+public slots:
+    virtual void exec() = 0;
+signals:
+    void applyOption(QString);
+};
+
 
 class IApplication : public IObject
 {

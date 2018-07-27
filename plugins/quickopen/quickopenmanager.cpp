@@ -29,7 +29,7 @@
 #include "quickopenmimetype.h"
 #include "quickopenaction.h"
 #include "quickopenhelp.h"
-#include "liteapi/liteids.h"
+#include "liteids.h"
 #include <QTreeView>
 #include <QDebug>
 
@@ -43,7 +43,7 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenManager::QuickOpenManager(QObject *parent) : LiteApi::IQuickOpenManager(parent)
+QuickOpenManager::QuickOpenManager(QObject *parent) :  IQuickOpenManager(parent)
 {
 
 }
@@ -56,55 +56,55 @@ bool QuickOpenManager::initWithApp(IApplication *app)
 
     m_liteApp->extension()->addObject("LiteApi.IQuickOpenManager",this);
 
-    m_widget = new QuickOpenWidget(m_liteApp,m_liteApp->mainWindow());
+//    m_widget = new QuickOpenWidget(m_liteApp,m_liteApp->mainWindow());
 
-    connect(m_widget,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
-    connect(m_widget->editor(),SIGNAL(returnPressed()),this,SLOT(selected()));
-    connect(m_widget->view(),SIGNAL(clicked(QModelIndex)),this,SLOT(selected()));
-    connect(m_widget->view(),SIGNAL(activated(QModelIndex)),this,SLOT(selected()));
-    connect(m_widget,SIGNAL(hideWidget()),this,SLOT(hideWidget()));
-    connect(m_widget,SIGNAL(indexChanage(QModelIndex)),this,SLOT(indexChanage(QModelIndex)));
+//    connect(m_widget,SIGNAL(filterChanged(QString)),this,SLOT(filterChanged(QString)));
+//    connect(m_widget->editor(),SIGNAL(returnPressed()),this,SLOT(selected()));
+//    connect(m_widget->view(),SIGNAL(clicked(QModelIndex)),this,SLOT(selected()));
+//    connect(m_widget->view(),SIGNAL(activated(QModelIndex)),this,SLOT(selected()));
+//    connect(m_widget,SIGNAL(hideWidget()),this,SLOT(hideWidget()));
+//    connect(m_widget,SIGNAL(indexChanage(QModelIndex)),this,SLOT(indexChanage(QModelIndex)));
 
-    m_quickOpenFiles = new QuickOpenFiles(app,this);
-    m_quickOpenFolder = new QuickOpenFolder(app,this);
+//    m_quickOpenFiles = new QuickOpenFiles(app,this);
+//    m_quickOpenFolder = new QuickOpenFolder(app,this);
 
-    this->addFilter("",m_quickOpenFiles);
-    this->addFilter("",m_quickOpenFolder);
-    this->addFilter("~",new QuickOpenEditor(m_liteApp,this));
-    this->addFilter(">",new QuickOpenAction(m_liteApp,this));
-    this->addFilter("?",new QuickOpenHelp(m_liteApp,this));
+//    this->addFilter("",m_quickOpenFiles);
+//    this->addFilter("",m_quickOpenFolder);
+//    this->addFilter("~",new QuickOpenEditor(m_liteApp,this));
+//    this->addFilter(">",new QuickOpenAction(m_liteApp,this));
+//    this->addFilter("?",new QuickOpenHelp(m_liteApp,this));
 
-    this->registerQuickOpenMimeType("@");
+//    this->registerQuickOpenMimeType("@");
 
-    m_quickOpenAct = new QAction(tr("Quick Open File"),this);
-    m_quickOpenEditAct = new QAction(tr("Quick Open Editor"),this);
-    m_quickOpenSymbolAct = new QAction(tr("Quick Open Symbol"),this);
-    m_quickOpenActionAct = new QAction(tr("Quick Open Command"),this);
-    m_quickOpenHelpAct = new QAction(tr("Show All Quick Open Actions"),this);
+//    m_quickOpenAct = new QAction(tr("Quick Open File"),this);
+//    m_quickOpenEditAct = new QAction(tr("Quick Open Editor"),this);
+//    m_quickOpenSymbolAct = new QAction(tr("Quick Open Symbol"),this);
+//    m_quickOpenActionAct = new QAction(tr("Quick Open Command"),this);
+//    m_quickOpenHelpAct = new QAction(tr("Show All Quick Open Actions"),this);
 
-    m_liteApp->actionManager()->setViewMenuSeparator("sep/quickopen",true);
+//    m_liteApp->actionManager()->setViewMenuSeparator("sep/quickopen",true);
 
-    LiteApi::IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
-    context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
-    context->regAction(m_quickOpenEditAct,"QuickOpenEditor","CTRL+ALT+P");
-    context->regAction(m_quickOpenActionAct,"QuickOpenCommand","CTRL+SHIFT+P");
-    context->regAction(m_quickOpenSymbolAct,"QuickOpenSymbol","CTRL+SHIFT+O");
-    context->regAction(m_quickOpenHelpAct,"QuickOpenHelp","");
+//     IActionContext *context = m_liteApp->actionManager()->getActionContext(m_liteApp,"App");
+//    context->regAction(m_quickOpenAct,"QuickOpen","CTRL+P");
+//    context->regAction(m_quickOpenEditAct,"QuickOpenEditor","CTRL+ALT+P");
+//    context->regAction(m_quickOpenActionAct,"QuickOpenCommand","CTRL+SHIFT+P");
+//    context->regAction(m_quickOpenSymbolAct,"QuickOpenSymbol","CTRL+SHIFT+O");
+//    context->regAction(m_quickOpenHelpAct,"QuickOpenHelp","");
 
-    m_liteApp->actionManager()->insertMenuActions(ID_MENU_TOOLS,"sep/quickopen",true, QList<QAction*>()
-                                                  << m_quickOpenAct
-                                                  << m_quickOpenActionAct
-                                                  << m_quickOpenEditAct
-                                                  << m_quickOpenSymbolAct
-                                                  << m_quickOpenHelpAct );
+//    m_liteApp->actionManager()->insertMenuActions(ID_MENU_TOOLS,"sep/quickopen",true, QList<QAction*>()
+//                                                  << m_quickOpenAct
+//                                                  << m_quickOpenActionAct
+//                                                  << m_quickOpenEditAct
+//                                                  << m_quickOpenSymbolAct
+//                                                  << m_quickOpenHelpAct );
 
-    connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
-    connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenEditor()));
-    connect(m_quickOpenSymbolAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenSymbol()));
-    connect(m_quickOpenActionAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenCommand()));
-    connect(m_quickOpenHelpAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenHelp()));
+//    connect(m_quickOpenAct,SIGNAL(triggered(bool)),this,SLOT(quickOpen()));
+//    connect(m_quickOpenEditAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenEditor()));
+//    connect(m_quickOpenSymbolAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenSymbol()));
+//    connect(m_quickOpenActionAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenCommand()));
+//    connect(m_quickOpenHelpAct,SIGNAL(triggered(bool)),this,SLOT(quickOpenHelp()));
 
-    connect(m_liteApp,SIGNAL(aboutToQuit()),this,SLOT(appAboutToQuit()));
+//    connect(m_liteApp,SIGNAL(aboutToQuit()),this,SLOT(appAboutToQuit()));
 
     return true;
 }
@@ -195,7 +195,7 @@ void QuickOpenManager::showBySymbol(const QString &sym)
 
 IQuickOpen *QuickOpenManager::findById(const QString &id)
 {
-    foreach (LiteApi::IQuickOpen *filter, m_filterList) {
+    foreach ( IQuickOpen *filter, m_filterList) {
         if (filter->id() == id) {
             return filter;
         }

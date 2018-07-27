@@ -30,11 +30,11 @@
 class QStandardItemModel;
 class QSortFilterProxyModel;
 
-class QuickOpenFolder : public LiteApi::IQuickOpenFolder
+class QuickOpenFolder : public  IQuickOpenFolder
 {
     Q_OBJECT
 public:
-    QuickOpenFolder(LiteApi::IApplication *app, QObject *parent = 0);
+    QuickOpenFolder( IApplication *app, QObject *parent = 0);
     virtual ~QuickOpenFolder();
     virtual QString id() const;
     virtual QString info() const;
@@ -52,7 +52,7 @@ public slots:
     void findResult(const QStringList &fileList);
 protected:
     void startFindThread();
-    LiteApi::IApplication *m_liteApp;
+     IApplication *m_liteApp;
     FindFilesThread *m_thread;
     QStandardItemModel *m_model;
     QSortFilterProxyModel *m_proxyModel;

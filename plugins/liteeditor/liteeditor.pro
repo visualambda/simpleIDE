@@ -14,8 +14,7 @@ ADS_ROOT = $${PWD}/..
 ADS_OUT_ROOT = $${OUT_PWD}/../..
 DESTDIR = $${ADS_OUT_ROOT}/lib
 
-include (../../api/api.pri)
-LIBS += -L$${ADS_OUT_ROOT}/lib
+
 
 DEFINES += LITEEDITOR_LIBRARY
 INCLUDEPATH += $${PWD}/../../api/liteapi
@@ -66,3 +65,13 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+
+
+#include (../../api/api.pri)
+LIBS += -L$${ADS_OUT_ROOT}/lib
+LIBS *= -l$$qtLibraryTarget(qtctexteditor)
+LIBS *= -l$$qtLibraryTarget(api)
+LIBS *= -l$$qtLibraryTarget(libucd)
+LIBS *= -l$$qtLibraryTarget(extension)
+LIBS *= -l$$qtLibraryTarget(liteeditorapi)

@@ -41,8 +41,8 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenFolder::QuickOpenFolder(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IQuickOpenFolder(parent), m_liteApp(app)
+QuickOpenFolder::QuickOpenFolder( IApplication *app, QObject *parent)
+    :  IQuickOpenFolder(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
     m_proxyModel = new QSortFilterProxyModel(this);
@@ -87,40 +87,40 @@ QAbstractItemModel *QuickOpenFolder::model() const
 
 void QuickOpenFolder::updateModel()
 {
-    m_maxCount = m_liteApp->settings()->value(QUICKOPEN_FOLDER_MAXCOUNT,100000).toInt();
-    m_matchCase = m_liteApp->settings()->value(QUICKOPNE_FOLDER_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+//    m_maxCount = m_liteApp->settings()->value(QUICKOPEN_FOLDER_MAXCOUNT,100000).toInt();
+//    m_matchCase = m_liteApp->settings()->value(QUICKOPNE_FOLDER_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
-    m_model->clear();
-    m_proxyModel->setFilterFixedString("");
-    m_proxyModel->setFilterKeyColumn(2);
-    m_proxyModel->setFilterCaseSensitivity(m_matchCase);
+//    m_model->clear();
+//    m_proxyModel->setFilterFixedString("");
+//    m_proxyModel->setFilterKeyColumn(2);
+//    m_proxyModel->setFilterCaseSensitivity(m_matchCase);
 
-    startFindThread();
+//    startFindThread();
 }
 
 void QuickOpenFolder::startFindThread()
 {
-    QSet<QString> extSet;
-    foreach(LiteApi::IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
-        foreach (QString ext, type->allPatterns()) {
-            if (ext.startsWith(".")) {
-                extSet << ext.mid(1);
-            } else if (ext.startsWith("*.")) {
-                extSet << ext.mid(2);
-            }
-        }
-    }
+//    QSet<QString> extSet;
+//    foreach( IMimeType* type, m_liteApp->mimeTypeManager()->mimeTypeList()) {
+//        foreach (QString ext, type->allPatterns()) {
+//            if (ext.startsWith(".")) {
+//                extSet << ext.mid(1);
+//            } else if (ext.startsWith("*.")) {
+//                extSet << ext.mid(2);
+//            }
+//        }
+//    }
 
-    int count = m_model->rowCount();
-    int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FOLDER_MAXCOUNT,100000).toInt();
-    QSet<QString> editorSet;
+//    int count = m_model->rowCount();
+//    int maxcount = count+m_liteApp->settings()->value(QUICKOPEN_FOLDER_MAXCOUNT,100000).toInt();
+//    QSet<QString> editorSet;
 
-    QStringList folderList;
-    folderList << m_folder;
-    m_thread->setFolderList(folderList,extSet,editorSet,maxcount);
+//    QStringList folderList;
+//    folderList << m_folder;
+//    m_thread->setFolderList(folderList,extSet,editorSet,maxcount);
 
-    m_thread->stop();
-    m_thread->start();
+//    m_thread->stop();
+//    m_thread->start();
 }
 
 void QuickOpenFolder::findResult(const QStringList &fileList)
@@ -156,9 +156,9 @@ bool QuickOpenFolder::selected(const QString &/*text*/, const QModelIndex &index
         return false;
     }
     QString filePath = m_proxyModel->index(index.row(),1).data().toString();
-    if (!m_liteApp->fileManager()->openFile(filePath)) {
-        return false;
-    }
+//    if (!m_liteApp->fileManager()->openFile(filePath)) {
+//        return false;
+//    }
     return true;
 }
 

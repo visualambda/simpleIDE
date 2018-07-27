@@ -22,7 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "quickopenwidget.h"
-#include "liteapi/liteids.h"
+#include "liteids.h"
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QTreeView>
@@ -40,7 +40,7 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenWidget::QuickOpenWidget(LiteApi::IApplication *app, QWidget *parent) :
+QuickOpenWidget::QuickOpenWidget( IApplication *app, QWidget *parent) :
     QWidget(parent,Qt::Popup),// Qt::ToolTip | Qt::WindowStaysOnTopHint)
     m_liteApp(app)
 {
