@@ -24,13 +24,13 @@
 #ifndef QUICKOPENMANAGER_H
 #define QUICKOPENMANAGER_H
 
-#include "liteapi/liteapi.h"
-#include "quickopenapi/quickopenapi.h"
+#include "liteapi.h"
+#include "quickopenapi.h"
 #include "quickopenwidget.h"
 
 #include <QPointer>
 
-using namespace LiteApi;
+//using namespace LiteApi;
 
 class QuickOpenFiles;
 class QuickOpenFolder;

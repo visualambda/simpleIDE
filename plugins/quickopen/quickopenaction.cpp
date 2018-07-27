@@ -39,8 +39,8 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenAction::QuickOpenAction(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IQuickOpen(parent), m_liteApp(app)
+QuickOpenAction::QuickOpenAction(   IApplication *app, QObject *parent)
+    :    IQuickOpen(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
     m_proxyModel = new QSortFilterProxyModel(this);
@@ -89,71 +89,71 @@ static QString makeMenuName(const QString &idMenu)
 
 void QuickOpenAction::updateModel()
 {
-    m_model->clear();
-    m_itemActionMap.clear();
-    m_proxyModel->setFilterFixedString("");
+//    m_model->clear();
+//    m_itemActionMap.clear();
+//    m_proxyModel->setFilterFixedString("");
 
-    LiteApi::IActionManager *manager = m_liteApp->actionManager();
-    // ("menu/build", "menu/debug", "menu/edit", "menu/file", "menu/find", "menu/help", "menu/recent", "menu/view")
-    // ("App", "Build", "Find", "Editor", "Document", "Debug", "JsonEdit", "GoPkg", "GolangEdit", "GoFmt", "Bookmarks")
-    foreach (QString idMenu, manager->menuList()) {
-        if (idMenu == "menu/recent") {
-            continue;
-        }
-        QMenu *menu = manager->loadMenu(idMenu);
-        if (!menu) {
-            continue;
-        }
-        QAction *menuAct = menu->menuAction();
-        if (!menuAct) {
-            continue;
-        }
-        QMenu *realMenu = menuAct->menu();
-        if (!realMenu) {
-            continue;
-        }
-        QList<QAction*> actionList;
-        QString menuName = makeMenuName(idMenu);
-        foreach (QAction *act, realMenu->actions()) {
-            if (act->isSeparator()) {
-                continue;
-            }
-            QMenu *childMenu = act->menu();
-            if (childMenu) {
-                foreach (QAction *act, childMenu->actions()) {
-                    if (act->isSeparator()) {
-                        continue;
-                    }
-                    if (act->menu() != 0) {
-                        continue;
-                    }
-                    actionList << act;
-                }
-            } else {
-                actionList << act;
-            }
-        }
-        foreach (QAction *act, actionList) {
-            if (!act->isEnabled()) {
-                continue;
-            }
-            if (act->data().isNull()) {
-                continue;
-            }
-            QString text = act->data().toString();
-            if (text.isEmpty()) {
-                continue;
-            }
-            QStandardItem *item = new QStandardItem(menuName+"."+text);
-            QStandardItem *info = new QStandardItem();
-            if (text != act->text()) {
-                info->setText(act->text());
-            }
-            QStandardItem *shortcut = new QStandardItem(act->shortcut().toString(QKeySequence::NativeText));
-            m_model->appendRow(QList<QStandardItem*>() << item << info << shortcut);
-            m_itemActionMap.insert(item,act);
-        }
-    }
+//       IActionManager *manager = m_liteApp->actionManager();
+//    // ("menu/build", "menu/debug", "menu/edit", "menu/file", "menu/find", "menu/help", "menu/recent", "menu/view")
+//    // ("App", "Build", "Find", "Editor", "Document", "Debug", "JsonEdit", "GoPkg", "GolangEdit", "GoFmt", "Bookmarks")
+//    foreach (QString idMenu, manager->menuList()) {
+//        if (idMenu == "menu/recent") {
+//            continue;
+//        }
+//        QMenu *menu = manager->loadMenu(idMenu);
+//        if (!menu) {
+//            continue;
+//        }
+//        QAction *menuAct = menu->menuAction();
+//        if (!menuAct) {
+//            continue;
+//        }
+//        QMenu *realMenu = menuAct->menu();
+//        if (!realMenu) {
+//            continue;
+//        }
+//        QList<QAction*> actionList;
+//        QString menuName = makeMenuName(idMenu);
+//        foreach (QAction *act, realMenu->actions()) {
+//            if (act->isSeparator()) {
+//                continue;
+//            }
+//            QMenu *childMenu = act->menu();
+//            if (childMenu) {
+//                foreach (QAction *act, childMenu->actions()) {
+//                    if (act->isSeparator()) {
+//                        continue;
+//                    }
+//                    if (act->menu() != 0) {
+//                        continue;
+//                    }
+//                    actionList << act;
+//                }
+//            } else {
+//                actionList << act;
+//            }
+//        }
+//        foreach (QAction *act, actionList) {
+//            if (!act->isEnabled()) {
+//                continue;
+//            }
+//            if (act->data().isNull()) {
+//                continue;
+//            }
+//            QString text = act->data().toString();
+//            if (text.isEmpty()) {
+//                continue;
+//            }
+//            QStandardItem *item = new QStandardItem(menuName+"."+text);
+//            QStandardItem *info = new QStandardItem();
+//            if (text != act->text()) {
+//                info->setText(act->text());
+//            }
+//            QStandardItem *shortcut = new QStandardItem(act->shortcut().toString(QKeySequence::NativeText));
+//            m_model->appendRow(QList<QStandardItem*>() << item << info << shortcut);
+//            m_itemActionMap.insert(item,act);
+//        }
+//    }
 }
 
 QModelIndex QuickOpenAction::filterChanged(const QString &text)

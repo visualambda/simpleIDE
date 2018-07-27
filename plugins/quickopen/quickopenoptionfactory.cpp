@@ -34,8 +34,8 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenOptionFactory::QuickOpenOptionFactory(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IOptionFactory(parent),
+QuickOpenOptionFactory::QuickOpenOptionFactory(   IApplication *app, QObject *parent)
+    :    IOptionFactory(parent),
       m_liteApp(app)
 {
 }
@@ -45,7 +45,7 @@ QStringList QuickOpenOptionFactory::mimeTypes() const
     return QStringList() << OPTION_QUICKOPEN;
 }
 
-LiteApi::IOption *QuickOpenOptionFactory::create(const QString &mimeType)
+   IOption *QuickOpenOptionFactory::create(const QString &mimeType)
 {
     if (mimeType == OPTION_QUICKOPEN) {
         return new QuickOpenOption(m_liteApp,this);

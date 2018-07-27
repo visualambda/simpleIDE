@@ -1,6 +1,10 @@
+ADS_ROOT = $${PWD}/..
+ADS_OUT_ROOT = $${OUT_PWD}/../..
+DESTDIR = $${ADS_OUT_ROOT}/lib
+
 TARGET = $$qtLibraryTarget(quickopen)
 TEMPLATE = lib
-
+QT += core widgets
 #include (../../liteideplugin.pri)
 #include (../../api/quickopenapi/quickopenapi.pri)
 #include (../../utils/fileutil/fileutil.pri)
@@ -43,6 +47,7 @@ FORMS += \
 
 INCLUDEPATH += $${PWD}/../../api/quickopenapi
 INCLUDEPATH += $${PWD}/../../api/liteapi
+INCLUDEPATH += $${PWD}/../../libUtility/fileutil
 #INCLUDEPATH += $${PWD}/../../api/liteEditorApi
 
 

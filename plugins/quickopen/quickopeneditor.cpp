@@ -36,8 +36,8 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenEditor::QuickOpenEditor(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IQuickOpen(parent), m_liteApp(app)
+QuickOpenEditor::QuickOpenEditor(   IApplication *app, QObject *parent)
+    :    IQuickOpen(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
     m_proxyModel = new QSortFilterProxyModel(this);
@@ -72,20 +72,20 @@ QAbstractItemModel *QuickOpenEditor::model() const
 
 void QuickOpenEditor::updateModel()
 {
-    m_matchCase = m_liteApp->settings()->value(QUICKOPNE_EDITOR_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
+//    m_matchCase = m_liteApp->settings()->value(QUICKOPNE_EDITOR_MATCHCASE,false).toBool() ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
-    m_model->clear();
-    m_proxyModel->setFilterFixedString("");
-    m_proxyModel->setFilterCaseSensitivity(m_matchCase);
-    m_proxyModel->setFilterKeyColumn(2);
+//    m_model->clear();
+//    m_proxyModel->setFilterFixedString("");
+//    m_proxyModel->setFilterCaseSensitivity(m_matchCase);
+//    m_proxyModel->setFilterKeyColumn(2);
 
-    foreach(LiteApi::IEditor *editor, m_liteApp->editorManager()->editorList()) {
-        if (editor->filePath().isEmpty()) {
-            continue;
-        }
-        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem(editor->name()) << new QStandardItem(editor->filePath()) );
-    }
-    m_proxyModel->sort(0);
+//    foreach(   IEditor *editor, m_liteApp->editorManager()->editorList()) {
+//        if (editor->filePath().isEmpty()) {
+//            continue;
+//        }
+//        m_model->appendRow(QList<QStandardItem*>() << new QStandardItem(editor->name()) << new QStandardItem(editor->filePath()) );
+//    }
+//    m_proxyModel->sort(0);
 }
 
 QModelIndex QuickOpenEditor::filterChanged(const QString &text)
@@ -111,13 +111,13 @@ void QuickOpenEditor::indexChanged(const QModelIndex &/*index*/)
 
 bool QuickOpenEditor::selected(const QString &/*text*/, const QModelIndex &index)
 {
-    if (!index.isValid()) {
-        return false;
-    }
-    QString filePath = m_proxyModel->index(index.row(),1).data().toString();
-    if (!m_liteApp->fileManager()->openFile(filePath)) {
-        return false;
-    }
+//    if (!index.isValid()) {
+//        return false;
+//    }
+//    QString filePath = m_proxyModel->index(index.row(),1).data().toString();
+//    if (!m_liteApp->fileManager()->openFile(filePath)) {
+//        return false;
+//    }
     return true;
 }
 

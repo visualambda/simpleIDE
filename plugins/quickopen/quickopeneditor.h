@@ -28,11 +28,11 @@
 
 class QStandardItemModel;
 class QSortFilterProxyModel;
-class QuickOpenEditor : public LiteApi::IQuickOpen
+class QuickOpenEditor : public    IQuickOpen
 {
     Q_OBJECT
 public:
-    QuickOpenEditor(LiteApi::IApplication *app, QObject *parent = 0);
+    QuickOpenEditor(   IApplication *app, QObject *parent = 0);
     virtual QString id() const;
     virtual QString info() const;
     virtual QString placeholderText() const;
@@ -44,7 +44,7 @@ public:
     virtual bool selected(const QString &text, const QModelIndex &index);
     virtual void cancel();
 protected:
-    LiteApi::IApplication *m_liteApp;
+       IApplication *m_liteApp;
     QStandardItemModel *m_model;
     QSortFilterProxyModel *m_proxyModel;
     Qt::CaseSensitivity m_matchCase;

@@ -103,8 +103,8 @@ bool FunctionTooltip::eventFilter(QObject *obj, QEvent *e)
         hide();
         break;
     case QEvent::Move:
-        if (obj != m_liteApp->mainWindow())
-            break;
+//        if (obj != m_liteApp->mainWindow())
+//            break;
         hide();
         break;
     case QEvent::MouseButtonPress:

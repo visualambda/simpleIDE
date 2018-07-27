@@ -40,7 +40,7 @@ DESTDIR = $${ADS_OUT_ROOT}/lib
 TARGET = $$qtLibraryTarget(extension)
 
 TEMPLATE = lib
-
+QT += core widgets
 
 CONFIG += staticlib
 

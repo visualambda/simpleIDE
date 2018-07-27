@@ -33,8 +33,8 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenHelp::QuickOpenHelp(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IQuickOpen(parent), m_liteApp(app)
+QuickOpenHelp::QuickOpenHelp(   IApplication *app, QObject *parent)
+    :    IQuickOpen(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
 }
@@ -66,9 +66,9 @@ QAbstractItemModel *QuickOpenHelp::model() const
 
 void QuickOpenHelp::updateModel()
 {
-    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+       IQuickOpenManager *mgr =    getQuickOpenManager(m_liteApp);
     m_model->clear();
-    QMapIterator<QString,LiteApi::IQuickOpen*> i(mgr->symFilterMap());
+    QMapIterator<QString,   IQuickOpen*> i(mgr->symFilterMap());
     while(i.hasNext()) {
         i.next();
         if (i.value() == this) {
@@ -81,8 +81,8 @@ void QuickOpenHelp::updateModel()
 QModelIndex QuickOpenHelp::filterChanged(const QString &text)
 {
     if (!text.isEmpty()) {
-        LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
-        LiteApi::IQuickOpen *p = mgr->findBySymbol(text);
+           IQuickOpenManager *mgr =    getQuickOpenManager(m_liteApp);
+           IQuickOpen *p = mgr->findBySymbol(text);
         if (p) {
             mgr->showBySymbol(text);
         }
@@ -100,7 +100,7 @@ bool QuickOpenHelp::selected(const QString &/*text*/, const QModelIndex &index)
         return false;
     }
     QString key = index.data(0).toString();
-    LiteApi::IQuickOpenManager *mgr = LiteApi::getQuickOpenManager(m_liteApp);
+       IQuickOpenManager *mgr =    getQuickOpenManager(m_liteApp);
     mgr->showBySymbol(key);
     return false;
 }

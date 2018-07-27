@@ -25,6 +25,9 @@ INCLUDEPATH += $${PWD}/../../libUtility/Extension
 INCLUDEPATH += $${PWD}/../../libUtility/EditorUtil
 INCLUDEPATH += $${PWD}/../../libUtility/libucd
 INCLUDEPATH += $${PWD}/../../libUtility/
+INCLUDEPATH += $${PWD}/../../libUtility/fileutil
+
+INCLUDEPATH += $${PWD}/../../plugins/quickopen
 
 
 # The following define makes your compiler emit warnings if you use

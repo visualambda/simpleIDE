@@ -24,16 +24,16 @@
 #ifndef QUICKOPENOPTIONFACTORY_H
 #define QUICKOPENOPTIONFACTORY_H
 
-#include "liteapi/liteapi.h"
+#include "liteapi.h"
 
-class QuickOpenOptionFactory : public LiteApi::IOptionFactory
+class QuickOpenOptionFactory : public    IOptionFactory
 {
 public:
-    QuickOpenOptionFactory(LiteApi::IApplication *app, QObject *parent);
+    QuickOpenOptionFactory(   IApplication *app, QObject *parent);
     virtual QStringList mimeTypes() const;
-    virtual LiteApi::IOption *create(const QString &mimeType);
+    virtual    IOption *create(const QString &mimeType);
 protected:
-    LiteApi::IApplication *m_liteApp;
+       IApplication *m_liteApp;
 };
 
 #endif // QUICKOPENOPTIONFACTORY_H

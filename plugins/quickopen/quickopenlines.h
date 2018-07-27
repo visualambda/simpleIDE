@@ -24,14 +24,14 @@
 #ifndef QUICKOPENLINES_H
 #define QUICKOPENLINES_H
 
-#include "quickopenapi/quickopenapi.h"
+#include "quickopenapi.h"
 
 class QStandardItemModel;
-class QuickOpenLines : public LiteApi::IQuickOpen
+class QuickOpenLines : public    IQuickOpen
 {
     Q_OBJECT
 public:
-    QuickOpenLines(LiteApi::IApplication *app, QObject *parent);
+    QuickOpenLines(   IApplication *app, QObject *parent);
     virtual QString id() const;
     virtual QString info() const;
     virtual QString placeholderText() const;
@@ -43,7 +43,7 @@ public:
     virtual bool selected(const QString &text, const QModelIndex &index);
     virtual void cancel();
 protected:
-    LiteApi::IApplication *m_liteApp;
+       IApplication *m_liteApp;
     QStandardItemModel    *m_model;
     bool update(const QString &text);
 };

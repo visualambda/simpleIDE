@@ -3218,7 +3218,7 @@ bool LiteEditorWidgetBase::openLink(const   Link &link)
             }
         }
     }
-      gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn,true,true);
+//      gotoLine(m_liteApp,link.targetFileName,link.targetLine,link.targetColumn,true,true);
     return true;
 }
 

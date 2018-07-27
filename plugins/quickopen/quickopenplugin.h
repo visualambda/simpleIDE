@@ -25,20 +25,20 @@
 #define QUICKOPENPLUGIN_H
 
 #include "quickopen_global.h"
-#include "liteapi/liteapi.h"
+#include "liteapi.h"
 
-class QuickOpenPlugin : public LiteApi::IPlugin
+class QuickOpenPlugin : public    IPlugin
 {
     Q_OBJECT
 public:
     QuickOpenPlugin();
-    virtual bool load(LiteApi::IApplication *app);
+    virtual bool load(   IApplication *app);
 };
 
-class PluginFactory : public LiteApi::PluginFactoryT<QuickOpenPlugin>
+class PluginFactory : public    PluginFactoryT<QuickOpenPlugin>
 {
     Q_OBJECT
-    Q_INTERFACES(LiteApi::IPluginFactory)
+    Q_INTERFACES(   IPluginFactory)
 #if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "liteidex.QuickOpenPlugin")
 #endif

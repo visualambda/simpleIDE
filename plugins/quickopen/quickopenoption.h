@@ -30,19 +30,19 @@ namespace Ui {
     class QuickOpenOption;
 }
 
-class QuickOpenOption : public LiteApi::IOption
+class QuickOpenOption : public  IOption
 {
     Q_OBJECT
 
 public:
-    explicit QuickOpenOption(LiteApi::IApplication *app, QObject *parent = 0);
+    explicit QuickOpenOption(   IApplication *app, QObject *parent = 0);
     ~QuickOpenOption();
     virtual QWidget *widget();
     virtual QString name() const;
     virtual QString mimeType() const;
     virtual void apply();
 private:
-    LiteApi::IApplication   *m_liteApp;
+       IApplication   *m_liteApp;
     QWidget           *m_widget;
     Ui::QuickOpenOption *ui;
 };

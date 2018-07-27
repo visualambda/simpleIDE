@@ -22,6 +22,7 @@
 #include <QMimeData>
 #include <QMenu>
 #include <QDebug>
+#include <QFileInfo>
 //lite_memory_check_begin
 #if defined(WIN32) && defined(_MSC_VER) &&  defined(_DEBUG)
      #define _CRTDBG_MAP_ALLOC
@@ -446,27 +447,27 @@ void LiteEditorWidget::updateFont(const QFont &font)
 
 void LiteEditorWidget::dropEvent(QDropEvent *event)
 {
-    QList<QUrl> urls = event->mimeData()->urls();
-    if (urls.isEmpty()) {
-        LiteEditorWidgetBase::dropEvent(event);
-        return;
-    }
-    bool hasFile = false;
-    foreach (QUrl url, urls) {
-        QString fileName = url.toLocalFile();
-        if (!fileName.isEmpty()) {
-            QFileInfo info(fileName);
-            if (info.isFile()) {
-                m_liteApp->fileManager()->openEditor(fileName,true);
-            } else if(info.isDir()) {
-                m_liteApp->fileManager()->addFolderList(fileName);
-            }
-            hasFile = true;
-        }
-    }
-    if (hasFile) {
-        event->accept();
-        return;
-    }
-    LiteEditorWidgetBase::dropEvent(event);
+//    QList<QUrl> urls = event->mimeData()->urls();
+//    if (urls.isEmpty()) {
+//        LiteEditorWidgetBase::dropEvent(event);
+//        return;
+//    }
+//    bool hasFile = false;
+//    foreach (QUrl url, urls) {
+//        QString fileName = url.toLocalFile();
+//        if (!fileName.isEmpty()) {
+//            QFileInfo info(fileName);
+//            if (info.isFile()) {
+//                m_liteApp->fileManager()->openEditor(fileName,true);
+//            } else if(info.isDir()) {
+//                m_liteApp->fileManager()->addFolderList(fileName);
+//            }
+//            hasFile = true;
+//        }
+//    }
+//    if (hasFile) {
+//        event->accept();
+//        return;
+//    }
+//    LiteEditorWidgetBase::dropEvent(event);
 }

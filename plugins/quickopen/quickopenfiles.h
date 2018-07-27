@@ -25,7 +25,7 @@
 #define QUICKOPENFILES_H
 
 #include "quickopenapi.h"
-#include  "fileutil/findfilesthread.h"
+#include  "findfilesthread.h"
 
 class QStandardItemModel;
 class QSortFilterProxyModel;

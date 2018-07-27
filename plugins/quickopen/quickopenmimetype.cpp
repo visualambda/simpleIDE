@@ -33,8 +33,8 @@
 #endif
 //lite_memory_check_end
 
-QuickOpenMimeType::QuickOpenMimeType(LiteApi::IApplication *app, QObject *parent)
-    : LiteApi::IQuickOpenMimeType(parent), m_liteApp(app)
+QuickOpenMimeType::QuickOpenMimeType(   IApplication *app, QObject *parent)
+    :    IQuickOpenMimeType(parent), m_liteApp(app)
 {
     m_model = new QStandardItemModel(this);
     m_id = "quickopen/symbol";
@@ -60,18 +60,18 @@ QString QuickOpenMimeType::placeholderText() const
 void QuickOpenMimeType::activate()
 {
     QString mimeType;
-    LiteApi::IEditor *editor = m_liteApp->editorManager()->currentEditor();
-    if (editor) {
-        mimeType = editor->mimeType();
-    }
-    foreach (LiteApi::IQuickOpenAdapter *factory, m_adapterList) {
-        LiteApi::IQuickOpen *symbol = factory->load(mimeType);
-        if (symbol) {
-            m_symbol = symbol;
-            m_symbol->activate();
-            break;
-        }
-    }
+//       IEditor *editor = m_liteApp->editorManager()->currentEditor();
+//    if (editor) {
+//        mimeType = editor->mimeType();
+//    }
+//    foreach (   IQuickOpenAdapter *factory, m_adapterList) {
+//           IQuickOpen *symbol = factory->load(mimeType);
+//        if (symbol) {
+//            m_symbol = symbol;
+//            m_symbol->activate();
+//            break;
+//        }
+//    }
 }
 
 QAbstractItemModel *QuickOpenMimeType::model() const
@@ -115,7 +115,7 @@ bool QuickOpenMimeType::selected(const QString &text, const QModelIndex &index)
     return false;
 }
 
-void QuickOpenMimeType::addAdapter(LiteApi::IQuickOpenAdapter *factory)
+void QuickOpenMimeType::addAdapter(   IQuickOpenAdapter *factory)
 {
     m_adapterList.push_back(factory);
 }
