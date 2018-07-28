@@ -298,6 +298,8 @@ IExtension *LiteApp::extension()
 
 void LiteApp::addEditorWidget(QWidget *w)
 {
+//     m_mainwindow->layout()->addWidget(w);
+//     return;
 
     int maxZorder = -1;
     ads::CDockAreaWidget* curArea = nullptr;
@@ -353,6 +355,7 @@ void LiteApp::addEditorWidget(QWidget *w)
     else
     {
         m_mainwindow->_dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
+
     }
 
 }
