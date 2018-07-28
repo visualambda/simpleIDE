@@ -142,15 +142,15 @@ LiteEditor::LiteEditor(IApplication *app)
 //    m_extension->addObject("LiteApi.IEditContext",editContext);
 
     m_editorWidget->installEventFilter(m_liteApp->editorManager());
-    connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
-    connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
-    connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
-    connect(m_editorWidget,SIGNAL(requestFontZoom(int)),this,SLOT(requestFontZoom(int)));
-    connect(m_editorWidget,SIGNAL(updateLink(QTextCursor,QPoint,bool)),this,SIGNAL(updateLink(QTextCursor,QPoint,bool)));
-    //connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
-    //connect(m_closeEditorAct,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
+//    connect(m_editorWidget,SIGNAL(cursorPositionChanged()),this,SLOT(editPositionChanged()));
+//    connect(m_editorWidget,SIGNAL(navigationStateChanged(QByteArray)),this,SLOT(navigationStateChanged(QByteArray)));
+//    connect(m_editorWidget,SIGNAL(overwriteModeChanged(bool)),m_overInfoAct,SLOT(setVisible(bool)));
+//    connect(m_editorWidget,SIGNAL(requestFontZoom(int)),this,SLOT(requestFontZoom(int)));
+//    connect(m_editorWidget,SIGNAL(updateLink(QTextCursor,QPoint,bool)),this,SIGNAL(updateLink(QTextCursor,QPoint,bool)));
+//    //connect(m_lineInfo,SIGNAL(doubleClickEvent()),this,SLOT(gotoLine()));
+//    //connect(m_closeEditorAct,SIGNAL(triggered()),m_liteApp->editorManager(),SLOT(closeEditor()));
 
-    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
+//    connect(m_liteApp,SIGNAL(broadcast(QString,QString,QString)),this,SLOT(broadcast(QString,QString,QString)));
 }
 
 
@@ -590,28 +590,28 @@ void LiteEditor::createToolBars()
 //    m_editToolBar->addAction(m_cutAct);
 //    m_editToolBar->addAction(m_copyAct);
 //    m_editToolBar->addAction(m_pasteAct);
-#ifdef LITEEDITOR_FIND
-    m_findComboBox = new QComboBox(m_widget);
-    m_findComboBox->setEditable(true);
-    m_findComboBox->setMinimumWidth(120);
-    m_findComboBox->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-    m_toolBar->addWidget(m_findComboBox);
-    m_toolBar->addSeparator();
-    connect(m_findComboBox->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findNextText()));
-#endif
+//#ifdef LITEEDITOR_FIND
+//    m_findComboBox = new QComboBox(m_widget);
+//    m_findComboBox->setEditable(true);
+//    m_findComboBox->setMinimumWidth(120);
+//    m_findComboBox->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+//    m_toolBar->addWidget(m_findComboBox);
+//    m_toolBar->addSeparator();
+//    connect(m_findComboBox->lineEdit(),SIGNAL(returnPressed()),this,SLOT(findNextText()));
+//#endif
 
-    //info toolbar
+//    //info toolbar
 
-    m_editToolBar->addSeparator();
-    //add lock info
-    m_editToolBar->addAction(m_lockAct);
-    m_editToolBar->addAction(m_unlockAct);
+//    m_editToolBar->addSeparator();
+//    //add lock info
+//    m_editToolBar->addAction(m_lockAct);
+//    m_editToolBar->addAction(m_unlockAct);
 
 
-    //add over info
-    QLabel *overInfo = new QLabel("[Over]");
-    m_overInfoAct = m_editToolBar->addWidget(overInfo);
-    m_overInfoAct->setVisible(false);
+//    //add over info
+//    QLabel *overInfo = new QLabel("[Over]");
+//    m_overInfoAct = m_editToolBar->addWidget(overInfo);
+//    m_overInfoAct->setVisible(false);
 
     //add line info
 //    m_lineInfo = new QLabelEx("000:000");
@@ -624,155 +624,155 @@ void LiteEditor::createToolBars()
 
 void LiteEditor::createMenu()
 {
-    m_editMenu = new QMenu(m_editorWidget);
-    m_contextMenu = new QMenu(m_editorWidget);
+//    m_editMenu = new QMenu(m_editorWidget);
+//    m_contextMenu = new QMenu(m_editorWidget);
 
-    //editor menu
-    m_editMenu->addAction(m_undoAct);
-    m_editMenu->addAction(m_redoAct);
-    m_editMenu->addSeparator();
-    m_editMenu->addAction(m_cutAct);
-    m_editMenu->addAction(m_copyAct);
-    m_editMenu->addAction(m_pasteAct);
-    m_editMenu->addSeparator();
-    m_editMenu->addAction(m_selectAllAct);
-    m_editMenu->addSeparator();
+//    //editor menu
+//    m_editMenu->addAction(m_undoAct);
+//    m_editMenu->addAction(m_redoAct);
+//    m_editMenu->addSeparator();
+//    m_editMenu->addAction(m_cutAct);
+//    m_editMenu->addAction(m_copyAct);
+//    m_editMenu->addAction(m_pasteAct);
+//    m_editMenu->addSeparator();
+//    m_editMenu->addAction(m_selectAllAct);
+//    m_editMenu->addSeparator();
 
-    QMenu *subMenu = m_editMenu->addMenu(tr("Advanced"));
-    subMenu->addAction(m_duplicateAct);
-    subMenu->addAction(m_copyLineAct);
-    subMenu->addAction(m_deleteLineAct);
-    subMenu->addAction(m_cutLineAct);
-    subMenu->addAction(m_moveLineUpAction);
-    subMenu->addAction(m_moveLineDownAction);
-    subMenu->addAction(m_copyLineUpAction);
-    subMenu->addAction(m_copyLineDownAction);
-    subMenu->addAction(m_joinLinesAction);
-    subMenu->addAction(m_insertLineBeforeAct);
-    subMenu->addAction(m_insertLineAfterAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_cleanWhitespaceAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_selectBlockAct);
-    subMenu->addAction(m_selectAllAct);
+//    QMenu *subMenu = m_editMenu->addMenu(tr("Advanced"));
+//    subMenu->addAction(m_duplicateAct);
+//    subMenu->addAction(m_copyLineAct);
+//    subMenu->addAction(m_deleteLineAct);
+//    subMenu->addAction(m_cutLineAct);
+//    subMenu->addAction(m_moveLineUpAction);
+//    subMenu->addAction(m_moveLineDownAction);
+//    subMenu->addAction(m_copyLineUpAction);
+//    subMenu->addAction(m_copyLineDownAction);
+//    subMenu->addAction(m_joinLinesAction);
+//    subMenu->addAction(m_insertLineBeforeAct);
+//    subMenu->addAction(m_insertLineAfterAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_cleanWhitespaceAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_selectBlockAct);
+//    subMenu->addAction(m_selectAllAct);
 
-#ifndef QT_NO_PRINTER
-    subMenu->addSeparator();
-    subMenu->addAction(m_exportPdfAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_filePrintPreviewAct);
-    subMenu->addAction(m_filePrintAct);
-#endif
+//#ifndef QT_NO_PRINTER
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_exportPdfAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_filePrintPreviewAct);
+//    subMenu->addAction(m_filePrintAct);
+//#endif
 
-    subMenu = m_editMenu->addMenu(tr("Goto"));
+//    subMenu = m_editMenu->addMenu(tr("Goto"));
 
-    subMenu->addAction(m_gotoLineAct);
-    subMenu->addAction(m_gotoMatchBraceAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_gotoPrevBlockAct);
-    subMenu->addAction(m_gotoNextBlockAct);
-    subMenu->addAction(m_gotoLineStartAct);
-    subMenu->addAction(m_gotoLineEndAct);
-    subMenu->addAction(m_gotoPrevLineAct);
-    subMenu->addAction(m_gotoNextLineAct);
-    subMenu->addAction(m_gotoPrevCharacterAct);
-    subMenu->addAction(m_gotoNextCharacterAct);
-    subMenu->addAction(m_gotoPrevWordAct);
-    subMenu->addAction(m_gotoNextWordAct);
-    subMenu->addAction(m_gotoDocStartAct);
-    subMenu->addAction(m_gotoDocEndAct);
+//    subMenu->addAction(m_gotoLineAct);
+//    subMenu->addAction(m_gotoMatchBraceAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_gotoPrevBlockAct);
+//    subMenu->addAction(m_gotoNextBlockAct);
+//    subMenu->addAction(m_gotoLineStartAct);
+//    subMenu->addAction(m_gotoLineEndAct);
+//    subMenu->addAction(m_gotoPrevLineAct);
+//    subMenu->addAction(m_gotoNextLineAct);
+//    subMenu->addAction(m_gotoPrevCharacterAct);
+//    subMenu->addAction(m_gotoNextCharacterAct);
+//    subMenu->addAction(m_gotoPrevWordAct);
+//    subMenu->addAction(m_gotoNextWordAct);
+//    subMenu->addAction(m_gotoDocStartAct);
+//    subMenu->addAction(m_gotoDocEndAct);
 
 
-    subMenu = m_editMenu->addMenu(tr("Convert Case"));
-    subMenu->addAction(m_convertCaseTitleAct);
-    subMenu->addAction(m_convertCaseUpperAct);
-    subMenu->addAction(m_convertCaseLowerAct);
-    subMenu->addAction(m_convertCaseSwapAct);
+//    subMenu = m_editMenu->addMenu(tr("Convert Case"));
+//    subMenu->addAction(m_convertCaseTitleAct);
+//    subMenu->addAction(m_convertCaseUpperAct);
+//    subMenu->addAction(m_convertCaseLowerAct);
+//    subMenu->addAction(m_convertCaseSwapAct);
 
-    subMenu = m_editMenu->addMenu(tr("Code Folding"));
-    subMenu->addAction(m_foldAct);
-    subMenu->addAction(m_unfoldAct);
-    subMenu->addAction(m_foldAllAct);
-    subMenu->addAction(m_unfoldAllAct);
+//    subMenu = m_editMenu->addMenu(tr("Code Folding"));
+//    subMenu->addAction(m_foldAct);
+//    subMenu->addAction(m_unfoldAct);
+//    subMenu->addAction(m_foldAllAct);
+//    subMenu->addAction(m_unfoldAllAct);
 
-    subMenu = m_editMenu->addMenu(tr("Settings"));
-    subMenu->menuAction()->setMenuRole(QAction::NoRole);
-    subMenu->addAction(m_visualizeWhitespaceAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_wordWrapAct);
-    subMenu->addAction(m_tabToSpacesAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_increaseFontSizeAct);
-    subMenu->addAction(m_decreaseFontSizeAct);
-    subMenu->addAction(m_resetFontSizeAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_lineEndingWindowAct);
-    subMenu->addAction(m_lineEndingUnixAct);
+//    subMenu = m_editMenu->addMenu(tr("Settings"));
+//    subMenu->menuAction()->setMenuRole(QAction::NoRole);
+//    subMenu->addAction(m_visualizeWhitespaceAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_wordWrapAct);
+//    subMenu->addAction(m_tabToSpacesAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_increaseFontSizeAct);
+//    subMenu->addAction(m_decreaseFontSizeAct);
+//    subMenu->addAction(m_resetFontSizeAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_lineEndingWindowAct);
+//    subMenu->addAction(m_lineEndingUnixAct);
 
-    m_editMenu->addSeparator();
-    m_editMenu->addAction(m_codeCompleteAct);
-    m_editMenu->addSeparator();
-    m_editMenu->addAction(m_commentAct);
-    m_editMenu->addAction(m_blockCommentAct);
-    m_editMenu->addAction(m_autoIndentAct);
+//    m_editMenu->addSeparator();
+//    m_editMenu->addAction(m_codeCompleteAct);
+//    m_editMenu->addSeparator();
+//    m_editMenu->addAction(m_commentAct);
+//    m_editMenu->addAction(m_blockCommentAct);
+//    m_editMenu->addAction(m_autoIndentAct);
 
-    //context menu
-    m_contextMenu->addAction(m_cutAct);
-    m_contextMenu->addAction(m_copyAct);
-    m_contextMenu->addAction(m_pasteAct);
-    m_contextMenu->addSeparator();
+//    //context menu
+//    m_contextMenu->addAction(m_cutAct);
+//    m_contextMenu->addAction(m_copyAct);
+//    m_contextMenu->addAction(m_pasteAct);
+//    m_contextMenu->addSeparator();
 
-    subMenu = m_contextMenu->addMenu(tr("Advanced"));
-    subMenu->addAction(m_duplicateAct);
-    subMenu->addAction(m_copyLineAct);
-    subMenu->addAction(m_deleteLineAct);
-    subMenu->addAction(m_cutLineAct);
-    subMenu->addAction(m_moveLineUpAction);
-    subMenu->addAction(m_moveLineDownAction);
-    subMenu->addAction(m_copyLineUpAction);
-    subMenu->addAction(m_copyLineDownAction);
-    subMenu->addAction(m_joinLinesAction);
-    subMenu->addAction(m_insertLineBeforeAct);
-    subMenu->addAction(m_insertLineAfterAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_cleanWhitespaceAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_selectBlockAct);
-    subMenu->addAction(m_selectAllAct);
+//    subMenu = m_contextMenu->addMenu(tr("Advanced"));
+//    subMenu->addAction(m_duplicateAct);
+//    subMenu->addAction(m_copyLineAct);
+//    subMenu->addAction(m_deleteLineAct);
+//    subMenu->addAction(m_cutLineAct);
+//    subMenu->addAction(m_moveLineUpAction);
+//    subMenu->addAction(m_moveLineDownAction);
+//    subMenu->addAction(m_copyLineUpAction);
+//    subMenu->addAction(m_copyLineDownAction);
+//    subMenu->addAction(m_joinLinesAction);
+//    subMenu->addAction(m_insertLineBeforeAct);
+//    subMenu->addAction(m_insertLineAfterAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_cleanWhitespaceAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_selectBlockAct);
+//    subMenu->addAction(m_selectAllAct);
 
-    subMenu = m_contextMenu->addMenu(tr("Goto"));
-    subMenu->addAction(m_gotoLineAct);
-    subMenu->addAction(m_gotoMatchBraceAct);
-    subMenu->addSeparator();
-    subMenu->addAction(m_gotoPrevBlockAct);
-    subMenu->addAction(m_gotoNextBlockAct);
-    subMenu->addAction(m_gotoLineStartAct);
-    subMenu->addAction(m_gotoLineEndAct);
-    subMenu->addAction(m_gotoPrevLineAct);
-    subMenu->addAction(m_gotoNextLineAct);
-    subMenu->addAction(m_gotoPrevCharacterAct);
-    subMenu->addAction(m_gotoNextCharacterAct);
-    subMenu->addAction(m_gotoPrevWordAct);
-    subMenu->addAction(m_gotoNextWordAct);
-    subMenu->addAction(m_gotoDocStartAct);
-    subMenu->addAction(m_gotoDocEndAct);
+//    subMenu = m_contextMenu->addMenu(tr("Goto"));
+//    subMenu->addAction(m_gotoLineAct);
+//    subMenu->addAction(m_gotoMatchBraceAct);
+//    subMenu->addSeparator();
+//    subMenu->addAction(m_gotoPrevBlockAct);
+//    subMenu->addAction(m_gotoNextBlockAct);
+//    subMenu->addAction(m_gotoLineStartAct);
+//    subMenu->addAction(m_gotoLineEndAct);
+//    subMenu->addAction(m_gotoPrevLineAct);
+//    subMenu->addAction(m_gotoNextLineAct);
+//    subMenu->addAction(m_gotoPrevCharacterAct);
+//    subMenu->addAction(m_gotoNextCharacterAct);
+//    subMenu->addAction(m_gotoPrevWordAct);
+//    subMenu->addAction(m_gotoNextWordAct);
+//    subMenu->addAction(m_gotoDocStartAct);
+//    subMenu->addAction(m_gotoDocEndAct);
 
-    subMenu = m_contextMenu->addMenu(tr("Convert Case"));
-    subMenu->addAction(m_convertCaseTitleAct);
-    subMenu->addAction(m_convertCaseUpperAct);
-    subMenu->addAction(m_convertCaseLowerAct);
-    subMenu->addAction(m_convertCaseSwapAct);
+//    subMenu = m_contextMenu->addMenu(tr("Convert Case"));
+//    subMenu->addAction(m_convertCaseTitleAct);
+//    subMenu->addAction(m_convertCaseUpperAct);
+//    subMenu->addAction(m_convertCaseLowerAct);
+//    subMenu->addAction(m_convertCaseSwapAct);
 
-    subMenu = m_contextMenu->addMenu(tr("Code Folding"));
-    subMenu->addAction(m_foldAct);
-    subMenu->addAction(m_unfoldAct);
-    subMenu->addAction(m_foldAllAct);
-    subMenu->addAction(m_unfoldAllAct);
+//    subMenu = m_contextMenu->addMenu(tr("Code Folding"));
+//    subMenu->addAction(m_foldAct);
+//    subMenu->addAction(m_unfoldAct);
+//    subMenu->addAction(m_foldAllAct);
+//    subMenu->addAction(m_unfoldAllAct);
 
-    m_contextMenu->addSeparator();
-    m_contextMenu->addAction(m_commentAct);
-    m_contextMenu->addAction(m_blockCommentAct);
-    m_contextMenu->addAction(m_autoIndentAct);
+//    m_contextMenu->addSeparator();
+//    m_contextMenu->addAction(m_commentAct);
+//    m_contextMenu->addAction(m_blockCommentAct);
+//    m_contextMenu->addAction(m_autoIndentAct);
 }
 
 #ifdef LITEEDITOR_FIND
@@ -815,8 +815,8 @@ void LiteEditor::initLoad()
 void LiteEditor::updateEditorInfo()
 {
     setReadOnly(m_file->isReadOnly());
-    m_lineEndingUnixAct->setChecked(m_file->isLineEndUnix());
-    m_lineEndingWindowAct->setChecked(!m_file->isLineEndUnix());
+//    m_lineEndingUnixAct->setChecked(m_file->isLineEndUnix());
+//    m_lineEndingWindowAct->setChecked(!m_file->isLineEndUnix());
 
     editPositionChanged();
 }
@@ -882,9 +882,9 @@ bool LiteEditor::saveAs(const QString &fileName)
 
 void LiteEditor::setReadOnly(bool b)
 {
-    m_lockAct->setVisible(b);
-    m_unlockAct->setVisible(!b);
-    m_bReadOnly = b;
+//    m_lockAct->setVisible(b);
+//    m_unlockAct->setVisible(!b);
+//    m_bReadOnly = b;
     m_editorWidget->setReadOnly(b);
 }
 
@@ -1377,7 +1377,7 @@ void LiteEditor::setTabOption(int tabSize, bool tabToSpace)
 
 void LiteEditor::setEnableAutoIndentAction(bool b)
 {
-    m_autoIndentAct->setVisible(b);
+//    m_autoIndentAct->setVisible(b);
 }
 
 bool LiteEditor::isLineEndUnix() const
@@ -1506,7 +1506,7 @@ void LiteEditor::toggledVisualizeWhitespace(bool b)
 
 void LiteEditor::triggeredLineEnding(QAction *action)
 {
-    this->setLineEndUnix(action == m_lineEndingUnixAct);
+//    this->setLineEndUnix(action == m_lineEndingUnixAct);
 }
 
 void LiteEditor::broadcast(const QString &module, const QString &id, const QString &param)

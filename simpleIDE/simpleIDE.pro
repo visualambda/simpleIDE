@@ -61,7 +61,8 @@ HEADERS += \
     editormanager.h \
     pluginmanager.h \
     filemanager.h \
-    folderView/multifolderwindow.h
+    folderView/multifolderwindow.h \
+    liteapp_global.h
 
 FORMS += \
         mainwindow.ui
@@ -72,15 +73,19 @@ RESOURCES += \
 
 LIBS += -L$${ADS_OUT_ROOT}/lib
 
-win32:CONFIG(release, debug|release): LIBS += -lAdvancedDockingSystem
-else:win32:CONFIG(debug, debug|release): LIBS += -lAdvancedDockingSystemd
-else:unix: LIBS += -lAdvancedDockingSystem_debug.1.0.0
+#win32:CONFIG(release, debug|release): LIBS += -lAdvancedDockingSystem
+#else:win32:CONFIG(debug, debug|release): LIBS += -lAdvancedDockingSystemd
+#else:unix: LIBS += -lAdvancedDockingSystem_debug.1.0.0
+LIBS *= -l$$qtLibraryTarget(AdvancedDockingSystem)
+
 
 INCLUDEPATH += ../dockerLib
 INCLUDEPATH += $${PWD}/../api/LiteApi
+INCLUDEPATH += $${PWD}/../libUtility/Extension
 
 # add api lib,
-include (../api/api.pri)
+LIBS *= -l$$qtLibraryTarget(api)
+LIBS *= -l$$qtLibraryTarget(extension)
 
 
 DEPENDPATH += ../dockerLib

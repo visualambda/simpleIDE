@@ -1,4 +1,0 @@
-LIBS *= -l$$qtLibraryTarget(api)
-
-
-
