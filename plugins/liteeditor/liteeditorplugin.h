@@ -10,7 +10,7 @@ class LiteEditorPlugin : public IPlugin
 {
     Q_OBJECT
 public:
-    LiteEditorPlugin(){};
+    LiteEditorPlugin(){}
     virtual bool load(IApplication *app);
 };
 
