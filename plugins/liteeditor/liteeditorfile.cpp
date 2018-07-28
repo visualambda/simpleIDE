@@ -123,7 +123,7 @@ bool LiteEditorFile::loadFileHelper(const QString &fileName, const QString &mime
         m_liteApp->appendLog("LiteEditor","Binary file not open in the text editor! "+fileName,true);
         m_hasDecodingError = true;
         //outText = "error load binary file!!!";
-        return false;
+//        return false;
     }
 
     if (bCheckCodec) {
