@@ -48,7 +48,10 @@ SOURCES += \
     functiontooltip.cpp \
     faketooltip.cpp \
     liteeditorfile.cpp \
-    liteeditorwidgetbase.cpp
+    liteeditorwidgetbase.cpp \
+    litewordcompleter.cpp \
+    litecompleter.cpp \
+    codecompleter.cpp
 
 HEADERS += \
         liteeditorplugin.h \
@@ -59,7 +62,10 @@ HEADERS += \
     functiontooltip.h \
     faketooltip.h \
     liteeditorfile.h \
-    liteeditorwidgetbase.h
+    liteeditorwidgetbase.h \
+    litewordcompleter.h \
+    litecompleter.h \
+    codecompleter.h
 
 unix {
     target.path = /usr/lib

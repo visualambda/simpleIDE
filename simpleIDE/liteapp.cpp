@@ -412,3 +412,8 @@ IFileManager *LiteApp::fileManager()
     return m_fileManager;
 }
 
+QSettings *LiteApp::settings()
+{
+    return m_settings;
+}
+

@@ -31,7 +31,7 @@
 #include <QToolButton>
 
 #include "liteeditor.h"
-
+#include "liteeditor_global.h"
 
 QLabelEx::QLabelEx(const QString &text, QWidget *parent) :
     QLabel(text,parent)
@@ -1038,66 +1038,66 @@ QTextCursor LiteEditor::textCursor() const
 
 void LiteEditor::applyOption(QString id)
 {
-//    if (id != OPTION_LITEEDITOR) {
-//        return;
-//    }
+    if (id != OPTION_LITEEDITOR) {
+        return;
+    }
 
-//    bool autoIndent = m_liteApp->settings()->value(EDITOR_AUTOINDENT,true).toBool();
-//    bool autoBraces0 = m_liteApp->settings()->value(EDITOR_AUTOBRACE0,true).toBool();
-//    bool autoBraces1 = m_liteApp->settings()->value(EDITOR_AUTOBRACE1,true).toBool();
-//    bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
-//    bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
-//    bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
-//    bool autoBraces5 = m_liteApp->settings()->value(EDITOR_AUTOBRACE5,true).toBool();
-//    bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
-//    bool fuzzyCompleter = m_liteApp->settings()->value(EDITOR_COMPLETER_FUZZY,true).toBool();
-//    bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
-//    bool codeFoldVisible = m_liteApp->settings()->value(EDITOR_CODEFOLDVISIBLE,true).toBool();
-//    bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
-//    bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
-//    bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
-//    bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
-//    bool wheelZooming = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
-//    bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
-//    int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
-//    int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
-//    bool copyToHtml = m_liteApp->settings()->value(EDITOR_ENABLE_COPYTOHTML,true).toBool();
+    bool autoIndent = m_liteApp->settings()->value(EDITOR_AUTOINDENT,true).toBool();
+    bool autoBraces0 = m_liteApp->settings()->value(EDITOR_AUTOBRACE0,true).toBool();
+    bool autoBraces1 = m_liteApp->settings()->value(EDITOR_AUTOBRACE1,true).toBool();
+    bool autoBraces2 = m_liteApp->settings()->value(EDITOR_AUTOBRACE2,true).toBool();
+    bool autoBraces3 = m_liteApp->settings()->value(EDITOR_AUTOBRACE3,true).toBool();
+    bool autoBraces4 = m_liteApp->settings()->value(EDITOR_AUTOBRACE4,true).toBool();
+    bool autoBraces5 = m_liteApp->settings()->value(EDITOR_AUTOBRACE5,true).toBool();
+    bool caseSensitive = m_liteApp->settings()->value(EDITOR_COMPLETER_CASESENSITIVE,false).toBool();
+    bool fuzzyCompleter = m_liteApp->settings()->value(EDITOR_COMPLETER_FUZZY,true).toBool();
+    bool lineNumberVisible = m_liteApp->settings()->value(EDITOR_LINENUMBERVISIBLE,true).toBool();
+    bool codeFoldVisible = m_liteApp->settings()->value(EDITOR_CODEFOLDVISIBLE,true).toBool();
+    bool rightLineVisible = m_liteApp->settings()->value(EDITOR_RIGHTLINEVISIBLE,true).toBool();
+    bool eofVisible = m_liteApp->settings()->value(EDITOR_EOFVISIBLE,false).toBool();
+    bool defaultWordWrap = m_liteApp->settings()->value(EDITOR_DEFAULTWORDWRAP,false).toBool();
+    bool indentLineVisible = m_liteApp->settings()->value(EDITOR_INDENTLINEVISIBLE,true).toBool();
+    bool wheelZooming = m_liteApp->settings()->value(EDITOR_WHEEL_SCROLL,true).toBool();
+    bool visualizeWhitespace = m_liteApp->settings()->value(EDITOR_VISUALIZEWHITESPACE,false).toBool();
+    int rightLineWidth = m_liteApp->settings()->value(EDITOR_RIGHTLINEWIDTH,80).toInt();
+    int min = m_liteApp->settings()->value(EDITOR_PREFIXLENGTH,1).toInt();
+    bool copyToHtml = m_liteApp->settings()->value(EDITOR_ENABLE_COPYTOHTML,true).toBool();
 
-//    m_cleanCompleterCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
-//    m_cleanWhiteSpace = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
-//    m_offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
+    m_cleanCompleterCache = m_liteApp->settings()->value(EDITOR_CLEAN_COMPLETERCACHE_SAVE,false).toBool();
+    m_cleanWhiteSpace = m_liteApp->settings()->value(EDITOR_CLEANWHITESPACEONSAVE,false).toBool();
+    m_offsetVisible = m_liteApp->settings()->value(EDITOR_OFFSETVISIBLE,false).toBool();
 
-//    m_editorWidget->setAutoIndent(autoIndent);
-//    m_editorWidget->setAutoBraces0(autoBraces0);
-//    m_editorWidget->setAutoBraces1(autoBraces1);
-//    m_editorWidget->setAutoBraces2(autoBraces2);
-//    m_editorWidget->setAutoBraces3(autoBraces3);
-//    m_editorWidget->setAutoBraces4(autoBraces4);
-//    m_editorWidget->setAutoBraces5(autoBraces5);
-//    m_editorWidget->setLineNumberVisible(lineNumberVisible);
-//    m_editorWidget->setCodeFoldVisible(codeFoldVisible);
-//    m_editorWidget->setEofVisible(eofVisible);
-//    m_editorWidget->setIndentLineVisible(indentLineVisible);
-//    m_editorWidget->setRightLineVisible(rightLineVisible);
-//    m_editorWidget->setRightLineWidth(rightLineWidth);
-//    m_editorWidget->setDefaultWordWrap(defaultWordWrap);
-//    m_editorWidget->setScrollWheelZooming(wheelZooming);
-//    m_editorWidget->setVisualizeWhitespace(visualizeWhitespace);
-//    m_editorWidget->setCopyToHtml(copyToHtml);
+    m_editorWidget->setAutoIndent(autoIndent);
+    m_editorWidget->setAutoBraces0(autoBraces0);
+    m_editorWidget->setAutoBraces1(autoBraces1);
+    m_editorWidget->setAutoBraces2(autoBraces2);
+    m_editorWidget->setAutoBraces3(autoBraces3);
+    m_editorWidget->setAutoBraces4(autoBraces4);
+    m_editorWidget->setAutoBraces5(autoBraces5);
+    m_editorWidget->setLineNumberVisible(lineNumberVisible);
+    m_editorWidget->setCodeFoldVisible(codeFoldVisible);
+    m_editorWidget->setEofVisible(eofVisible);
+    m_editorWidget->setIndentLineVisible(indentLineVisible);
+    m_editorWidget->setRightLineVisible(rightLineVisible);
+    m_editorWidget->setRightLineWidth(rightLineWidth);
+    m_editorWidget->setDefaultWordWrap(defaultWordWrap);
+    m_editorWidget->setScrollWheelZooming(wheelZooming);
+    m_editorWidget->setVisualizeWhitespace(visualizeWhitespace);
+    m_editorWidget->setCopyToHtml(copyToHtml);
 
-//    if (m_completer) {
-//        m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
-//        m_completer->setFuzzy(fuzzyCompleter);
-//        m_completer->setPrefixMin(min);
-//    }
+    if (m_completer) {
+        m_completer->setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+        m_completer->setFuzzy(fuzzyCompleter);
+        m_completer->setPrefixMin(min);
+    }
 
-//    updateFont();
+    updateFont();
 
-//    QString mime = this->m_file->mimeType();
-//    m_editorWidget->setMimeType(mime);
-//    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
-//    bool useSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
-//    this->setTabOption(tabWidth,useSpace);
+    QString mime = this->m_file->mimeType();
+    m_editorWidget->setMimeType(mime);
+    int tabWidth = m_liteApp->settings()->value(EDITOR_TABWIDTH+mime,4).toInt();
+    bool useSpace = m_liteApp->settings()->value(EDITOR_TABTOSPACES+mime,false).toBool();
+    this->setTabOption(tabWidth,useSpace);
 //    m_visualizeWhitespaceAct->setChecked(visualizeWhitespace);
 }
 

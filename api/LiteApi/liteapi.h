@@ -4,9 +4,18 @@
 #include <QObject>
 #include <QTextCursor>
 #include <QMenu>
+#include <QSettings>
 #include <QToolBar>
-#include "liteobj.h"
+#include <QTextBlock>
+#include <QCompleter>
+#include <QStandardItem>
 #include "QPlainTextEdit"
+#include "liteobj.h"
+
+
+
+
+
 
 class IApplication;
 class IManager : public QObject
@@ -346,7 +355,7 @@ public:
 //    virtual IRecentManager *recentManager() = 0;
 
 //    virtual QMainWindow *mainWindow() const = 0;
-//    virtual QSettings *settings() = 0;
+    virtual QSettings *settings() = 0;
 //    virtual QMap<QString,QVariant> &globalCookie() = 0; //global cookie
 
 //    virtual QString rootPath() const = 0;

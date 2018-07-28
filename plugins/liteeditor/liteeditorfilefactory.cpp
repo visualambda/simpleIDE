@@ -20,20 +20,20 @@
 **************************************************************************/
 // Module: liteeditorfilefactory.cpp
 // Creator: visualfc <visualfc@gmail.com>
-
-#include "liteeditorfilefactory.h"
-
 #include "liteeditor.h"
+#include "liteeditorfilefactory.h"
+#include "liteeditor_global.h"
+
 
 
 //#include "liteeditorwidget.h"
-//#include "litewordcompleter.h"
+#include "litewordcompleter.h"
 //#include "editorapimanager.h"
 //#include "liteeditormark.h"
 //#include "liteeditor_global.h"
 //#include "katehighlighterfactory.h"
 //#include "katetextlexer.h"
-//#include "liteeditorapi/liteeditorapi.h"
+#include "liteeditorapi.h"
 #include <QDir>
 #include <QFileInfo>
 //#include "mimetype/mimetype.h"
@@ -138,8 +138,8 @@ IEditor *LiteEditorFileFactory::open(const QString &fileName, const QString &mim
 //        delete editor;
 //        return 0;
 //    }
-//    return setupEditor(editor,mimeType);
-    return (IEditor *)editor;
+    return setupEditor(editor,mimeType);
+//    return (IEditor *)editor;
 }
 
 IEditor *LiteEditorFileFactory::create(const QString &contents, const QString &mimeType)
@@ -151,7 +151,16 @@ IEditor *LiteEditorFileFactory::create(const QString &contents, const QString &m
 //        return 0;
 //    }
 
-//    return setupEditor(editor,mimeType);
+    return setupEditor(editor,mimeType);
+    //    return (IEditor *)editor;
+}
+
+IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const QString &mimeType)
+{
+    LiteWordCompleter *wordCompleter = new LiteWordCompleter(editor);
+    editor->setCompleter(wordCompleter);
+    editor->applyOption(OPTION_LITEEDITOR);
+
     return (IEditor *)editor;
 }
 

@@ -29,7 +29,7 @@ protected:
 
 
 //todo
-class LiteEditor : ILiteEditor
+class LiteEditor : public ILiteEditor
 {
    Q_OBJECT
 public:
