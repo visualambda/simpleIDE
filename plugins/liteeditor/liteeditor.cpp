@@ -163,8 +163,8 @@ LiteEditor::~LiteEditor()
     if (m_funcTip) {
         delete m_funcTip;
     }
-    delete m_contextMenu;
-    delete m_editMenu;
+//    delete m_contextMenu;
+//    delete m_editMenu;
     delete m_extension;
     delete m_editorWidget;
     delete m_widget;

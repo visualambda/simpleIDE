@@ -132,12 +132,11 @@ IEditor *LiteEditorFileFactory::open(const QString &fileName, const QString &mim
     //m_liteApp->editorManager()->addNavigationHistory();
 
     LiteEditor *editor = new LiteEditor(m_liteApp);
-    editor->open(fileName, "minetype");
 //    editor->setEditorMark(new LiteEditorMark(m_markManager,editor));
-//    if (!editor->open(fileName,mimeType)) {
-//        delete editor;
-//        return 0;
-//    }
+    if (!editor->open(fileName,mimeType)) {
+        delete editor;
+        return 0;
+    }
     return setupEditor(editor,mimeType);
 //    return (IEditor *)editor;
 }

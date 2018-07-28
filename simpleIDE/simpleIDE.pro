@@ -43,7 +43,8 @@ SOURCES += \
     editormanager.cpp \
     pluginmanager.cpp \
     filemanager.cpp \
-    folderView/multifolderwindow.cpp
+    folderView/multifolderwindow.cpp \
+    mimetypemanager.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -62,7 +63,8 @@ HEADERS += \
     pluginmanager.h \
     filemanager.h \
     folderView/multifolderwindow.h \
-    liteapp_global.h
+    liteapp_global.h \
+    mimetypemanager.h
 
 FORMS += \
         mainwindow.ui
@@ -82,11 +84,11 @@ LIBS *= -l$$qtLibraryTarget(AdvancedDockingSystem)
 INCLUDEPATH += ../dockerLib
 INCLUDEPATH += $${PWD}/../api/LiteApi
 INCLUDEPATH += $${PWD}/../libUtility/Extension
-
+INCLUDEPATH += $${PWD}/../libUtility/mimetype
 # add api lib,
 LIBS *= -l$$qtLibraryTarget(api)
 LIBS *= -l$$qtLibraryTarget(extension)
-
+LIBS *= -l$$qtLibraryTarget(mimetype)
 
 DEPENDPATH += ../dockerLib
 

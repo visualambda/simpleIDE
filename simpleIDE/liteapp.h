@@ -8,6 +8,7 @@
 #include "pluginmanager.h"
 
 #include "extension.h"
+#include "mimetypemanager.h"
 
 class LiteApp : public IApplication
 {
@@ -40,6 +41,13 @@ public:
     virtual IEditorManager  *editorManager();
 
     virtual IFileManager    *fileManager();
+
+    virtual IMimeTypeManager *mimeTypeManager();
+
+
+
+
+
 
     virtual QSettings *settings();
 
@@ -78,7 +86,7 @@ protected:
 //    ProjectManager *m_projectManager;
 //    EditorManager   *m_editorManager;
 //    FileManager    *m_fileManager;
-//    MimeTypeManager *m_mimeTypeManager;
+    MimeTypeManager *m_mimeTypeManager;
 //    OptionManager   *m_optionManager;
 //    TextOutput    *m_logOutput;
 //    QAction       *m_logAct;

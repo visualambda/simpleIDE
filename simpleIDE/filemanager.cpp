@@ -1,5 +1,5 @@
 #include "filemanager.h"
-
+#include <QDir>
 FileManager::FileManager()
 {
 
@@ -17,14 +17,14 @@ FileManager::~FileManager()
 
 }
 
-IEditor *FileManager::openEditor(const QString &fileName, bool bActive, bool ignoreNavigationHistory)
+IEditor *FileManager::openEditor(const QString &_fileName, bool bActive, bool ignoreNavigationHistory)
 {
-//    QString fileName = QDir::fromNativeSeparators(QDir::cleanPath(_fileName));
+    QString fileName = QDir::fromNativeSeparators(QDir::cleanPath(_fileName));
 
-//    QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);
+    QString mimeType = m_liteApp->mimeTypeManager()->findMimeTypeByFile(fileName);
 
-//    IEditor *editor = m_liteApp->editorManager()->openEditor(fileName,mimeType);
-    IEditor *editor = m_liteApp->editorManager()->openEditor(fileName,"mimeType");
+    IEditor *editor = m_liteApp->editorManager()->openEditor(fileName,mimeType);
+//    IEditor *editor = m_liteApp->editorManager()->openEditor(fileName,"mimeType");
 
     if (editor && bActive) {
         m_liteApp->editorManager()->setCurrentEditor(editor,ignoreNavigationHistory);

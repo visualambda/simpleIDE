@@ -56,6 +56,42 @@ public:
     virtual QStringList allPatterns() const = 0;
 };
 
+class IMimeTypeManager : public IManager
+{
+    Q_OBJECT
+public:
+    IMimeTypeManager(QObject *parent = 0) : IManager(parent) {}
+    virtual bool addMimeType(IMimeType *mimeType) = 0;
+    virtual void removeMimeType(IMimeType *mimeType) = 0;
+    virtual QList<IMimeType*> mimeTypeList() const= 0;
+    virtual IMimeType *findMimeType(const QString &type) const = 0;
+    virtual QString findPackageByMimeType(const QString &type) const = 0;
+    virtual QString findMimeTypeByFile(const QString &fileName) const = 0;
+    virtual QString findMimeTypeBySuffix(const QString &suffix) const = 0;
+    virtual QString findMimeTypeByScheme(const QString &scheme) const = 0;
+    virtual QStringList findAllFilesByMimeType(const QString &dir, const QString &type, int deep = 0) const = 0;
+};
+
+
+inline QString mimeHead(const QString &mimeType)
+{
+    int find = mimeType.indexOf('/');
+    if (find == -1) {
+        return mimeType;
+    }
+    return mimeType.left(find);
+}
+
+inline bool mimeIsText(const QString &mimeType)
+{
+    return mimeHead(mimeType) == "text";
+}
+
+inline bool mimeIsFolder(const QString &mimeType)
+{
+    return mimeHead(mimeType) == "folder";
+}
+
 class IEditor;
 class IFileManager : public IManager
 {
@@ -348,7 +384,7 @@ public:
     virtual void addEditorWidget(QWidget * w) = 0;
     virtual IFileManager    *fileManager() = 0;
 //    virtual IActionManager  *actionManager() = 0;
-//    virtual IMimeTypeManager *mimeTypeManager() = 0;
+    virtual IMimeTypeManager *mimeTypeManager() = 0;
 //    virtual IOptionManager  *optionManager() = 0;
 //    virtual IToolWindowManager *toolWindowManager() = 0;
 //    virtual IHtmlWidgetManager *htmlWidgetManager() = 0;
@@ -488,6 +524,7 @@ public:
         return new T;
     }
 };
+
 
 Q_DECLARE_INTERFACE(IPluginFactory,"LiteApi.IPluginFactory.X33")
 

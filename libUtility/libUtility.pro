@@ -8,4 +8,5 @@ SUBDIRS += \
     qtc_texteditor \
     FileUtil \
     ColorStyle \
-    qtc_editutil
+    qtc_editutil \
+    mimetype

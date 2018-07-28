@@ -81,3 +81,4 @@ LIBS *= -l$$qtLibraryTarget(api)
 LIBS *= -l$$qtLibraryTarget(libucd)
 LIBS *= -l$$qtLibraryTarget(extension)
 LIBS *= -l$$qtLibraryTarget(liteeditorapi)
+

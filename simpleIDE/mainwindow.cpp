@@ -62,6 +62,7 @@ MainWindow::MainWindow(IApplication *app, QWidget *parent) :
 
     MultiFolderWindow *mfw = new MultiFolderWindow(app);
     mfw->addFolderList("c:/test");
+    mfw->addFolderList("/applications");
 
     ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
     ProjectExplorerDocker->setWidget(mfw->widget());

@@ -202,7 +202,7 @@ LiteApp::LiteApp()
 //    m_projectManager = new ProjectManager;
     m_fileManager = new FileManager;
     m_editorManager = new EditorManager;
-//    m_mimeTypeManager = new MimeTypeManager;
+    m_mimeTypeManager = new MimeTypeManager;
 //    m_optionManager = new OptionManager;
 //    m_recentManager = new RecentManager;
 
@@ -212,7 +212,7 @@ LiteApp::LiteApp()
 //    m_mainwindow->createToolWindowMenu();
 
 //    m_toolWindowManager->initWithApp(this);
-//    m_mimeTypeManager->initWithApp(this);
+    m_mimeTypeManager->initWithApp(this);
 //    m_recentManager->initWithApp(this);
 //    m_projectManager->initWithApp(this);
     m_fileManager->initWithApp(this);
@@ -372,7 +372,7 @@ void LiteApp::load()
     loadPlugins();
     initPlugins();
 
-    m_fileManager->openEditor("c:/test.txt",true);
+    m_fileManager->openEditor("/Users/zhufei/csource.h",true);
 
 
     m_mainwindow->show();
@@ -410,6 +410,11 @@ IEditorManager *LiteApp::editorManager()
 IFileManager *LiteApp::fileManager()
 {
     return m_fileManager;
+}
+
+IMimeTypeManager *LiteApp::mimeTypeManager()
+{
+    return m_mimeTypeManager;
 }
 
 QSettings *LiteApp::settings()
