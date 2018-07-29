@@ -22,6 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 
 #include "multifolderwindow.h"
+#include "folderModel/filesystemmodelex.h"
 //#include "liteapp_global.h"
 #include <QMenu>
 #include <QAction>
@@ -181,6 +182,15 @@ void MultiFolderWindow::setChildRole(const QString &rootPath, const QString &chi
 
 
         m_folderListView->viewport()->update();
+}
+
+void MultiFolderWindow::setChildRole(const QModelIndex &index, int role, const QVariant &value)
+{
+    SourceModelIndex si = m_folderListView->proxyModel()->mapToSourceEx(index);
+    if (!si.isValid()) {
+        return;
+    }
+    ((MultiFolderFileSystemModelEx*)si.model)->setChildRole(role,si.index,value);
 }
 
 void MultiFolderWindow::resetChildRold(const QString &rootPath)

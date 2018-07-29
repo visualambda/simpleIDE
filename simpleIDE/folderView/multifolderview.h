@@ -29,6 +29,8 @@ public:
     void expandFolder(const QString &path, bool expand);
     QList<QModelIndex> indexForPath(const QString &path) const;
     bool isShowDetails() const;
+public:
+    AbstractMultiProxyModel *proxyModel() const;
 public slots:
     void setShowDetails(bool b);
 public slots:

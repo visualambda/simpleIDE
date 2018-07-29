@@ -389,9 +389,10 @@ void LiteApp::doubleClickedFolderView(const QModelIndex &index)
 
         //_mfw->setChildRole(_mfw->m_folderListView->fileRootPath(index), info.absoluteFilePath(),Qt::DisplayRole, info.fileName() + "    status");
         //_mfw->setChildRole(_mfw->m_folderListView->fileRootPath(index), info.absoluteFilePath(), Qt::ForegroundRole, QVariant(QColor(Qt::blue)));
-        _mfw->m_folderListView->setChildRole(index,Qt::DisplayRole,info.fileName()+"    status");
-        _mfw->m_folderListView->setChildRole(index,Qt::ForegroundRole,QColor(Qt::blue));
-
+        //_mfw->m_folderListView->setChildRole(index,Qt::DisplayRole,info.fileName()+"    status");
+        //_mfw->m_folderListView->setChildRole(index,Qt::ForegroundRole,QColor(Qt::blue));
+        _mfw->setChildRole(index,Qt::DisplayRole,info.fileName()+"    status");
+        _mfw->setChildRole(index,Qt::ForegroundRole,QColor(Qt::blue));
 //        QTimer* captureLoopTimer = new QTimer(this);
 //        captureLoopTimer->setInterval(1000);
 //        QObject::connect(captureLoopTimer, &QTimer::timeout, [= ]()

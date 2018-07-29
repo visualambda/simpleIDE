@@ -161,6 +161,11 @@ bool MultiFolderView::isShowDetails() const
     return m_model->isShowDetails();
 }
 
+AbstractMultiProxyModel *MultiFolderView::proxyModel() const
+{
+    return m_model;
+}
+
 void MultiFolderView::customContextMenuRequested(const QPoint &pos)
 {
     m_contextMenu->clear();
