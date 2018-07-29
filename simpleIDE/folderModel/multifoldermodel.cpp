@@ -246,6 +246,15 @@ void MultiFolderModel::setChildRole(const QString &rootPath, const QString child
     }
 }
 
+void MultiFolderModel::setChildRole(const QModelIndex &index, int role, const QVariant &value)
+{
+    SourceModelIndex si = this->mapToSourceEx(index);
+    if (!si.isValid()) {
+        return;
+    }
+    ((MultiFolderFileSystemModelEx *)si.model)->setChildRole(role,si.index,value);
+}
+
 void MultiFolderModel::resetChildRold(const QString &rootPath, int role)
 {
     foreach (QAbstractItemModel *model, this->sourceModelList()) {

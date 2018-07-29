@@ -22,6 +22,7 @@ public:
     QStringList rootPathList() const;
     void setRootRole(const QString &path, int role, const QVariant &value);
     void setChildRole(const QString &rootPath, const QString &childPath, int role, const QVariant &value);
+    void setChildRole(const QModelIndex &index, int role, const QVariant &value);
     void resetChildRole(const QString &rootPath, int role);
     void resetRootRole(const QString &path, int role);
     void clear();
