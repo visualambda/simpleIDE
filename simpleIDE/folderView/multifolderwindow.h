@@ -22,13 +22,18 @@ public:
     virtual void setShowDetails(bool b);
     virtual void setSyncEditor(bool b);
     void updateFolderRole(const QStringList &folders);
+    void updateFolderRole(const QStringList &folders, const QString &status);
+    void setChildRole(const QString &rootPath, const QString &childPath, const QString &status);
+    void resetChildRold(const QString &rootPath);
 public slots:
     void doubleClickedFolderView(const QModelIndex &index);
     void enterKeyPressedFolderView(const QModelIndex &index);
     void currentEditorChanged(IEditor *editor);
+public:
+    MultiFolderView *m_folderListView;
 protected:
     IApplication *m_liteApp;
-    MultiFolderView *m_folderListView;
+
     bool m_bSyncEditor;
 };
 

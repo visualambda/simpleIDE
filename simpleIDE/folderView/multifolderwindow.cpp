@@ -135,7 +135,7 @@ void MultiFolderWindow::doubleClickedFolderView(const QModelIndex &index)
     if (info.isFile()) {
        m_liteApp->fileManager()->openEditor(info.filePath());
     }
-    //qDebug() << m_folderListView->fileRootPath(index);
+    qDebug() << m_folderListView->fileRootPath(index);
 }
 
 void MultiFolderWindow::enterKeyPressedFolderView(const QModelIndex &index)
@@ -165,6 +165,28 @@ void MultiFolderWindow::updateFolderRole(const QStringList &folders)
         //m_folderListView->resetRootRole(folder,Qt::TextColorRole);
     }
 }
+
+void MultiFolderWindow::updateFolderRole(const QStringList &folders, const QString &status)
+{
+    foreach (QString folder, folders) {
+        QString text = QFileInfo(folder).fileName()+ status;
+        m_folderListView->setRootRole(folder,Qt::DisplayRole,text );
+        m_folderListView->viewport()->update();
+    }
+}
+
+void MultiFolderWindow::setChildRole(const QString &rootPath, const QString &childPath, const QString &status)
+{
+        m_folderListView->setChildRole(rootPath, childPath,Qt::DisplayRole, status );
+        m_folderListView->viewport()->update();
+}
+
+void MultiFolderWindow::resetChildRold(const QString &rootPath)
+{
+    m_folderListView->resetChildRole( rootPath,Qt::DisplayRole);
+    m_folderListView->viewport()->update();
+}
+
 
 void MultiFolderWindow::setFolderList(const QStringList &folders)
 {

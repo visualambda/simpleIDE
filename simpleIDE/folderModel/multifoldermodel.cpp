@@ -135,6 +135,20 @@ public:
     {
         roleMap[role] = value;
     }
+
+    void setChildRole(int role, const QModelIndex &index, const QVariant &value)
+    {
+
+        QMap<QModelIndex, QVariant> &cm = childRoleMap[role] ;
+        cm.insert(index, value);
+    }
+
+    void resetChildRold(int role)
+    {
+         QMap<QModelIndex, QVariant> &cm = childRoleMap[role] ;
+         cm.clear();
+    }
+
     void resetRootRole(int role)
     {
         roleMap.remove(role);
@@ -148,6 +162,12 @@ public:
                 return it.value();
             }
         }
+
+       QMap<QModelIndex, QVariant> cm = childRoleMap[role] ;
+       QMap<QModelIndex,QVariant>::const_iterator it = cm.find(index);
+       if (it != cm.end()) {
+           return it.value();
+       }
         if(index.column() > 0)
         {
             // 显示名称，可以为空。
@@ -175,6 +195,8 @@ public:
 
 protected:
     QMap<int,QVariant> roleMap;
+
+    QMap<int, QMap<QModelIndex, QVariant>> childRoleMap;
     MultiFolderModel  *model;
     QModelIndex        rootIndex;
 };
@@ -201,11 +223,34 @@ MultiFolderModel::~MultiFolderModel()
 
 }
 
-void MultiFolderModel::setRootRole(const QString &path, int role, const QVariant &value)
+void MultiFolderModel::setChildRole(const QString &rootPath, const QString childPath, int role, const QVariant &value)
 {
     foreach (QAbstractItemModel *model, this->sourceModelList()) {
         MultiFolderFileSystemModelEx *m = (MultiFolderFileSystemModelEx*)model;
-        if (m->rootPath() == path) {
+        if (m->rootPath() == rootPath) {
+              QModelIndex childIndex = m->index(childPath);
+              if(childIndex.isValid())
+                 m->setChildRole(role, childIndex, value);
+//            m->setRootRole(role,value);
+        }
+    }
+}
+
+void MultiFolderModel::resetChildRold(const QString &rootPath, int role)
+{
+    foreach (QAbstractItemModel *model, this->sourceModelList()) {
+        MultiFolderFileSystemModelEx *m = (MultiFolderFileSystemModelEx*)model;
+        if (m->rootPath() == rootPath) {
+            m->resetChildRold(role);
+        }
+    }
+}
+
+void MultiFolderModel::setRootRole(const QString &rootPath, int role, const QVariant &value)
+{
+    foreach (QAbstractItemModel *model, this->sourceModelList()) {
+        MultiFolderFileSystemModelEx *m = (MultiFolderFileSystemModelEx*)model;
+        if (m->rootPath() == rootPath) {
             m->setRootRole(role,value);
         }
     }

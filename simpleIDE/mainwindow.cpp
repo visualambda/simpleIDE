@@ -2,9 +2,9 @@
 #include "ui_mainwindow.h"
 
 
-#include <folderView/multifolderwindow.h>
+
 #include <QVBoxLayout>
-#include <QMessageBox>
+
 #include <QRect>
 
 #include "DockAreaWidget.h"
@@ -14,23 +14,24 @@
 #include <QToolBar>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QTimer>
 
 
 void MainWindow::open()
 {
 
-    m_liteApp->fileManager()->openEditor("c:/test.txt",true);
+//    m_liteApp->fileManager()->openEditor("c:/test.txt",true);
 //    QMessageBox::information(this, tr("Information"), tr("Open"));
 }
 QMenu * file_menu;
 
-MainWindow::MainWindow(IApplication *app, QWidget *parent) :
+MainWindow::MainWindow(/*IApplication *app,*/ QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    m_liteApp=app;
+//    m_liteApp=app;
 
     openAction = new QAction(QIcon(":/icon/icon/status-green.png"), tr("&Open..."), this);
     openAction->setShortcuts(QKeySequence::Open);
@@ -42,13 +43,7 @@ MainWindow::MainWindow(IApplication *app, QWidget *parent) :
     editMenu->addAction(openAction);
     ui->menuBar->addMenu(editMenu);
 
-
-
-
-
     this->ui->mainToolBar->addAction(openAction);
-
-
 
 
 
@@ -56,18 +51,12 @@ MainWindow::MainWindow(IApplication *app, QWidget *parent) :
 
     QVBoxLayout *vl = new QVBoxLayout(this);
     vl->addWidget(_dockManager);
+
     this->centralWidget()->setLayout(vl);
 
 
 
-    MultiFolderWindow *mfw = new MultiFolderWindow(app);
-    mfw->addFolderList("c:/test");
-    mfw->addFolderList("/applications");
 
-    ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
-    ProjectExplorerDocker->setWidget(mfw->widget());
-    ProjectExplorerDocker->dockType = ads::CDockWidget::dockType::dockProjectExplorer;
-    ads::CDockAreaWidget*  ProjectExplorerArea = _dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
 
 //    QVBoxLayout *layout = new QVBoxLayout;
 //    layout->addWidget(mfv);

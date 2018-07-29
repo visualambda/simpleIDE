@@ -16,6 +16,8 @@ public:
     virtual ~MultiFolderModel();
 public:
     void setRootRole(const QString &path, int role, const QVariant &value);
+    void setChildRole(const QString &rootPath,  const QString childPath, int role, const QVariant &value);
+    void resetChildRold(const QString &rootPath, int role);
     void resetRootRole(const QString &path, int role);
 
     QModelIndex addRootPath(const QString &path);

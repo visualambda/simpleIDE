@@ -86,6 +86,17 @@ void MultiFolderView::setRootRole(const QString &path, int role, const QVariant 
     m_model->setRootRole(path,role,value);
 }
 
+void MultiFolderView::setChildRole(const QString &rootPath, const QString &childPath, int role, const QVariant &value)
+{
+     m_model->setChildRole(rootPath, childPath, role,value);
+
+}
+
+void MultiFolderView::resetChildRole(const QString &rootPath, int role)
+{
+    m_model->resetChildRold(rootPath, role);
+}
+
 void MultiFolderView::resetRootRole(const QString &path, int role)
 {
     m_model->resetRootRole(path,role);

@@ -1,5 +1,5 @@
 
-#include "liteapp.h"
+
 #include <QApplication>
 #include <QLayout>
 #include <QProcessEnvironment>
@@ -19,13 +19,16 @@
 #include <QComboBox>
 #include <QProcessEnvironment>
 #include <QSettings>
+#include <QMessageBox>
 
 #include "DockManager.h"
 #include "DockWidget.h"
 #include "DockAreaWidget.h"
 
-#include "liteapp_global.h"
 
+
+#include "liteapp_global.h"
+#include "liteapp.h"
 
 static QMap<QString,QVariant> s_cookie;
 static QList<IApplication*> s_appList;
@@ -184,7 +187,7 @@ LiteApp::LiteApp()
 //    m_idleTimer = new AppIdleTimer;
 //    m_extension->addObject("LiteApi.IAppIdleTimer",m_idleTimer);
 
-    m_mainwindow = new MainWindow(this);
+    m_mainwindow = new MainWindow();
 
 //    QString style = this->settings()->value(LITEAPP_STYLE,"sidebar").toString();
 //    if (style == "splitter") {
@@ -370,12 +373,63 @@ QString LiteApp::applicationPath() const
     return m_applicationPath;
 }
 
+void LiteApp::doubleClickedFolderView(const QModelIndex &index)
+{
+    if (!index.isValid()) {
+        return;
+    }
+    QFileInfo info = _mfw->m_folderListView->fileInfo(index);
+    if (info.isFile()) {
+//       m_liteApp->fileManager()->openEditor(info.filePath());
+        _mfw->updateFolderRole(QStringList()<<_mfw->m_folderListView->fileRootPath(index), " " +
+                              info.fileName());
+
+        _mfw->resetChildRold(_mfw->m_folderListView->fileRootPath(index));
+        _mfw->setChildRole(_mfw->m_folderListView->fileRootPath(index), info.absoluteFilePath(), info.fileName() + "    status");
+
+
+//        QTimer* captureLoopTimer = new QTimer(this);
+//        captureLoopTimer->setInterval(1000);
+//        QObject::connect(captureLoopTimer, &QTimer::timeout, [= ]()
+//        {
+//            _mfw->resetChildRold(_mfw->m_folderListView->fileRootPath(index));
+//        });
+//        captureLoopTimer->start();
+    }
+}
+
+
+
 void LiteApp::load()
 {
     loadPlugins();
     initPlugins();
 
     m_fileManager->openEditor("/Users/zhufei/csource.h",true);
+
+    _mfw = new MultiFolderWindow(this);
+    _mfw->addFolderList("c:/test");
+    _mfw->addFolderList("/applications");
+
+    connect(_mfw->m_folderListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
+
+
+    ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
+    ProjectExplorerDocker->setWidget(_mfw->widget());
+    ProjectExplorerDocker->dockType = ads::CDockWidget::dockType::dockProjectExplorer;
+    ads::CDockAreaWidget*  ProjectExplorerArea = m_mainwindow->_dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
+
+
+//    QTimer* captureLoopTimer = new QTimer(this);
+//    captureLoopTimer->setInterval(1000);
+//    static int index = 0;
+//      QObject::connect(captureLoopTimer, &QTimer::timeout, [this]()
+//      {
+//            index++;
+//            this->_mfw->updateFolderRole(QStringList()<<"/applications", " " + QString::number(index));
+//      });
+//      captureLoopTimer->start();
+
 
 
     m_mainwindow->show();

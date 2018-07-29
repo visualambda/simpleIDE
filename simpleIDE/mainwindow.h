@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(IApplication *app, QWidget *parent = 0);
+    explicit MainWindow(/*IApplication *app, */QWidget *parent = 0);
     ~MainWindow();
 
     void open();
@@ -30,8 +30,8 @@ private:
     Ui::MainWindow *ui;
     QAction *openAction;
 
-protected:
-    IApplication *m_liteApp;
+//protected:
+//    IApplication *m_liteApp;
 
 
 

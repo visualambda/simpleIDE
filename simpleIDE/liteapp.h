@@ -10,8 +10,11 @@
 #include "extension.h"
 #include "mimetypemanager.h"
 
-class LiteApp : public IApplication
+#include <folderView/multifolderwindow.h>
+
+class LiteApp :  public IApplication
 {
+        Q_OBJECT
 public:
     static IApplication* NewApplication();
 
@@ -58,7 +61,8 @@ public:
     virtual QString applicationPath() const;
 
 
-public:
+public slots:
+    void doubleClickedFolderView(const QModelIndex &index);
 
 
 public:
@@ -67,6 +71,8 @@ public:
     EditorManager   *m_editorManager;
     FileManager     *m_fileManager;
     MainWindow      *m_mainwindow;
+
+    MultiFolderWindow *_mfw;
 
     QString         m_applicationPath;
 
