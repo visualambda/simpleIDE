@@ -95,6 +95,88 @@ QVariant FileSystemModelEx::data(const QModelIndex &index, int role) const
 }
 
 
+MultiFolderFileSystemModelEx::MultiFolderFileSystemModelEx(QObject *parent)
+    : FileSystemModelEx(parent)
+{
+
+}
+
+void MultiFolderFileSystemModelEx::setRootIndex(const QModelIndex &index)
+{
+    rootIndex = index;
+}
+
+void MultiFolderFileSystemModelEx::setRootRole(int role, const QVariant &value)
+{
+    roleMap[role] = value;
+}
+
+void MultiFolderFileSystemModelEx::setChildRole(int role, const QModelIndex &index, const QVariant &value)
+{
+
+    QMap<QModelIndex, QVariant> &cm = childRoleMap[role] ;
+    cm.insert(index, value);
+}
+
+void MultiFolderFileSystemModelEx::resetChildRold(int role)
+{
+    QMap<QModelIndex, QVariant> &cm = childRoleMap[role] ;
+    cm.clear();
+}
+
+void MultiFolderFileSystemModelEx::resetRootRole(int role)
+{
+    roleMap.remove(role);
+}
+
+QVariant MultiFolderFileSystemModelEx::data(const QModelIndex &index, int role) const
+{
+    if (rootIndex == index) {
+        QMap<int,QVariant>::const_iterator it = roleMap.find(role);
+        if (it != roleMap.end()) {
+            return it.value();
+        }
+    }
+
+    QMap<QModelIndex, QVariant> cm = childRoleMap[role] ;
+    QMap<QModelIndex,QVariant>::const_iterator it = cm.find(index);
+    if (it != cm.end()) {
+        return it.value();
+    }
+    if(index.column() > 0)
+    {
+        // 显示名称，可以为空。
+        if (role == Qt::DisplayRole) {
+            return ".";
+        }
+        return QVariant();
+    }
+
+
+    //        switch( role )
+    //         {
+    //         case Qt::ForegroundRole: return QVariant(QColor(Qt::blue));
+    ////         case Qt::BackgroundRole: return QVariant(QColor(Qt::red)); // or any brush, etc
+    //         default:
+    //           break;
+    //         }
+
+    return FileSystemModelEx::data(index,role);
+}
+
+QVariant MultiFolderFileSystemModelEx::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (section > 0) {
+        return ".";
+    }
+    return FileSystemModelEx::headerData(section,orientation,role);
+}
+
+int MultiFolderFileSystemModelEx::columnCount(const QModelIndex &) const
+{
+    return 6;
+}
+
 
 
 

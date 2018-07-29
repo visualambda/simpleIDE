@@ -1,8 +1,6 @@
 #ifndef MULTIFOLDERMODEL_H
 #define MULTIFOLDERMODEL_H
 
-
-
 #include "multiindexmodel.h"
 #include <QDir>
 #include <QMap>

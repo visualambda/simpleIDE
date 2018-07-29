@@ -119,97 +119,6 @@ bool QDirSortItemComparator::sort(const QDirSortItem &n1, const QDirSortItem &n2
     return r < 0;
 }
 
-class MultiFolderFileSystemModelEx : public FileSystemModelEx
-{
-public:
-    explicit MultiFolderFileSystemModelEx(MultiFolderModel *parent)
-        : FileSystemModelEx(parent),model(parent)
-    {
-
-    }
-    void setRootIndex(const QModelIndex &index)
-    {
-        rootIndex = index;
-    }
-    void setRootRole(int role, const QVariant &value)
-    {
-        roleMap[role] = value;
-    }
-
-    void setChildRole(int role, const QModelIndex &index, const QVariant &value)
-    {
-
-        QMap<QModelIndex, QVariant> &cm = childRoleMap[role] ;
-        cm.insert(index, value);
-    }
-
-    void resetChildRold(int role)
-    {
-         QMap<QModelIndex, QVariant> &cm = childRoleMap[role] ;
-         cm.clear();
-    }
-
-    void resetRootRole(int role)
-    {
-        roleMap.remove(role);
-    }
-
-    QVariant data(const QModelIndex &index, int role) const
-    {
-        if (rootIndex == index) {
-            QMap<int,QVariant>::const_iterator it = roleMap.find(role);
-            if (it != roleMap.end()) {
-                return it.value();
-            }
-        }
-
-       QMap<QModelIndex, QVariant> cm = childRoleMap[role] ;
-       QMap<QModelIndex,QVariant>::const_iterator it = cm.find(index);
-       if (it != cm.end()) {
-           return it.value();
-       }
-        if(index.column() > 0)
-        {
-            // 显示名称，可以为空。
-            if (role == Qt::DisplayRole) {
-                return ".";
-            }
-            return QVariant();
-        }
-
-
-//        switch( role )
-//         {
-//         case Qt::ForegroundRole: return QVariant(QColor(Qt::blue));
-////         case Qt::BackgroundRole: return QVariant(QColor(Qt::red)); // or any brush, etc
-//         default:
-//           break;
-//         }
-
-        return FileSystemModelEx::data(index,role);
-    }
-
-    //控制列名的显示
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const
-    {
-        if (section > 0) {
-            return ".";
-        }
-        return FileSystemModelEx::headerData(section,orientation,role);
-    }
-    //控制几列显示
-    int columnCount(const QModelIndex &/*parent*/) const
-    {
-        return 6;
-    }
-
-protected:
-    QMap<int,QVariant> roleMap;
-
-    QMap<int, QMap<QModelIndex, QVariant>> childRoleMap;
-    MultiFolderModel  *model;
-    QModelIndex        rootIndex;
-};
 
 
 MultiFolderModel::MultiFolderModel(QObject *parent)
@@ -632,8 +541,7 @@ bool MultiFolderModel::isShowDetails() const
     return m_isShowDetails;
 }
 
-bool MultiFolderModel::lessThan(const QAbstractItemModel *sourceModel, const QModelIndex &left, const QModelIndex &right) const
-{
+bool MultiFolderModel::lessThan(const QAbstractItemModel *sourceModel, const QModelIndex &left, const QModelIndex &right) const{
     QDirSortItemComparator comp(m_sorts);
     QDirSortItem n1;
     QDirSortItem n2;
@@ -654,3 +562,4 @@ void MultiFolderModel::slotDirectoryLoaded(const QString &path)
 {
     emit directoryLoaded((QFileSystemModel*)sender(),path);
 }
+
