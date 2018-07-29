@@ -176,6 +176,16 @@ public:
             }
             return QVariant();
         }
+
+
+//        switch( role )
+//         {
+//         case Qt::ForegroundRole: return QVariant(QColor(Qt::blue));
+////         case Qt::BackgroundRole: return QVariant(QColor(Qt::red)); // or any brush, etc
+//         default:
+//           break;
+//         }
+
         return FileSystemModelEx::data(index,role);
     }
 

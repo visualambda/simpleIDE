@@ -23,7 +23,7 @@ public:
     virtual void setSyncEditor(bool b);
     void updateFolderRole(const QStringList &folders);
     void updateFolderRole(const QStringList &folders, const QString &status);
-    void setChildRole(const QString &rootPath, const QString &childPath, const QString &status);
+    void setChildRole(const QString &rootPath, const QString &childPath, int role, const QVariant &status);
     void resetChildRold(const QString &rootPath);
 public slots:
     void doubleClickedFolderView(const QModelIndex &index);

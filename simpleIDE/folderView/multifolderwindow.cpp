@@ -175,15 +175,18 @@ void MultiFolderWindow::updateFolderRole(const QStringList &folders, const QStri
     }
 }
 
-void MultiFolderWindow::setChildRole(const QString &rootPath, const QString &childPath, const QString &status)
+void MultiFolderWindow::setChildRole(const QString &rootPath, const QString &childPath, int role, const QVariant &status)
 {
-        m_folderListView->setChildRole(rootPath, childPath,Qt::DisplayRole, status );
+        m_folderListView->setChildRole(rootPath, childPath, role,  status );
+
+
         m_folderListView->viewport()->update();
 }
 
 void MultiFolderWindow::resetChildRold(const QString &rootPath)
 {
     m_folderListView->resetChildRole( rootPath,Qt::DisplayRole);
+    m_folderListView->resetChildRole( rootPath,Qt::ForegroundRole);
     m_folderListView->viewport()->update();
 }
 
