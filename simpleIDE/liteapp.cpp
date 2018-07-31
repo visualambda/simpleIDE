@@ -358,7 +358,7 @@ void LiteApp::addEditorWidget(QWidget *w)
     }
     else
     {
-        ads::CDockAreaWidget* ddd = m_mainwindow->_dockManager->addDockWidget(ads::CenterDockWidgetArea, EditorDocker);
+        ads::CDockAreaWidget* ddd = m_mainwindow->_dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
 //         ddd->show();
          EditorDocker->toggleView();
 //         m_mainwindow->_dockManager->show();
