@@ -307,6 +307,7 @@ void LiteApp::addEditorWidget(QWidget *w)
     int maxZorder = -1;
     ads::CDockAreaWidget* curArea = nullptr;
 
+    int x =  m_mainwindow->_dockManager->dockContainers().count();
     foreach (ads::CDockContainerWidget* dc, m_mainwindow->_dockManager->dockContainers())
     {
 //        if(dc->zOrderIndex() == 0) // is the main window!
@@ -357,7 +358,10 @@ void LiteApp::addEditorWidget(QWidget *w)
     }
     else
     {
-        m_mainwindow->_dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
+        ads::CDockAreaWidget* ddd = m_mainwindow->_dockManager->addDockWidget(ads::CenterDockWidgetArea, EditorDocker);
+//         ddd->show();
+         EditorDocker->toggleView();
+//         m_mainwindow->_dockManager->show();
 
     }
 
