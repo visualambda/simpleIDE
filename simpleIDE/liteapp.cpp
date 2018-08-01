@@ -38,6 +38,8 @@ QString getNewXml(QString xml)
     if( dom.setContent(xml,true))
     {
         QDomElement root = dom.documentElement();
+        if(root.isNull())
+            return "";
 
 //        QMessageBox::question(0, root.tagName(), root.tagName() );
         if (root.tagName() == "QtAdvancedDockingSystem")
