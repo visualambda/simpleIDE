@@ -342,6 +342,8 @@ void LiteApp::addEditorWidget(QWidget *w)
     EditorDocker->dockType = ads::CDockWidget::dockType::dockEditor;
     EditorDocker->setWidget(w);
 
+    m_mainwindow->menuView()->addAction(EditorDocker->toggleViewAction());
+
 
     if(maxZorder != -1 && curArea != nullptr )
     {
@@ -360,10 +362,11 @@ void LiteApp::addEditorWidget(QWidget *w)
     {
         ads::CDockAreaWidget* ddd = m_mainwindow->_dockManager->addDockWidget(ads::RightDockWidgetArea, EditorDocker);
 //         ddd->show();
-         EditorDocker->toggleView();
+//         EditorDocker->toggleView();
 //         m_mainwindow->_dockManager->show();
 
     }
+    EditorDocker->toggleView();
 
 }
 

@@ -26,6 +26,9 @@ public:
 
     ads::CDockManager* _dockManager = nullptr;
     ads::CDockAreaWidget*  _editorArea;
+
+    QMenu* menuView();
+
 private:
     Ui::MainWindow *ui;
     QAction *openAction;

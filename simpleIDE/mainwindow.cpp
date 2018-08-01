@@ -11,17 +11,28 @@
 #include <QCalendarWidget>
 #include <QPlainTextEdit>
 
-#include <QToolBar>
+
 #include <QPushButton>
-#include <QVBoxLayout>
+#include <QStyle>
 #include <QTimer>
+#include <QToolBar>
+#include <QVBoxLayout>
+
 
 
 void MainWindow::open()
 {
+    if(openAction)
+     delete openAction;
 
 //    m_liteApp->fileManager()->openEditor("c:/test.txt",true);
-//    QMessageBox::information(this, tr("Information"), tr("Open"));
+    //    QMessageBox::information(this, tr("Information"), tr("Open"));
+}
+
+QMenu* MainWindow::menuView()
+{
+    return this->ui->menuView;
+
 }
 QMenu * file_menu;
 
@@ -31,19 +42,25 @@ MainWindow::MainWindow(/*IApplication *app,*/ QWidget *parent) :
 {
     ui->setupUi(this);
 
+
+    ui->mainToolBar->addAction(ui->actionSaveState);
+    ui->actionSaveState->setIcon(this->style()->standardIcon(QStyle::SP_DialogSaveButton));
+    ui->mainToolBar->addAction(ui->actionRestoreState);
+    ui->actionRestoreState->setIcon(this->style()->standardIcon(QStyle::SP_DialogOpenButton));
+
 //    m_liteApp=app;
 
-    openAction = new QAction(QIcon(":/icon/icon/status-green.png"), tr("&Open..."), this);
-    openAction->setShortcuts(QKeySequence::Open);
-    openAction->setStatusTip(tr("Open an existing file"));
-    connect(openAction, &QAction::triggered, this, &MainWindow::open);
+//    openAction = new QAction(QIcon(":/icon/icon/status-green.png"), tr("&Open..."), this);
+//    openAction->setShortcuts(QKeySequence::Open);
+//    openAction->setStatusTip(tr("Open an existing file"));
+//    connect(openAction, &QAction::triggered, this, &MainWindow::open);
 
 
-    QMenu *editMenu = ui->menuBar->addMenu(tr("编辑(&E)"));
-    editMenu->addAction(openAction);
-    ui->menuBar->addMenu(editMenu);
+//    QMenu *editMenu = ui->menuBar->addMenu(tr("编辑(&E)"));
+//    editMenu->addAction(openAction);
+//    ui->menuBar->addMenu(editMenu);
 
-    this->ui->mainToolBar->addAction(openAction);
+//    this->ui->mainToolBar->addAction(openAction);
 
 
 
