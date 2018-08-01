@@ -11,7 +11,7 @@
 #include <QCalendarWidget>
 #include <QPlainTextEdit>
 
-
+#include <QDebug>
 #include <QPushButton>
 #include <QStyle>
 #include <QTimer>
@@ -33,6 +33,27 @@ QMenu* MainWindow::menuView()
 {
     return this->ui->menuView;
 
+}
+
+void MainWindow::on_actionSaveState_triggered(bool)
+{
+    QSettings Settings("Settings.ini", QSettings::IniFormat);
+//    Settings.setValue("mainWindow/Geometry", this->saveGeometry());
+//    Settings.setValue("mainWindow/State", this->saveState());
+    Settings.setValue("mainWindow/DockingState", this->_dockManager->saveState());
+
+    qDebug()<<"on_actionSaveState_triggered";
+}
+
+void MainWindow::on_actionRestoreState_triggered(bool)
+{
+    QSettings Settings("Settings.ini", QSettings::IniFormat);
+//    this->restoreGeometry(Settings.value("mainWindow/Geometry").toByteArray());
+//    this->restoreState(Settings.value("mainWindow/State").toByteArray());
+    this->_dockManager->restoreState(Settings.value("mainWindow/DockingState").toByteArray());
+
+
+  qDebug()<<"on_actionRestoreState_triggered";
 }
 QMenu * file_menu;
 

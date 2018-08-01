@@ -76,6 +76,8 @@ public:
 
     QString         m_applicationPath;
 
+    bool            _hasResetLayout{false};
+
 
 protected:
     QString         m_currentSession;

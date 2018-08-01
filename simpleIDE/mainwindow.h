@@ -33,6 +33,9 @@ private:
     Ui::MainWindow *ui;
     QAction *openAction;
 
+private slots:
+    void on_actionSaveState_triggered(bool);
+    void on_actionRestoreState_triggered(bool);
 //protected:
 //    IApplication *m_liteApp;
 
