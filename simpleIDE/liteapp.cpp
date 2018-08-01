@@ -553,7 +553,7 @@ void LiteApp::load()
     loadPlugins();
     initPlugins();
 
-    m_fileManager->openEditor("/Users/zhufei/csource.h",true);
+
 
     _mfw = new MultiFolderWindow(this);
     _mfw->addFolderList("c:/test");
@@ -582,9 +582,11 @@ void LiteApp::load()
 //      captureLoopTimer->start();
 
 
-
     m_mainwindow->show();
     m_mainwindow->resize(QSize(1080, 800));
+
+    m_fileManager->openEditor("/Users/zhufei/csource.h",true);
+
 }
 
 void LiteApp::loadPlugins()
