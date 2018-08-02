@@ -36,6 +36,8 @@
 #include "edbee/edbee.h"
 //#include "edbee/texteditorwidget.h"
 
+#include "liteeditorfilefactory.h"
+
 QString getNewXml(QString xml)
 {
     QDomDocument dom;
@@ -607,8 +609,15 @@ void LiteApp::load()
 //    }
 
 
-    loadPlugins();
-    initPlugins();
+//    loadPlugins();
+//    initPlugins();
+
+
+
+    LiteEditorFileFactory *factory = new LiteEditorFileFactory(this, nullptr);
+    this->editorManager()->addFactory(factory);
+
+
 
     m_mainwindow = new MainWindow();
 

@@ -6,6 +6,7 @@
 #include "textgrammar.h"
 
 #include <QDir>
+#include <QMessageBox>
 
 #include "edbee/io/tmlanguageparser.h"
 #include "edbee/util/regexp.h"
@@ -270,6 +271,7 @@ void TextGrammar::addFileExtension(const QString& ext)
 TextGrammarManager::TextGrammarManager()
     : defaultGrammarRef_(0)
 {
+//    QMessageBox::question(0, "TextGrammarManager", "TextGrammarManager");
 
     // always make sure there's a default grammar
     defaultGrammarRef_ = new TextGrammar( "text.plain", "Plain Text" );
@@ -318,6 +320,8 @@ void TextGrammarManager::readAllGrammarFilesInPath(const QString& path )
     QStringList filters("*.tmLanguage");
     foreach( QFileInfo fileInfo, dir.entryInfoList( filters, QDir::Files, QDir::Name ) ) {
 //        qlog_info() << "- parse" << fileInfo.baseName() << ".";
+        qDebug()<<"- parse" << fileInfo.baseName() << ".";
+//        QMessageBox::question(0, "", fileInfo.filePath());
         readGrammarFile( fileInfo.absoluteFilePath());
     }
 }
@@ -348,6 +352,7 @@ void TextGrammarManager::giveGrammar(TextGrammar* grammar)
         // clearup the old one
         delete oldGrammar;
     }
+//    QMessageBox::question(0, name, QString::number((int)this));
     grammarMap_.insert(name,grammar);
 }
 
@@ -391,6 +396,7 @@ QList<TextGrammar*> TextGrammarManager::grammarsSortedByDisplayName()
 /// @return the defaultGrammar if no grammar was found
 TextGrammar* TextGrammarManager::detectGrammarWithFilename(const QString& fileName)
 {
+//     QMessageBox::question(0, "detectGrammarWithFilename", QString::number((int)this));
     foreach( TextGrammar* grammar, grammarMap_.values() ) {
         foreach( QString ext, grammar->fileExtensions() ) {
             if( fileName.endsWith( QStringLiteral(".%1").arg(ext) ) ) return grammar;

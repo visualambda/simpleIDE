@@ -44,7 +44,9 @@ SOURCES += \
     pluginmanager.cpp \
     filemanager.cpp \
     folderView/multifolderwindow.cpp \
-    mimetypemanager.cpp
+    mimetypemanager.cpp \
+    liteeditorfilefactory.cpp \
+    liteeditor.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -64,7 +66,9 @@ HEADERS += \
     filemanager.h \
     folderView/multifolderwindow.h \
     liteapp_global.h \
-    mimetypemanager.h
+    mimetypemanager.h \
+    liteeditorfilefactory.h \
+    liteeditor.h
 
 FORMS += \
         mainwindow.ui
@@ -113,10 +117,12 @@ LIBS *= -l$$qtLibraryTarget(AdvancedDockingSystem)
 INCLUDEPATH += ../dockerLib
 INCLUDEPATH += ../edbee-lib
 INCLUDEPATH += $${PWD}/../api/LiteApi
+INCLUDEPATH += $${PWD}/../api/LiteEditorApi
 INCLUDEPATH += $${PWD}/../libUtility/Extension
 INCLUDEPATH += $${PWD}/../libUtility/mimetype
 # add api lib,
 LIBS *= -l$$qtLibraryTarget(api)
+LIBS *= -l$$qtLibraryTarget(liteeditorapi)
 LIBS *= -l$$qtLibraryTarget(edbee)
 LIBS *= -l$$qtLibraryTarget(extension)
 LIBS *= -l$$qtLibraryTarget(mimetype)

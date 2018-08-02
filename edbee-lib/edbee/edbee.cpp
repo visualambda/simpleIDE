@@ -6,7 +6,7 @@
 #include "edbee.h"
 
 #include <QApplication>
-
+#include <QMessageBox>
 #include "edbee/models/textautocompleteprovider.h"
 #include "edbee/models/dynamicvariables.h"
 #include "edbee/models/textbuffer.h"
@@ -58,7 +58,11 @@ Edbee::~Edbee()
 /// The singleton instance getter
 Edbee* Edbee::instance()
 {
-    if( !theInstance ) { theInstance = new Edbee(); }
+    if( !theInstance )
+    {
+//        QMessageBox::question(0, "Edbee::instance", " Edbee::instance");
+        theInstance = new Edbee();
+    }
     return theInstance;
 }
 

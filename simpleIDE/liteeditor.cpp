@@ -7,11 +7,11 @@
 #include "edbee/io/textdocumentserializer.h"
 #include "edbee/models/textdocument.h"
 #include "edbee/models/textgrammar.h"
-
+#include "edbee/edbee.h"
 LiteEditor::LiteEditor(IApplication *app)
 {
 
-    m_editorWidget = new LiteEditorWidget(app,m_widget);
+    m_editorWidget = new edbee::TextEditorWidget();
 //    m_document = m_editorWidget->document();
 
 

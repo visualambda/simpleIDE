@@ -8,7 +8,7 @@ TEMPLATE = lib
 
 CONFIG += staticlib
 
-include(../../liteideutils.pri)
+#include(../../liteideutils.pri)
 
 HEADERS += \
     filterlineedit.h \
