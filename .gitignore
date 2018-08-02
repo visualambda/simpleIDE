@@ -3,3 +3,10 @@ simpleIDE.pro.user
 simpleIDE.pro.user.8eac282
 dockerLib/.DS_Store
 .qmake.stash
+edbee-data/.vs/edbee-data/v15/.suo
+edbee-data/.vs/edbee-data/v15/Browse.VC.db
+edbee-data/.vs/ProjectSettings.json
+edbee-data/.vs/slnx.sqlite
+edbee-data/.vs/VSWorkspaceState.json
+Makefile
+simpleIDE.sln
