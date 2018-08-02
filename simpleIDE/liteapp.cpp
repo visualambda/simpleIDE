@@ -91,8 +91,8 @@ QString getNewXml(QString xml)
                                                                   if(w1 > 0 && w2 > 0)
                                                                   {
                                                                       int total = w1+ w2;
-                                                                      int neww1 = total / 5;
-                                                                      int neww2 = total - w1;
+                                                                      int neww1 = total / 5.2;
+                                                                      int neww2 = total - neww1;
                                                                       QString newSizes = QString::number(neww1) + " " + QString::number(neww2) + " ";
 //                                                                      sizeNode.setNodeValue(newSizes);
 
