@@ -32,6 +32,10 @@
 
 #include <QDomDocument>
 
+
+#include "edbee/edbee.h"
+//#include "edbee/texteditorwidget.h"
+
 QString getNewXml(QString xml)
 {
     QDomDocument dom;
@@ -308,7 +312,7 @@ LiteApp::LiteApp()
 //    m_idleTimer = new AppIdleTimer;
 //    m_extension->addObject("LiteApi.IAppIdleTimer",m_idleTimer);
 
-    m_mainwindow = new MainWindow();
+
 
 //    QString style = this->settings()->value(LITEAPP_STYLE,"sidebar").toString();
 //    if (style == "splitter") {
@@ -548,18 +552,69 @@ void LiteApp::doubleClickedFolderView(const QModelIndex &index)
     }
 }
 
+//EdbeeConfig* Application::config() const
+//{
+//    return config_;
+//}
 
 
 void LiteApp::load()
 {
+
+
+#ifdef Q_OS_MAC
+    appDataPath_    = applicationDirPath() + "/../Resources/";
+#else
+    appDataPath_ = qApp->applicationDirPath() + "/data/";
+#endif
+
+    userDataPath_   = QStandardPaths::writableLocation( QStandardPaths::DataLocation) + "/";
+
+    // configure the edbee component to use the default paths
+    edbee::Edbee* tm = edbee::Edbee::instance();
+    tm->setKeyMapPath( QString("%1%2").arg(appDataPath_).arg("keymaps"));
+    tm->setGrammarPath(  QString("%1%2").arg(appDataPath_).arg("syntaxfiles") );
+    tm->setThemePath( QString("%1%2").arg(appDataPath_).arg("themes") );
+    tm->init();
+    tm->autoShutDownOnAppExit();
+
+
+//    QDir dir;
+//    dir.mkpath( userConfigPath() );
+
+//    // add the configuration paths to the edbeeconfig
+//    config()->addFile( QString("%1%2").arg(appConfigPath()).arg("default.json") );
+//    config()->addFile( QString("%1%2").arg(appConfigPath()).arg( QString("default.%1.json").arg(osNameString()) ), EdbeeConfig::Optional );
+//    config()->addFile( QString("%1%2").arg(userConfigPath()).arg("default.json"), EdbeeConfig::AutoCreate );
+//    config()->addFile( QString("%1%2").arg(userConfigPath()).arg( QString("default.%1.json").arg(osNameString()) ), EdbeeConfig::Optional );
+
+//    // load the configuration
+//    if( !config()->loadConfig() ) {
+
+//        /// build a nice error message
+//        QString messages;
+//        for( int i=0, cnt=config()->fileCount(); i<cnt; ++i ) {
+//            QString msg = config()->loadMessageForFile(i);
+//            if( !msg.isEmpty() ) {
+//                messages.append( tr("- %1: %2\n").arg(config()->file(i)).arg(msg) );
+//            }
+//        }
+//        // and show it
+//        if( !messages.isEmpty() ) {
+//            QString title = tr("Error loading configuration file(s)");
+//            QMessageBox::warning(0, title,QString("%1\n%2").arg(title).arg(messages) );
+//        }
+//    }
+
+
     loadPlugins();
     initPlugins();
 
-
+    m_mainwindow = new MainWindow();
 
     _mfw = new MultiFolderWindow(this);
-    _mfw->addFolderList("c:/test");
-    _mfw->addFolderList("/applications");
+    _mfw->addFolderList(appDataPath_);
+//    _mfw->addFolderList("/applications");
 
     connect(_mfw->m_folderListView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(doubleClickedFolderView(QModelIndex)));
 
@@ -588,7 +643,7 @@ void LiteApp::load()
     m_mainwindow->show();
     m_mainwindow->resize(QSize(1080, 800));
 
-    m_fileManager->openEditor("/Users/zhufei/csource.h",true);
+//    m_fileManager->openEditor("/Users/zhufei/csource.h",true);
 
 }
 

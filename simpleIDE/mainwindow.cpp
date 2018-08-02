@@ -1,3 +1,5 @@
+#include <QComboBox>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -19,6 +21,9 @@
 #include <QVBoxLayout>
 
 
+#include "edbee/models/textgrammar.h"
+#include "edbee/edbee.h"
+
 
 void MainWindow::open()
 {
@@ -33,6 +38,30 @@ QMenu* MainWindow::menuView()
 {
     return this->ui->menuView;
 
+}
+
+void MainWindow::constructUI()
+{
+    QFont font = QFont(statusBar()->font().family(), 10 );
+    statusBar()->setFont(font);
+    statusBar()->addPermanentWidget(constructGrammarCombo());
+
+}
+
+/// Constructs the grammar combobox with all loaded grammars
+QComboBox* MainWindow::constructGrammarCombo()
+{
+    grammarComboRef_ = new QComboBox();
+    grammarComboRef_->setMinimumWidth(100);
+    edbee::TextGrammarManager* gr = edbee::Edbee::instance()->grammarManager();
+
+    QList<edbee::TextGrammar*> grammarList = gr->grammarsSortedByDisplayName();
+
+    // next add all grammars
+    foreach( edbee::TextGrammar* grammar, grammarList ) {
+        grammarComboRef_->addItem(grammar->displayName(), grammar->name());
+    }
+    return grammarComboRef_;
 }
 
 void MainWindow::on_actionSaveState_triggered(bool)
@@ -94,7 +123,7 @@ MainWindow::MainWindow(/*IApplication *app,*/ QWidget *parent) :
 
 
 
-
+    constructUI();
 
 //    QVBoxLayout *layout = new QVBoxLayout;
 //    layout->addWidget(mfv);

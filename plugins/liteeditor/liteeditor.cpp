@@ -1,7 +1,10 @@
 #include "liteeditor.h"
 
+#include <QVBoxLayout>
+#include <QMessageBox>
+#include <QFile>
 
-#include "QVBoxLayout"
+#include "edbee/io/textdocumentserializer.h"
 
 LiteEditor::LiteEditor(IApplication *app)
 {
@@ -28,6 +31,15 @@ LiteEditor::~LiteEditor()
 bool LiteEditor::open(const QString &filePath, const QString &mimeType)
 {
 //    m_document->setPlainText("hahahaahahah");
+
+    QFile file(filePath);
+
+    edbee::TextDocumentSerializer serializer( m_editorWidget->textDocument() );
+    if( !serializer.load( &file ) ) {
+        QMessageBox::warning(nullptr, QString("Error opening file"), QString("Error opening file:\n%1").arg(serializer.errorString()) );
+        return false;
+    }
+
 
     return true;
 }

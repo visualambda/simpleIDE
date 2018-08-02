@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
+
 #include <QMainWindow>
 
 
@@ -29,9 +31,20 @@ public:
 
     QMenu* menuView();
 
+
+
+
+    void constructUI();
+
+    QComboBox* constructGrammarCombo();
+
+
 private:
     Ui::MainWindow *ui;
     QAction *openAction;
+
+
+    QComboBox* grammarComboRef_;
 
 private slots:
     void on_actionSaveState_triggered(bool);

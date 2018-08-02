@@ -12,6 +12,8 @@
 
 #include <folderView/multifolderwindow.h>
 
+//#include <edbee/
+
 class LiteApp :  public IApplication
 {
         Q_OBJECT
@@ -47,7 +49,7 @@ public:
 
     virtual IMimeTypeManager *mimeTypeManager();
 
-
+//    EdbeeConfig* config() const;
 
 
 
@@ -95,6 +97,15 @@ protected:
 //    EditorManager   *m_editorManager;
 //    FileManager    *m_fileManager;
     MimeTypeManager *m_mimeTypeManager;
+
+private:
+    QString appDataPath_;           ///< The application data path
+    QString userDataPath_;          ///< The user configuration path
+//    QtAwesome* qtAwesome_;          ///< The QtAwesome IconFont instance
+
+//    EdbeeConfig* config_;                   ///< The main edbee configuration file
+
+
 //    OptionManager   *m_optionManager;
 //    TextOutput    *m_logOutput;
 //    QAction       *m_logAct;
