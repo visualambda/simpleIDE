@@ -4,8 +4,12 @@
 #include "liteapi.h"
 
 
-#include "QPlainTextEdit"
-class LiteEditorWidget : public QPlainTextEdit
+#include <QPlainTextEdit>
+#include "edbee/edbee.h"
+#include "edbee/texteditorwidget.h"
+
+
+class LiteEditorWidget : public  edbee::TextEditorWidget
 {
 public:
     LiteEditorWidget(IApplication *app, QWidget *parent = 0);

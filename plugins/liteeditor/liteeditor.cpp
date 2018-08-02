@@ -7,7 +7,7 @@ LiteEditor::LiteEditor(IApplication *app)
 {
 
     m_editorWidget = new LiteEditorWidget(app,m_widget);
-    m_document = m_editorWidget->document();
+//    m_document = m_editorWidget->document();
 
 
     m_widget = new QWidget;
@@ -27,7 +27,7 @@ LiteEditor::~LiteEditor()
 
 bool LiteEditor::open(const QString &filePath, const QString &mimeType)
 {
-    m_document->setPlainText("hahahaahahah");
+//    m_document->setPlainText("hahahaahahah");
 
     return true;
 }

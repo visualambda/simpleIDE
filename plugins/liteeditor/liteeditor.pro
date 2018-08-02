@@ -17,7 +17,7 @@ DESTDIR = $${ADS_OUT_ROOT}/lib
 
 
 DEFINES += LITEEDITOR_LIBRARY
-INCLUDEPATH += $${PWD}/../../api/liteapi
+
 #INCLUDEPATH += $${PWD}/../../api/liteEditorApi
 #INCLUDEPATH += $${PWD}/../../api/quickopenapi
 #INCLUDEPATH += $${PWD}/../../libUtility/Extension
@@ -27,6 +27,7 @@ INCLUDEPATH += $${PWD}/../../api/liteapi
 #INCLUDEPATH += $${PWD}/../../libUtility/fileutil
 
 #INCLUDEPATH += $${PWD}/../../plugins/quickopen
+
 
 
 # The following define makes your compiler emit warnings if you use
@@ -58,8 +59,14 @@ unix {
 }
 
 
+
+INCLUDEPATH += $${PWD}/../../api/liteapi
+INCLUDEPATH +=  $${PWD}/../../edbee-lib
+
+
 LIBS += -L$${ADS_OUT_ROOT}/lib
 LIBS *= -l$$qtLibraryTarget(api)
+LIBS *= -l$$qtLibraryTarget(edbee)
 #LIBS *= -l$$qtLibraryTarget(qtctexteditor)
 #LIBS *= -l$$qtLibraryTarget(libucd)
 #LIBS *= -l$$qtLibraryTarget(extension)

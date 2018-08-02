@@ -82,11 +82,13 @@ LIBS *= -l$$qtLibraryTarget(AdvancedDockingSystem)
 
 
 INCLUDEPATH += ../dockerLib
+INCLUDEPATH += ../edbee-lib
 INCLUDEPATH += $${PWD}/../api/LiteApi
 INCLUDEPATH += $${PWD}/../libUtility/Extension
 INCLUDEPATH += $${PWD}/../libUtility/mimetype
 # add api lib,
 LIBS *= -l$$qtLibraryTarget(api)
+LIBS *= -l$$qtLibraryTarget(edbee)
 LIBS *= -l$$qtLibraryTarget(extension)
 LIBS *= -l$$qtLibraryTarget(mimetype)
 
