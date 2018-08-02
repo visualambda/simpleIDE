@@ -571,6 +571,7 @@ void LiteApp::load()
 
     ProjectExplorerDocker->dockType = ads::CDockWidget::dockType::dockProjectExplorer;
     ads::CDockAreaWidget*  ProjectExplorerArea = m_mainwindow->_dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
+    m_mainwindow->menuView()->addAction(ProjectExplorerDocker->toggleViewAction());
 
 
 //    QTimer* captureLoopTimer = new QTimer(this);

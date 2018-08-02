@@ -39,26 +39,10 @@ void EditorManager::addFactory(IEditorFactory *factory)
 
 IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeType)
 {
-//    IEditor *editor =nullptr;
+    IEditor *editor = nullptr;
 
-//    foreach (IEditorFactory *factory, m_factoryList)
-//    {
-////        if (factory->mimeTypes().contains(mimeType))
-//        {
-//                editor = factory->open(fileName,mimeType);
-//        }
-//    }
-//    return editor;
-
-
-    IEditor *editor = nullptr;//findEditor(fileName,true);
-//    if (editor) {
-//        return editor;
-//    }
-    bool matchFactory = false;
     foreach (IEditorFactory *factory, m_factoryList) {
-        if (factory->mimeTypes().contains(mimeType)) {
-            matchFactory = true;
+        if (factory->mimeTypes().contains(mimeType) || true ) {
             try {
                 editor = factory->open(fileName,mimeType);
             } catch(std::bad_alloc &ba) {
@@ -70,34 +54,7 @@ IEditor *EditorManager::openEditor(const QString &fileName, const QString &mimeT
             }
         }
     }
-    if (editor == 0 && !matchFactory) {
-        QString type = "liteide/default.editor";
-        foreach (IEditorFactory *factory, m_factoryList) {
-            if (factory->mimeTypes().contains(type)) {
-                try {
-                    editor = factory->open(fileName,type);
-                } catch(std::bad_alloc &ba) {
-                    m_liteApp->appendLog("EditorManager",QString("exception %1! can not load file %2").arg(ba.what()).arg(fileName),true);
-                    return 0;
-                }
-                if (editor) {
-                    break;
-                }
-            }
-        }
-    }
-    if (editor) {
-//        addEditor(editor);
-        ITextEditor *textEditor = getTextEditor(editor);
-        if (textEditor)
-        {
-//            textEditor->restoreState(m_liteApp->settings()->value(QString("state_%1").arg(editor->filePath())).toByteArray());
-        }
-//        while (m_editorTabWidget->tabBar()->count() > m_maxEditorCount)
-//        {
-//            this->closeEditorForTab(0);
-//        }
-    }
+
     return editor;
 }
 

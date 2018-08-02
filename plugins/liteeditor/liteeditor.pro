@@ -18,15 +18,15 @@ DESTDIR = $${ADS_OUT_ROOT}/lib
 
 DEFINES += LITEEDITOR_LIBRARY
 INCLUDEPATH += $${PWD}/../../api/liteapi
-INCLUDEPATH += $${PWD}/../../api/liteEditorApi
-INCLUDEPATH += $${PWD}/../../api/quickopenapi
-INCLUDEPATH += $${PWD}/../../libUtility/Extension
-INCLUDEPATH += $${PWD}/../../libUtility/EditorUtil
-INCLUDEPATH += $${PWD}/../../libUtility/libucd
-INCLUDEPATH += $${PWD}/../../libUtility/
-INCLUDEPATH += $${PWD}/../../libUtility/fileutil
+#INCLUDEPATH += $${PWD}/../../api/liteEditorApi
+#INCLUDEPATH += $${PWD}/../../api/quickopenapi
+#INCLUDEPATH += $${PWD}/../../libUtility/Extension
+#INCLUDEPATH += $${PWD}/../../libUtility/EditorUtil
+#INCLUDEPATH += $${PWD}/../../libUtility/libucd
+#INCLUDEPATH += $${PWD}/../../libUtility/
+#INCLUDEPATH += $${PWD}/../../libUtility/fileutil
 
-INCLUDEPATH += $${PWD}/../../plugins/quickopen
+#INCLUDEPATH += $${PWD}/../../plugins/quickopen
 
 
 # The following define makes your compiler emit warnings if you use
@@ -44,28 +44,13 @@ SOURCES += \
         liteeditorplugin.cpp \
     liteeditorfilefactory.cpp \
     liteeditor.cpp \
-    liteeditorwidget.cpp \
-    functiontooltip.cpp \
-    faketooltip.cpp \
-    liteeditorfile.cpp \
-    liteeditorwidgetbase.cpp \
-    litewordcompleter.cpp \
-    litecompleter.cpp \
-    codecompleter.cpp
+    liteeditorwidget.cpp
 
 HEADERS += \
         liteeditorplugin.h \
-        liteeditor_global.h \ 
     liteeditorfilefactory.h \
     liteeditor.h \
-    liteeditorwidget.h \
-    functiontooltip.h \
-    faketooltip.h \
-    liteeditorfile.h \
-    liteeditorwidgetbase.h \
-    litewordcompleter.h \
-    litecompleter.h \
-    codecompleter.h
+    liteeditorwidget.h
 
 unix {
     target.path = /usr/lib
@@ -73,12 +58,10 @@ unix {
 }
 
 
-
-#include (../../api/api.pri)
 LIBS += -L$${ADS_OUT_ROOT}/lib
-LIBS *= -l$$qtLibraryTarget(qtctexteditor)
 LIBS *= -l$$qtLibraryTarget(api)
-LIBS *= -l$$qtLibraryTarget(libucd)
-LIBS *= -l$$qtLibraryTarget(extension)
-LIBS *= -l$$qtLibraryTarget(liteeditorapi)
+#LIBS *= -l$$qtLibraryTarget(qtctexteditor)
+#LIBS *= -l$$qtLibraryTarget(libucd)
+#LIBS *= -l$$qtLibraryTarget(extension)
+#LIBS *= -l$$qtLibraryTarget(liteeditorapi)
 

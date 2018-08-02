@@ -22,18 +22,7 @@
 // Creator: visualfc <visualfc@gmail.com>
 #include "liteeditor.h"
 #include "liteeditorfilefactory.h"
-#include "liteeditor_global.h"
 
-
-
-//#include "liteeditorwidget.h"
-#include "litewordcompleter.h"
-//#include "editorapimanager.h"
-//#include "liteeditormark.h"
-//#include "liteeditor_global.h"
-//#include "katehighlighterfactory.h"
-//#include "katetextlexer.h"
-#include "liteeditorapi.h"
 #include <QDir>
 #include <QFileInfo>
 //#include "mimetype/mimetype.h"
@@ -144,68 +133,16 @@ IEditor *LiteEditorFileFactory::open(const QString &fileName, const QString &mim
 IEditor *LiteEditorFileFactory::create(const QString &contents, const QString &mimeType)
 {
     LiteEditor *editor = new LiteEditor(m_liteApp);
-//    editor->setEditorMark(new LiteEditorMark(m_markManager,editor));
-//    if (!editor->createNew(contents,mimeType)) {
-//        delete editor;
-//        return 0;
-//    }
 
     return setupEditor(editor,mimeType);
-    //    return (IEditor *)editor;
 }
 
 IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const QString &mimeType)
 {
-    LiteWordCompleter *wordCompleter = new LiteWordCompleter(editor);
-    editor->setCompleter(wordCompleter);
-    editor->applyOption(OPTION_LITEEDITOR);
+//    LiteWordCompleter *wordCompleter = new LiteWordCompleter(editor);
+//    editor->setCompleter(wordCompleter);
+//    editor->applyOption(OPTION_LITEEDITOR);
 
     return (IEditor *)editor;
 }
 
-//LiteApi::IEditor *LiteEditorFileFactory::setupEditor(LiteEditor *editor, const QString &mimeType)
-//{
-//    QTextDocument *doc = editor->document();
-//    LiteApi::IHighlighterFactory *factory = m_highlighterManager->findFactory(mimeType);
-//    if (factory) {
-//        TextEditor::SyntaxHighlighter *h = factory->create(editor,doc,mimeType);
-//        if (h) {
-//            editor->setSyntaxHighlighter(h);
-//            editor->setTextLexer(new KateTextLexer(editor));
-//            connect(editor,SIGNAL(colorStyleChanged()),this,SLOT(colorStyleChanged()));
-//            //connect(editor,SIGNAL(tabSettingChanged(int)),this,SLOT(tabSettingChanged(int)));
-//            connect(h,SIGNAL(foldIndentChanged(QTextBlock)),editor->editorWidget(),SLOT(foldIndentChanged(QTextBlock)));
-//        }
-//    }
-
-//    LiteWordCompleter *wordCompleter = new LiteWordCompleter(editor);
-//    editor->setCompleter(wordCompleter);
-//    if (wordCompleter) {
-//        LiteApi::IWordApi *wordApi = m_wordApiManager->findWordApi(mimeType);
-//        if (wordApi && wordApi->loadApi()) {
-//            QIcon icon("icon:liteeditor/images/keyword.png");
-//            QIcon exp("icon:liteeditor/images/findword.png");
-//            QIcon func("icon:liteeditor/images/func.png");
-//            foreach(QString item, wordApi->wordList()) {
-//                int pos = item.indexOf("(");
-//                if (pos != -1) {
-//                    wordCompleter->appendItemEx(item.left(pos).trimmed(),"func","func"+item.right(item.length()-pos),func,false);
-//                } else {
-//                    wordCompleter->appendItemEx(item,"keyword",QString(""),icon,false);
-//                }
-//            }
-//            wordCompleter->appendItems(wordApi->expList(),"","",exp,false);
-//            wordCompleter->model()->sort(0);
-//        }
-
-//    }
-//    LiteApi::ISnippetApi *snippetApi = m_wordApiManager->findSnippetApi(mimeType);
-//    if (snippetApi && snippetApi->loadApi()) {
-//        foreach (LiteApi::Snippet *snippet, snippetApi->snippetList()) {
-//            wordCompleter->appendSnippetItem(snippet->Name,snippet->Info,snippet->Text);
-//        }
-//    }
-//    editor->applyOption(OPTION_LITEEDITOR);
-//    editor->loadColorStyleScheme();
-//    return editor;
-//}
