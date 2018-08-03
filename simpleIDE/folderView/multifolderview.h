@@ -5,13 +5,13 @@
 #include "basefolderview.h"
 #include "folderModel/multifoldermodel.h"
 
-class Application;
+class IApplication;
 class MultiFolderView : public BaseFolderView
 {
 public:
     Q_OBJECT
 public:
-    explicit MultiFolderView(Application *app, QWidget *parent = 0);
+    explicit MultiFolderView(IApplication *app, QWidget *parent = 0);
     virtual ~MultiFolderView();
     void setFilter(QDir::Filters filters);
     QDir::Filters filter() const;

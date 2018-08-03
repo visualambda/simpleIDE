@@ -38,7 +38,7 @@
 //lite_memory_check_end
 #include "folderView/itemdelegate.h"
 
-MultiFolderWindow::MultiFolderWindow(Application *app, QObject *parent) //: IFolderWindow(parent)
+MultiFolderWindow::MultiFolderWindow(IApplication *app, QObject *parent) //: IFolderWindow(parent)
 {
     m_liteApp = app;
     m_folderListView = new MultiFolderView(app);

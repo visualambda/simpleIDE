@@ -37,7 +37,7 @@
 #endif
 //lite_memory_check_end
 
-MultiFolderView::MultiFolderView(Application *app, QWidget *parent)
+MultiFolderView::MultiFolderView(IApplication *app, QWidget *parent)
     : BaseFolderView(app,parent)
 {
     m_model = new MultiFolderModel(this);

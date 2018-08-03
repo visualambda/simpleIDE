@@ -1,4 +1,6 @@
 
+#include "application.h"
+
 #include "basefolderview.h"
 //#include "liteenvapi/liteenvapi.h"
 //#include "fileutil/fileutil.h"
@@ -33,7 +35,7 @@
 //lite_memory_check_end
 #endif
 
-BaseFolderView::BaseFolderView(Application *app, QWidget *parent) :
+BaseFolderView::BaseFolderView(IApplication *app, QWidget *parent) :
     SymbolTreeView(parent), m_liteApp(app)
 {
     this->setHeaderHidden(true);

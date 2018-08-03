@@ -6,13 +6,13 @@
 #include "folderview/multifolderview.h"
 //#include "filemanager.h"
 
-class Application;
+class IApplication;
 
 class MultiFolderWindow : QObject//: public IFolderWindow
 {
     Q_OBJECT
 public:
-    explicit MultiFolderWindow(Application *app, QObject *parent = 0);
+    explicit MultiFolderWindow(IApplication *app, QObject *parent = 0);
     virtual ~MultiFolderWindow();
     virtual QString id() const;
     virtual QWidget *widget() const;
@@ -35,7 +35,7 @@ public slots:
 public:
     MultiFolderView *m_folderListView;
 protected:
-    Application *m_liteApp;
+    IApplication *m_liteApp;
 
     bool m_bSyncEditor;
 };

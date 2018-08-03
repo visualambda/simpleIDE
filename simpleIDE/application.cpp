@@ -14,7 +14,6 @@
 #include "DockManager.h"
 #include "DockWidget.h"
 
-
 #include "application.h"
 
 #include <QDir>
@@ -28,7 +27,7 @@
 #include "mainwindow.h"
 
 Application::Application(int &argc, char **argv)
-     : QApplication( argc, argv ),
+     : QApplication( argc, argv ), // IApplication(),
        _mainWindow(0)
 {
     config_ = new EdbeeConfig();

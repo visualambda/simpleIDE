@@ -1,7 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-
+#include <interfaces/api.h>
 #include <QApplication>
 
 class EdbeeConfig;
@@ -14,7 +14,7 @@ namespace ads
 }
 
 
-class Application : public QApplication
+class Application : public QApplication , public  IApplication
 {
 public:
     explicit Application(int& argc, char** argv);

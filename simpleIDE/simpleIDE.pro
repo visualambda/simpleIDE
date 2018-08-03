@@ -36,7 +36,8 @@ SOURCES += \
     folderView/itemdelegate.cpp \
     folderView/multifolderview.cpp \
     folderView/multifolderwindow.cpp \
-    folderView/symboltreeview.cpp
+    folderView/symboltreeview.cpp \
+    interfaces/api.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -52,7 +53,8 @@ HEADERS += \
     folderView/itemdelegate.h \
     folderView/multifolderview.h \
     folderView/multifolderwindow.h \
-    folderView/symboltreeview.h
+    folderView/symboltreeview.h \
+    interfaces/api.h
 
 FORMS += \
         mainwindow.ui
