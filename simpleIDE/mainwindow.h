@@ -7,6 +7,11 @@ namespace Ui {
 class MainWindow;
 }
 
+
+class MultiFolderWindow;
+
+class QWidget;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -14,6 +19,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    void addWidget(QWidget* w);
 
 private:
     Ui::MainWindow *ui;

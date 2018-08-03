@@ -27,12 +27,32 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     application.cpp \
-    models/edbeeconfig.cpp
+    models/edbeeconfig.cpp \
+    folderModel/abstractmultiproxymodel.cpp \
+    folderModel/filesystemmodelex.cpp \
+    folderModel/multifoldermodel.cpp \
+    folderModel/multiindexmodel.cpp \
+    folderView/basefolderview.cpp \
+    folderView/itemdelegate.cpp \
+    folderView/multifolderview.cpp \
+    folderView/multifolderwindow.cpp \
+    folderView/symboltreeview.cpp
 
 HEADERS += \
         mainwindow.h \
     application.h \
-    models/edbeeconfig.h
+    models/edbeeconfig.h \
+    folderModel/abstractmultiproxymodel.h \
+    folderModel/abstractmultiproxymodel_p.h \
+    folderModel/filesystemmodelex.h \
+    folderModel/multifoldermodel.h \
+    folderModel/multiindexmodel.h \
+    folderModel/multiindexmodel_p.h \
+    folderView/basefolderview.h \
+    folderView/itemdelegate.h \
+    folderView/multifolderview.h \
+    folderView/multifolderwindow.h \
+    folderView/symboltreeview.h
 
 FORMS += \
         mainwindow.ui
@@ -74,14 +94,21 @@ POST_TARGETDEPS += copyfiles
 ADS_ROOT = $${PWD}/..
 ADS_OUT_ROOT = $${OUT_PWD}/..
 
+DESTDIR = $${ADS_OUT_ROOT}/lib
+
 INCLUDEPATH += ../dockerLib
 INCLUDEPATH += ../edbee-lib
 
 LIBS += -L$${ADS_OUT_ROOT}/lib
 LIBS *= -l$$qtLibraryTarget(edbee)
+LIBS *= -l$$qtLibraryTarget(AdvancedDockingSystem)
+
 #DEPENDPATH += ../dockerLib
 
 include(../vendor/qslog/QsLog.pri)
+
+RESOURCES += \
+    icons.qrc
 
 
 

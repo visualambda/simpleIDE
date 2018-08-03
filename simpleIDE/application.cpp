@@ -1,14 +1,18 @@
 
-
-#include <QApplication>
-
-
 #include "edbee/edbee.h"
 #include "edbee/io/tmlanguageparser.h"
 #include "edbee/models/texteditorcommandmap.h"
 #include "edbee/views/texttheme.h"
 
 #include "models/edbeeconfig.h"
+
+#include <folderView/multifolderwindow.h>
+
+
+
+#include "DockAreaWidget.h"
+#include "DockManager.h"
+#include "DockWidget.h"
 
 
 #include "application.h"
@@ -18,11 +22,51 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QStandardPaths>
+#include <QDesktopWidget>
+
+
+#include "mainwindow.h"
 
 Application::Application(int &argc, char **argv)
-     : QApplication( argc, argv )
+     : QApplication( argc, argv ),
+       _mainWindow(0)
 {
+    config_ = new EdbeeConfig();
+    _mainWindow = new MainWindow();
+    _mainWindow->show();
 
+
+    QDesktopWidget* desktopWidget = QApplication::desktop();
+    //获取可用桌面大小
+    QRect deskRect = desktopWidget->availableGeometry();
+    //获取设备屏幕大小
+    QRect screenRect = desktopWidget->screenGeometry();
+
+    int x = 10;
+    _mainWindow->setGeometry(screenRect.width()/x, screenRect.height()/x, screenRect.width()/x*(x-2),screenRect.height()/x*(x-2));
+
+    _mfw = new MultiFolderWindow(this);
+
+    _dockManager = new ads::CDockManager(nullptr);
+
+    ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
+    ProjectExplorerDocker->setWidget(_mfw->widget());
+    ProjectExplorerDocker->setObjectName(ProjectExplorerDocker->windowTitle());
+
+    ads::CDockAreaWidget*  ProjectExplorerArea = _dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
+//    m_mainwindow->menuView()->addAction(ProjectExplorerDocker->toggleViewAction());
+
+
+    _mainWindow->addWidget(_dockManager);
+
+
+
+}
+
+Application::~Application()
+{
+    delete _mainWindow;
+    delete config_;
 }
 
 void Application::initApplication()
@@ -74,6 +118,14 @@ void Application::initApplication()
             QMessageBox::warning(0, title,QString("%1\n%2").arg(title).arg(messages) );
         }
     }
+
+
+
+
+
+//test
+    _mfw->addFolderList(appDataPath_);
+
 }
 
 QString Application::userConfigPath() const

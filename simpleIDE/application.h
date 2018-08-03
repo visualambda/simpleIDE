@@ -2,16 +2,23 @@
 #define APPLICATION_H
 
 
-class QApplication;
-class EdbeeConfig;
+#include <QApplication>
 
+class EdbeeConfig;
+class MainWindow;
+class MultiFolderWindow;
+
+namespace ads
+{
+    class  CDockManager;
+}
 
 
 class Application : public QApplication
 {
 public:
     explicit Application(int& argc, char** argv);
-
+    ~Application();
 
     void initApplication();
 
@@ -19,15 +26,12 @@ public:
     QString appConfigPath() const;
     QString userDataPath() const;
     QString appDataPath() const;
-
     EdbeeConfig* config() const;
 
-
     const char* osNameString();
+
 protected:
-
     void registerCustomEditorCommands();
-
 
 private:
     QString appDataPath_;           ///< The application data path
@@ -35,6 +39,13 @@ private:
 
 
     EdbeeConfig* config_;
+    MainWindow * _mainWindow;
+
+    MultiFolderWindow *_mfw;
+
+
+    ads::CDockManager * _dockManager;
+
 };
 
 #endif // APPLICATION_H
