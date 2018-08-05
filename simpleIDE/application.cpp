@@ -108,12 +108,12 @@ void Application::initApplication()
         for( int i=0, cnt=config()->fileCount(); i<cnt; ++i ) {
             QString msg = config()->loadMessageForFile(i);
             if( !msg.isEmpty() ) {
-                messages.append( tr("- %1: %2\n").arg(config()->file(i)).arg(msg) );
+                messages.append( QString("- %1: %2\n").arg(config()->file(i)).arg(msg) );
             }
         }
         // and show it
         if( !messages.isEmpty() ) {
-            QString title = tr("Error loading configuration file(s)");
+            QString title = QString("Error loading configuration file(s)");
             QMessageBox::warning(0, title,QString("%1\n%2").arg(title).arg(messages) );
         }
     }

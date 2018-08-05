@@ -14,7 +14,52 @@ namespace ads
 }
 
 
-class Application : public QApplication , public  IApplication
+class EditorManager : public IEditorManager
+{
+public:
+
+    EditorManager(ads::CDockManager * dm, IApplication *app)
+    {
+        _dockManager = dm;
+        initWithApp(app);
+
+    };
+
+
+    ~EditorManager(){};
+
+    virtual bool initWithApp(IApplication *app)
+    {
+        if (!IEditorManager::initWithApp(app)) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    virtual IEditor *openEditor(const QString &fileName, const QString &mimeType)
+    {
+
+
+    }
+
+
+    virtual void setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory = false)
+    {
+
+
+
+    }
+
+protected:
+    ads::CDockManager * _dockManager;
+
+};
+
+
+class Application : public QApplication , public IApplication
 {
 public:
     explicit Application(int& argc, char** argv);
@@ -45,6 +90,8 @@ private:
 
 
     ads::CDockManager * _dockManager;
+
+    EditorManager * _editorManager;
 
 };
 

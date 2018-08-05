@@ -134,7 +134,7 @@ void MultiFolderWindow::doubleClickedFolderView(const QModelIndex &index)
     }
     QFileInfo info = m_folderListView->fileInfo(index);
     if (info.isFile()) {
-       //m_liteApp->fileManager()->openEditor(info.filePath());
+       m_liteApp;//->fileManager()->openEditor(info.filePath());
     }
     qDebug() << m_folderListView->fileRootPath(index);
 }
