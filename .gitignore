@@ -11,3 +11,4 @@ edbee-data/.vs/VSWorkspaceState.json
 Makefile
 simpleIDE.sln
 build-simpleIDE-Desktop_Qt_5_11_0_MSVC2015_64bit-Debug
+build-simpleIDE-Desktop_Qt_5_11_1_clang_64bit-Debug
