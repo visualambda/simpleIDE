@@ -949,7 +949,12 @@ QList<CDockAreaWidget*> CDockContainerWidget::openedDockAreas() const
 		}
 	}
 
-	return Result;
+    return Result;
+}
+
+QList<CDockAreaWidget *> CDockContainerWidget::dockAreas() const
+{
+    return d->DockAreas;
 }
 
 

@@ -84,9 +84,16 @@ bool EditorManager::initWithApp(IApplication *app)
 
 QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeType)
 {
-        if(_dockManager)
-        {
-            QFileInfo fileInfo(filename);
+    QFileInfo fileInfo(filename);
+
+    ads::CDockWidget* editorToFind = getEditor(fileInfo.filePath());
+    if(editorToFind)
+    {
+        editorToFind->toggleView();
+        return nullptr;
+    }
+
+
 
             // file not found ??
             if( !fileInfo.exists() ) {
@@ -116,18 +123,17 @@ QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeT
             }
 //            addEditorTab( widget, fileInfo.filePath() );
 
-            setCurrentEditor(widget);
+            setCurrentEditor(widget, fileInfo.fileName(), fileInfo.filePath());
             return widget;
 
-        }
 
-        return nullptr;
 
 }
 
 
-void EditorManager::setCurrentEditor(QWidget *editor, bool ignoreNavigationHistory)
+void EditorManager::setCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory)
 {
+
     QWidget * w = editor;
 
     int maxZorder = -1;
@@ -164,10 +170,10 @@ void EditorManager::setCurrentEditor(QWidget *editor, bool ignoreNavigationHisto
     }
 
 
-    ads::CDockWidget* EditorDocker = new ads::CDockWidget(QString("Editors"));
+    ads::CDockWidget* EditorDocker = new ads::CDockWidget(filename);
     EditorDocker->dockType = ads::CDockWidget::dockType::dockEditor;
     EditorDocker->setWidget(w);
-    EditorDocker->setObjectName(EditorDocker->windowTitle());
+    EditorDocker->setObjectName(/*EditorDocker->windowTitle()*/filePath);
 
     _menu->addAction(EditorDocker->toggleViewAction());
 
@@ -198,6 +204,30 @@ void EditorManager::setCurrentEditor(QWidget *editor, bool ignoreNavigationHisto
 
 
 
+}
+
+ads::CDockWidget *EditorManager::getEditor(QString filePath)
+{
+    foreach (ads::CDockContainerWidget* dc, _dockManager->dockContainers())
+    {
+            QList<ads::CDockAreaWidget*> oda = dc->dockAreas();
+            foreach (ads::CDockAreaWidget* daw, oda)
+            {
+
+                QList<ads::CDockWidget*> odws = daw->dockWidgets() ;
+                foreach (ads::CDockWidget* daw, odws)
+                {
+                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor &&
+                            daw->objectName() == filePath)
+                    {
+                        return daw;
+
+                    }
+                }
+            }
+
+    }
+    return nullptr;
 }
 
 

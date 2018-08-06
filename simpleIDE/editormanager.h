@@ -6,6 +6,7 @@
 
 namespace ads {
 class CDockManager;
+class CDockWidget;
 }
 class QMenu;
 
@@ -33,8 +34,9 @@ public:
     virtual QWidget *openEditor(const QString &filename, const QString &mimeType);
 
 
-    virtual void setCurrentEditor(QWidget *editor, bool ignoreNavigationHistory = false);
+    virtual void setCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory = false);
 
+    ads::CDockWidget* getEditor(QString filePath);
 
     void reArrange();
 protected:
