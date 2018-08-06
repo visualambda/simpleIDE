@@ -7,13 +7,21 @@
 namespace ads {
 class CDockManager;
 }
-
+class QMenu;
 
 class EditorManager : public IEditorManager
 {
+        Q_OBJECT
+
+
+private slots:
+    void onDockmanagerDockAreasAdded();
+    void onDockmanagerDockAreasRemoved();
+
+
 public:
 
-    EditorManager(ads::CDockManager * dm, IApplication *app);
+    EditorManager(ads::CDockManager * dm, QMenu *menu, IApplication *app);
 
 
     ~EditorManager();
@@ -28,8 +36,12 @@ public:
     virtual void setCurrentEditor(QWidget *editor, bool ignoreNavigationHistory = false);
 
 
+    void reArrange();
 protected:
     ads::CDockManager * _dockManager;
+    QMenu * _menu;
+
+//    bool _hasResetLayout {false};
 
 };
 

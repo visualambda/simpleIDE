@@ -22,6 +22,9 @@ public:
 
     void addWidget(QWidget* w);
 
+
+     QMenu* menuView();
+
 private:
     Ui::MainWindow *ui;
 };

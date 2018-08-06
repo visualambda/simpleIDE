@@ -185,6 +185,10 @@ void DockWidgetPrivate::hideEmptyParentDockArea()
 	else
 	{
 		DockArea->hide();
+//        if(this->DockManager)
+        {
+//            emit this->DockManager->dockAreasRemoved();
+        }
 	}
 }
 

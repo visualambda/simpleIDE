@@ -33,4 +33,9 @@ void MainWindow::addWidget(QWidget *w)
     this->centralWidget()->setLayout(vl);
 }
 
+QMenu *MainWindow::menuView()
+{
+    return this->ui->menuView;
+}
+
 

@@ -48,19 +48,21 @@ Application::Application(int &argc, char **argv)
     _mfw = new MultiFolderWindow(this);
 
     _dockManager = new ads::CDockManager(nullptr);
+    _dockManager->setObjectName("_dockManager");
 
     ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
     ProjectExplorerDocker->setWidget(_mfw->widget());
     ProjectExplorerDocker->setObjectName(ProjectExplorerDocker->windowTitle());
 
     ads::CDockAreaWidget*  ProjectExplorerArea = _dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
-//    m_mainwindow->menuView()->addAction(ProjectExplorerDocker->toggleViewAction());
+    _mainWindow->menuView()->addAction(ProjectExplorerDocker->toggleViewAction());
+
 
 
     _mainWindow->addWidget(_dockManager);
 
 
-    _editorManager = new EditorManager(_dockManager, this);
+    _editorManager = new EditorManager(_dockManager, _mainWindow->menuView(), this);
 
 }
 
