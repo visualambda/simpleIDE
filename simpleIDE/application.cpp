@@ -14,6 +14,7 @@
 #include "DockManager.h"
 #include "DockWidget.h"
 
+#include "editormanager.h"
 #include "application.h"
 
 #include <QDir>
@@ -59,6 +60,7 @@ Application::Application(int &argc, char **argv)
     _mainWindow->addWidget(_dockManager);
 
 
+    _editorManager = new EditorManager(_dockManager, this);
 
 }
 
@@ -161,6 +163,11 @@ const char *Application::osNameString()
 #else
     return "x11";
 #endif
+}
+
+IEditorManager *Application::getEditorManager()
+{
+    return _editorManager;
 }
 
 void Application::registerCustomEditorCommands()

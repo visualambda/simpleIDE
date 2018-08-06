@@ -37,7 +37,8 @@ SOURCES += \
     folderView/multifolderview.cpp \
     folderView/multifolderwindow.cpp \
     folderView/symboltreeview.cpp \
-    interfaces/api.cpp
+    interfaces/api.cpp \
+    editormanager.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -54,7 +55,8 @@ HEADERS += \
     folderView/multifolderview.h \
     folderView/multifolderwindow.h \
     folderView/symboltreeview.h \
-    interfaces/api.h
+    interfaces/api.h \
+    editormanager.h
 
 FORMS += \
         mainwindow.ui

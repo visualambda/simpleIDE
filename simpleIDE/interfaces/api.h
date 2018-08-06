@@ -4,23 +4,30 @@
 
 #include <QObject>
 
-
+class IEditorManager;
+class EdbeeConfig;
 class IApplication : public QObject
 {
     Q_OBJECT
 public:
     IApplication();
+
+    virtual EdbeeConfig* config() const = 0;
+
+    virtual IEditorManager* getEditorManager() = 0;
+
+
 };
 
 
 
-class IEditor : public QObject
-{
-    Q_OBJECT
-public:
-    virtual QWidget *widget() = 0;
+//class IEditor : public QObject
+//{
+//    Q_OBJECT
+//public:
+//    virtual QWidget *widget() = 0;
 
-};
+//};
 
 
 class IEditorManager : public QObject
@@ -39,9 +46,9 @@ public:
 
 //    virtual QWidget *widget() = 0;
 
-    virtual IEditor *openEditor(const QString &fileName, const QString &mimeType) = 0;
+    virtual QWidget *openEditor(const QString &fileName, const QString &mimeType) = 0;
 
-    virtual void setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory = false) = 0;
+    virtual void setCurrentEditor(QWidget *editor, bool ignoreNavigationHistory = false) = 0;
 
 
 protected:

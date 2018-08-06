@@ -4,6 +4,9 @@
 #include <interfaces/api.h>
 #include <QApplication>
 
+
+
+
 class EdbeeConfig;
 class MainWindow;
 class MultiFolderWindow;
@@ -13,50 +16,6 @@ namespace ads
     class  CDockManager;
 }
 
-
-class EditorManager : public IEditorManager
-{
-public:
-
-    EditorManager(ads::CDockManager * dm, IApplication *app)
-    {
-        _dockManager = dm;
-        initWithApp(app);
-
-    };
-
-
-    ~EditorManager(){};
-
-    virtual bool initWithApp(IApplication *app)
-    {
-        if (!IEditorManager::initWithApp(app)) {
-            return false;
-        }
-
-        return true;
-    }
-
-
-
-    virtual IEditor *openEditor(const QString &fileName, const QString &mimeType)
-    {
-
-
-    }
-
-
-    virtual void setCurrentEditor(IEditor *editor, bool ignoreNavigationHistory = false)
-    {
-
-
-
-    }
-
-protected:
-    ads::CDockManager * _dockManager;
-
-};
 
 
 class Application : public QApplication , public IApplication
@@ -71,9 +30,13 @@ public:
     QString appConfigPath() const;
     QString userDataPath() const;
     QString appDataPath() const;
-    EdbeeConfig* config() const;
+
 
     const char* osNameString();
+
+public:
+    virtual EdbeeConfig* config() const;
+    virtual IEditorManager * getEditorManager();
 
 protected:
     void registerCustomEditorCommands();
@@ -91,7 +54,7 @@ private:
 
     ads::CDockManager * _dockManager;
 
-    EditorManager * _editorManager;
+    IEditorManager * _editorManager;
 
 };
 
