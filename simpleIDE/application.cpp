@@ -42,8 +42,13 @@ Application::Application(int &argc, char **argv)
 {
     QPixmap pixmap(":icon/icon/vectordisplay.png");
     splash = new QSplashScreen(pixmap);
+
+    QFont font = QFont(splash->font().family(), 50 );
+    splash->setFont(font);
+
     splash->show();
-    splash->showMessage("loading resourse...");
+
+    splash->showMessage("loading resourse...", Qt::AlignBottom | Qt::AlignCenter, Qt::blue);
 
     config_ = new EdbeeConfig();
     _mainWindow = new MainWindow();
@@ -62,6 +67,7 @@ Application::~Application()
 
 void Application::initApplication()
 {
+//    QThread::sleep(3);
     #ifdef Q_OS_MAC
         appDataPath_    = applicationDirPath() + "/../Resources/";
     #else
