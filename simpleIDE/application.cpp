@@ -32,46 +32,25 @@
 #include <QStandardPaths>
 #include <QStatusBar>
 #include <QDesktopWidget>
-
-
+#include <QSplashScreen>
+#include <QThread>
 #include "mainwindow.h"
 
 Application::Application(int &argc, char **argv)
      : QApplication( argc, argv ), // IApplication(),
        _mainWindow(0)
 {
+    QPixmap pixmap(":icon/icon/vectordisplay.png");
+    splash = new QSplashScreen(pixmap);
+    splash->show();
+    splash->showMessage("loading resourse...");
+
     config_ = new EdbeeConfig();
     _mainWindow = new MainWindow();
-    _mainWindow->show();
-
-
-    QDesktopWidget* desktopWidget = QApplication::desktop();
-    //获取可用桌面大小
-    QRect deskRect = desktopWidget->availableGeometry();
-    //获取设备屏幕大小
-    QRect screenRect = desktopWidget->screenGeometry();
-
-    int x = 10;
-    _mainWindow->setGeometry(screenRect.width()/x, screenRect.height()/x, screenRect.width()/x*(x-2),screenRect.height()/x*(x-2));
-
-    _mfw = new MultiFolderWindow(this);
-
-    _dockManager = new ads::CDockManager(nullptr);
-    _dockManager->setObjectName("_dockManager");
-
-    ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
-    ProjectExplorerDocker->setWidget(_mfw->widget());
-    ProjectExplorerDocker->setObjectName(ProjectExplorerDocker->windowTitle());
-
-    ads::CDockAreaWidget*  ProjectExplorerArea = _dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
-    _mainWindow->menuView()->addAction(ProjectExplorerDocker->toggleViewAction());
+//    _mainWindow->show();
 
 
 
-    _mainWindow->addWidget(_dockManager);
-
-
-    _editorManager = new EditorManager(_dockManager, this, this->_mainWindow);
 
 }
 
@@ -133,6 +112,26 @@ void Application::initApplication()
 
 
 
+
+    _mfw = new MultiFolderWindow(this);
+
+    _dockManager = new ads::CDockManager(nullptr);
+    _dockManager->setObjectName("_dockManager");
+
+    ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
+    ProjectExplorerDocker->setWidget(_mfw->widget());
+    ProjectExplorerDocker->setObjectName(ProjectExplorerDocker->windowTitle());
+
+    ads::CDockAreaWidget*  ProjectExplorerArea = _dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
+    _mainWindow->menuView()->addAction(ProjectExplorerDocker->toggleViewAction());
+
+    _mainWindow->addWidget(_dockManager);
+
+    _editorManager = new EditorManager(_dockManager, this, this->_mainWindow);
+
+
+
+
     edbee::TextGrammarManager* gr = edbee::Edbee::instance()->grammarManager();
 
     QList<edbee::TextGrammar*> grammarList = gr->grammarsSortedByDisplayName();
@@ -190,6 +189,27 @@ void Application::initApplication()
 
 //test
     _mfw->addFolderList(appDataPath_);
+
+
+
+
+    QDesktopWidget* desktopWidget = QApplication::desktop();
+    //获取可用桌面大小
+    QRect deskRect = desktopWidget->availableGeometry();
+    //获取设备屏幕大小
+    QRect screenRect = desktopWidget->screenGeometry();
+
+    int x = 10;
+    _mainWindow->setGeometry(screenRect.width()/x, screenRect.height()/x, screenRect.width()/x*(x-2),screenRect.height()/x*(x-2));
+    _mainWindow->show();
+
+    splash->finish(_mainWindow);
+    _mainWindow->show();
+
+
+
+
+
 
 }
 

@@ -393,7 +393,7 @@ unsigned int CDockAreaWidget::zOrderIndex() const
 
 bool CDockAreaWidget::event(QEvent *e)
 {
-    qDebug() << "CDockAreaWidget::event(QEvent *e)"<</*this <<*/ e->type();
+//    qDebug() << "CDockAreaWidget::event(QEvent *e)"<</*this <<*/ e->type();
     bool Result = QWidget::event(e);
 
     if(e->type() == QEvent::MouseButtonRelease)

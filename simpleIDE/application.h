@@ -10,7 +10,7 @@
 class EdbeeConfig;
 class MainWindow;
 class MultiFolderWindow;
-
+class QSplashScreen;
 namespace ads
 {
     class  CDockManager;
@@ -25,6 +25,8 @@ public:
     ~Application();
 
     void initApplication();
+
+
 
     QString userConfigPath() const;
     QString appConfigPath() const;
@@ -55,6 +57,8 @@ private:
     ads::CDockManager * _dockManager;
 
     IEditorManager * _editorManager;
+
+    QSplashScreen * splash;
 
 };
 
