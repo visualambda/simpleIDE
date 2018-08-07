@@ -32,6 +32,7 @@ private slots:
     void lineEndingChanged();
     void grammarChanged();
     void themeChanged();
+    void zoomChanged();
 
 public:
 

@@ -104,12 +104,36 @@ void EditorManager::encodingChanged()
 
 void EditorManager::lineEndingChanged()
 {
-
+    ads::CDockWidget * dw = getCurActiveDockWidget();
+    if(dw)
+    {
+         edbee::TextEditorWidget* widget = (edbee::TextEditorWidget* ) dw->widget();
+        if( widget ) {
+            edbee::TextDocument* doc = widget->textDocument();
+            edbee::LineEnding* lineEnding = edbee::LineEnding::get( _mainWindow->lineEndingComboRef_->currentIndex() );
+            if( lineEnding ) {
+                doc->setLineEnding( lineEnding );
+            }
+        }
+    }
 }
 
 void EditorManager::grammarChanged()
 {
+    ads::CDockWidget * dw = getCurActiveDockWidget();
+    if(dw)
+    {
+         edbee::TextEditorWidget* widget = (edbee::TextEditorWidget* ) dw->widget();
+        if( widget ) {
+            edbee::TextDocument* doc = widget->textDocument();
+            QString name = _mainWindow->grammarComboRef_->itemData( _mainWindow->grammarComboRef_->currentIndex() ).toString();
+            edbee::TextGrammar* grammar = edbee::Edbee::instance()->grammarManager()->get(name);
+            if( grammar) {
+                doc->setLanguageGrammar( grammar );
+            }
 
+        }
+    }
 }
 
 void EditorManager::themeChanged()
@@ -127,6 +151,11 @@ void EditorManager::themeChanged()
            }
        }
   }
+}
+
+void EditorManager::zoomChanged()
+{
+
 }
 
 void EditorManager::reArrange()
@@ -167,6 +196,7 @@ EditorManager::EditorManager(ads::CDockManager * dm, IApplication *app, MainWind
     connect( _mainWindow->encodingComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(encodingChanged()) );
     connect( _mainWindow->grammarComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(grammarChanged()) );
     connect( _mainWindow->themeComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(themeChanged()) );
+    connect( _mainWindow->zoomComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(themeChanged()) );
 
 
 }

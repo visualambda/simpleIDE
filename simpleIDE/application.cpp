@@ -193,8 +193,7 @@ void Application::initApplication()
 
     _mainWindow->statusBar()->addPermanentWidget( _mainWindow->zoomComboRef_);
 
-//test
-    _mfw->addFolderList(appDataPath_);
+
 
 
 
@@ -214,7 +213,9 @@ void Application::initApplication()
 
 
 
-
+    //test
+        _mfw->addFolderList(appDataPath_);
+        this->getEditorManager()->openEditor(appDataPath_ + "code/cpp/b_callback.cpp", "");
 
 
 }
