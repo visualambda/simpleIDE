@@ -3,6 +3,13 @@
 #include "edbee/io/tmlanguageparser.h"
 #include "edbee/models/texteditorcommandmap.h"
 #include "edbee/views/texttheme.h"
+#include "edbee/models/textgrammar.h"
+
+
+#include "edbee/util/lineending.h"
+#include "edbee/util/textcodec.h"
+#include "edbee/views/texttheme.h"
+
 
 #include "models/edbeeconfig.h"
 
@@ -17,11 +24,13 @@
 #include "editormanager.h"
 #include "application.h"
 
+#include <QComboBox>
 #include <QDir>
 #include <QFileOpenEvent>
 #include <QMenu>
 #include <QMessageBox>
 #include <QStandardPaths>
+#include <QStatusBar>
 #include <QDesktopWidget>
 
 
@@ -62,7 +71,7 @@ Application::Application(int &argc, char **argv)
     _mainWindow->addWidget(_dockManager);
 
 
-    _editorManager = new EditorManager(_dockManager, _mainWindow->menuView(), this);
+    _editorManager = new EditorManager(_dockManager, this, this->_mainWindow);
 
 }
 
@@ -124,7 +133,60 @@ void Application::initApplication()
 
 
 
+    edbee::TextGrammarManager* gr = edbee::Edbee::instance()->grammarManager();
 
+    QList<edbee::TextGrammar*> grammarList = gr->grammarsSortedByDisplayName();
+
+    _mainWindow->grammarComboRef_->blockSignals(true);
+    // next add all grammars
+    foreach( edbee::TextGrammar* grammar, grammarList ) {
+        _mainWindow->grammarComboRef_->addItem(grammar->displayName(), grammar->name());
+    }
+    _mainWindow->grammarComboRef_->blockSignals(false);
+
+    _mainWindow->statusBar()->addPermanentWidget( _mainWindow->grammarComboRef_);
+
+
+
+
+    _mainWindow->lineEndingComboRef_->blockSignals(true);
+    for( int i=0, cnt = edbee::LineEnding::typeCount(); i<cnt; ++i  ) {
+        const edbee::LineEnding* ending = edbee::LineEnding::get(i);
+        _mainWindow->lineEndingComboRef_->addItem( QString("%1 (%2)").arg(ending->name()).arg(ending->escapedChars()), QString(edbee::LineEnding::get(i)->name()) );
+    }
+     _mainWindow->lineEndingComboRef_->blockSignals(false);
+     _mainWindow->statusBar()->addPermanentWidget( _mainWindow->lineEndingComboRef_);
+
+
+
+
+     QList<edbee::TextCodec*> codecs = edbee::Edbee::instance()->codecManager()->codecList();
+     _mainWindow->encodingComboRef_->blockSignals(true);
+     foreach( edbee::TextCodec* codec, codecs ) {
+        _mainWindow->encodingComboRef_->addItem( codec->name() );
+     }
+     _mainWindow->encodingComboRef_->blockSignals(false);
+    _mainWindow->statusBar()->addPermanentWidget( _mainWindow->encodingComboRef_);
+
+
+
+     edbee::TextThemeManager* themeManager = edbee::Edbee::instance()->themeManager();
+     _mainWindow->themeComboRef_->blockSignals(true);
+     for( int i=0, cnt = themeManager->themeCount(); i<cnt; ++i ) {
+         _mainWindow->themeComboRef_->addItem(themeManager->themeName(i));
+     }
+     _mainWindow->themeComboRef_->blockSignals(false);
+    _mainWindow->statusBar()->addPermanentWidget( _mainWindow->themeComboRef_);
+
+
+    _mainWindow->zoomComboRef_->blockSignals(true);
+    for( int i=1, cnt = 20; i<=cnt; ++i ) {
+        _mainWindow->zoomComboRef_->addItem(QString("%1%").arg(i*10));
+    }
+    _mainWindow->zoomComboRef_->blockSignals(false);
+    _mainWindow->zoomComboRef_->setCurrentText("100%");
+
+    _mainWindow->statusBar()->addPermanentWidget( _mainWindow->zoomComboRef_);
 
 //test
     _mfw->addFolderList(appDataPath_);

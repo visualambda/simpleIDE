@@ -8,7 +8,14 @@ namespace ads {
 class CDockManager;
 class CDockWidget;
 }
+
+namespace edbee {
+class TextEditorWidget;
+//class TextEditorDocument;
+}
+
 class QMenu;
+class MainWindow;
 
 class EditorManager : public IEditorManager
 {
@@ -19,10 +26,16 @@ private slots:
     void onDockmanagerDockAreasAdded();
     void onDockmanagerDockAreasRemoved();
 
+    ads::CDockWidget* getCurActiveDockWidget();
+
+    void encodingChanged();
+    void lineEndingChanged();
+    void grammarChanged();
+    void themeChanged();
 
 public:
 
-    EditorManager(ads::CDockManager * dm, QMenu *menu, IApplication *app);
+    EditorManager(ads::CDockManager * dm,  IApplication *app, MainWindow * mw);
 
 
     ~EditorManager();
@@ -34,7 +47,12 @@ public:
     virtual QWidget *openEditor(const QString &filename, const QString &mimeType);
 
 
-    virtual void setCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory = false);
+    virtual void activeCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory = false);
+
+    void setupEditor( edbee::TextEditorWidget* editor, const QString& fileName );
+
+    void updateCombox(ads::CDockWidget* dw);
+
 
     ads::CDockWidget* getEditor(QString filePath);
 
@@ -42,6 +60,7 @@ public:
 protected:
     ads::CDockManager * _dockManager;
     QMenu * _menu;
+    MainWindow * _mainWindow;
 
 //    bool _hasResetLayout {false};
 

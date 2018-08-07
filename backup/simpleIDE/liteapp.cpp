@@ -565,7 +565,7 @@ void LiteApp::load()
 
 
 #ifdef Q_OS_MAC
-    appDataPath_    = applicationDirPath() + "/../Resources/";
+    appDataPath_    = qApp->applicationDirPath() + "/../Resources/";
 #else
     appDataPath_ = qApp->applicationDirPath() + "/data/";
 #endif

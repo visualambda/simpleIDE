@@ -4,7 +4,7 @@
 
 
 #include <QMainWindow>
-
+#include <QComboBox>
 
 #include "DockManager.h"
 #include "DockWidget.h"

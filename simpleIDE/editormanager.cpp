@@ -6,17 +6,28 @@
 #include "DockWidget.h"
 #include "DockAreaWidget.h"
 
+#include "QComboBox"
 #include <QDomDocument>
 #include <QFile>
 #include <QFileInfo>
 #include <QMenu>
 #include <QMessageBox>
 
-//#include "edbee/edbee.h"
+#include "edbee/edbee.h"
+#include "edbee/models/textdocument.h"
+#include "edbee/models/textgrammar.h"
 #include "edbee/io/textdocumentserializer.h"
 #include "edbee/texteditorwidget.h"
 
+#include "mainwindow.h"
+
 #include "editormanager.h"
+
+#include "edbee/util/lineending.h"
+#include "edbee/util/textcodec.h"
+#include "edbee/views/textrenderer.h"
+#include "edbee/views/texttheme.h"
+
 
 
 QString getNewXml(QString xml, int oldw1, int oldw2);
@@ -29,7 +40,93 @@ void EditorManager::onDockmanagerDockAreasAdded()
 void EditorManager::onDockmanagerDockAreasRemoved()
 {
 //      _hasResetLayout = false;
-//       reArrange();
+    //       reArrange();
+}
+
+ads::CDockWidget *EditorManager::getCurActiveDockWidget()
+{
+    int maxZorder = -1;
+    ads::CDockAreaWidget* curArea = nullptr;
+
+    int x =  _dockManager->dockContainers().count();
+    foreach (ads::CDockContainerWidget* dc, _dockManager->dockContainers())
+    {
+//        if(dc->zOrderIndex() == 0) // is the main window!
+        {
+            QList<ads::CDockAreaWidget*> oda = dc->openedDockAreas();
+            foreach (ads::CDockAreaWidget* daw, oda) {
+
+                bool canDockEditor = false;
+                QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
+                foreach (ads::CDockWidget* daw, odws)
+                {
+                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+                    {
+                        canDockEditor = true;
+                        break;
+                    }
+                }
+
+                int order = daw->zOrderIndex();
+                if(order > maxZorder && canDockEditor)
+                {
+                    maxZorder = order;
+                    curArea = daw;
+                }
+
+            }
+        }
+    }
+    if(curArea)
+        return curArea->currentDockWidget();
+    else
+        return nullptr;
+}
+
+
+
+
+void EditorManager::encodingChanged()
+{
+    ads::CDockWidget * dw = getCurActiveDockWidget();
+    if(dw)
+    {
+         edbee::TextEditorWidget* widget = (edbee::TextEditorWidget* ) dw->widget();
+    if( widget ) {
+        edbee::TextDocument* doc = widget->textDocument();
+        edbee::TextCodec* codec = edbee::Edbee::instance()->codecManager()->codecForName( _mainWindow->encodingComboRef_->currentText().toLatin1() );
+        if( codec ) {
+            doc->setEncoding(codec);
+        }
+    }
+    }
+}
+
+void EditorManager::lineEndingChanged()
+{
+
+}
+
+void EditorManager::grammarChanged()
+{
+
+}
+
+void EditorManager::themeChanged()
+{
+  ads::CDockWidget * dw = getCurActiveDockWidget();
+  if(dw)
+  {
+       edbee::TextEditorWidget* widget = (edbee::TextEditorWidget* ) dw->widget();
+       if( widget ) {
+           QString name = _mainWindow->themeComboRef_->currentText();
+           if( !name.isEmpty() ) {
+               widget->textRenderer()->setThemeByName(name);
+               widget->updateComponents();
+               widget->textRenderer()->invalidateCaches();
+           }
+       }
+  }
 }
 
 void EditorManager::reArrange()
@@ -52,10 +149,11 @@ void EditorManager::reArrange()
 
 }
 
-EditorManager::EditorManager(ads::CDockManager * dm, QMenu * menu, IApplication *app)
+EditorManager::EditorManager(ads::CDockManager * dm, IApplication *app, MainWindow * mw)
 {
     _dockManager = dm;
-    _menu = menu;
+    _mainWindow = mw;
+    _menu = _mainWindow->menuView();
     initWithApp(app);
 
     connect(_dockManager, SIGNAL(dockAreasAdded()),
@@ -63,6 +161,13 @@ EditorManager::EditorManager(ads::CDockManager * dm, QMenu * menu, IApplication 
 
     connect(_dockManager, SIGNAL(dockAreasRemoved()),
             SLOT(onDockmanagerDockAreasRemoved()));
+
+
+    connect( _mainWindow->lineEndingComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(lineEndingChanged()) );
+    connect( _mainWindow->encodingComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(encodingChanged()) );
+    connect( _mainWindow->grammarComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(grammarChanged()) );
+    connect( _mainWindow->themeComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(themeChanged()) );
+
 
 }
 
@@ -89,6 +194,7 @@ QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeT
     ads::CDockWidget* editorToFind = getEditor(fileInfo.filePath());
     if(editorToFind)
     {
+        updateCombox(editorToFind);
         editorToFind->toggleView();
         return nullptr;
     }
@@ -122,16 +228,66 @@ QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeT
                 return nullptr;
             }
 //            addEditorTab( widget, fileInfo.filePath() );
+            setupEditor(widget, fileInfo.filePath());
 
-            setCurrentEditor(widget, fileInfo.fileName(), fileInfo.filePath());
+            activeCurrentEditor(widget, fileInfo.fileName(), fileInfo.filePath());
             return widget;
 
 
 
 }
+void EditorManager::setupEditor(edbee::TextEditorWidget *editor, const QString &fileName)
+{
+    QFileInfo info( fileName );
+
+    // set the state to 'persisted'
+    editor->textDocument()->setPersisted();
+    editor->setProperty("file",fileName);
+
+    // detect the grammar
+    editor->textDocument()->setLanguageGrammar( edbee::Edbee::instance()->grammarManager()->detectGrammarWithFilename(fileName) );
+
+}
+
+void EditorManager::updateCombox(ads::CDockWidget *dw)
+{
+    edbee::TextEditorWidget* widget =  (edbee::TextEditorWidget*)dw->widget();
+    if( widget ) {
+        edbee::TextDocument* doc = widget->textDocument();
+
+        // select the line type
+        edbee::TextGrammar* grammar = doc->languageGrammar();
+        _mainWindow->grammarComboRef_->blockSignals(true);
+        _mainWindow->grammarComboRef_->setCurrentText( grammar->displayName() );
+        _mainWindow->grammarComboRef_->blockSignals(false);
+
+        // select the correct encoding in the combobox
+        edbee::TextCodec* codec = doc->encoding();
+        _mainWindow->encodingComboRef_->blockSignals(true);
+        _mainWindow->encodingComboRef_->setCurrentText(codec->name());
+        _mainWindow->encodingComboRef_->blockSignals(false);
+
+        // select the correct line ending
+        const edbee::LineEnding* lineEnding = doc->lineEnding();
+        _mainWindow->lineEndingComboRef_->blockSignals(true);
+        _mainWindow->lineEndingComboRef_->setCurrentIndex( lineEnding->type() );
+        _mainWindow->lineEndingComboRef_->blockSignals(false);
+
+//        // select the current theme
+        widget->textRenderer()->setThemeByName(_mainWindow->themeComboRef_->currentText());
+//        _mainWindow->themeComboRef_->setCurrentText(widget->textRenderer()->themeName());
+
+        // set the filename in the window menu
+        QString filename = widget->property("file").toString();
+        dw->setWindowFilePath(filename);
 
 
-void EditorManager::setCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory)
+
+    }
+}
+
+
+void EditorManager::activeCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory)
 {
 
     QWidget * w = editor;
@@ -199,12 +355,15 @@ void EditorManager::setCurrentEditor(QWidget *editor, QString filename, QString 
 //         m_mainwindow->_dockManager->show();
 
     }
+    updateCombox(EditorDocker);
     EditorDocker->toggleView();
+
 // && _dockManager->openedDockAreas()== 2 ) /*SplitterNode.attribute("Count") == "2" && 這裏check過了，下面的xml代碼就不需要check了*/
 
 
 
 }
+
 
 ads::CDockWidget *EditorManager::getEditor(QString filePath)
 {

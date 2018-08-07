@@ -48,7 +48,7 @@ public:
 
     virtual QWidget *openEditor(const QString &fileName, const QString &mimeType) = 0;
 
-    virtual void setCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory = false) = 0;
+    virtual void activeCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory = false) = 0;
 
 
 protected:
