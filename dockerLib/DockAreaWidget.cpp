@@ -84,7 +84,7 @@ public:
 protected:
 	virtual void wheelEvent(QWheelEvent* Event) override
 	{
-		Event->accept();
+        Event->accept();
 		const int direction = Event->angleDelta().y();
 		if (direction < 0)
 		{

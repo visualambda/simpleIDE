@@ -18,6 +18,7 @@
 #include "edbee/models/textgrammar.h"
 #include "edbee/io/textdocumentserializer.h"
 #include "edbee/texteditorwidget.h"
+#include "liteeditor.h"
 
 #include "mainwindow.h"
 
@@ -27,6 +28,8 @@
 #include "edbee/util/textcodec.h"
 #include "edbee/views/textrenderer.h"
 #include "edbee/views/texttheme.h"
+
+
 
 
 
@@ -91,7 +94,7 @@ void EditorManager::encodingChanged()
     ads::CDockWidget * dw = getCurActiveDockWidget();
     if(dw)
     {
-         edbee::TextEditorWidget* widget = (edbee::TextEditorWidget* ) dw->widget();
+          LiteEditor* widget = ( LiteEditor* ) dw->widget();
     if( widget ) {
         edbee::TextDocument* doc = widget->textDocument();
         edbee::TextCodec* codec = edbee::Edbee::instance()->codecManager()->codecForName( _mainWindow->encodingComboRef_->currentText().toLatin1() );
@@ -107,7 +110,7 @@ void EditorManager::lineEndingChanged()
     ads::CDockWidget * dw = getCurActiveDockWidget();
     if(dw)
     {
-         edbee::TextEditorWidget* widget = (edbee::TextEditorWidget* ) dw->widget();
+          LiteEditor* widget = ( LiteEditor* ) dw->widget();
         if( widget ) {
             edbee::TextDocument* doc = widget->textDocument();
             edbee::LineEnding* lineEnding = edbee::LineEnding::get( _mainWindow->lineEndingComboRef_->currentIndex() );
@@ -123,7 +126,7 @@ void EditorManager::grammarChanged()
     ads::CDockWidget * dw = getCurActiveDockWidget();
     if(dw)
     {
-         edbee::TextEditorWidget* widget = (edbee::TextEditorWidget* ) dw->widget();
+          LiteEditor* widget = ( LiteEditor* ) dw->widget();
         if( widget ) {
             edbee::TextDocument* doc = widget->textDocument();
             QString name = _mainWindow->grammarComboRef_->itemData( _mainWindow->grammarComboRef_->currentIndex() ).toString();
@@ -141,7 +144,7 @@ void EditorManager::themeChanged()
   ads::CDockWidget * dw = getCurActiveDockWidget();
   if(dw)
   {
-       edbee::TextEditorWidget* widget = (edbee::TextEditorWidget* ) dw->widget();
+        LiteEditor* widget = ( LiteEditor* ) dw->widget();
        if( widget ) {
            QString name = _mainWindow->themeComboRef_->currentText();
            if( !name.isEmpty() ) {
@@ -247,7 +250,7 @@ QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeT
 
             // create the widget and serialize the file
 
-            edbee::TextEditorWidget* widget = new edbee::TextEditorWidget();
+             LiteEditor* widget = new  LiteEditor(this->m_liteApp);
             m_liteApp->config()->applyToWidget( widget );
 
 
@@ -266,7 +269,7 @@ QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeT
 
 
 }
-void EditorManager::setupEditor(edbee::TextEditorWidget *editor, const QString &fileName)
+void EditorManager::setupEditor( LiteEditor *editor, const QString &fileName)
 {
     QFileInfo info( fileName );
 
@@ -281,7 +284,7 @@ void EditorManager::setupEditor(edbee::TextEditorWidget *editor, const QString &
 
 void EditorManager::updateCombox(ads::CDockWidget *dw)
 {
-    edbee::TextEditorWidget* widget =  (edbee::TextEditorWidget*)dw->widget();
+     LiteEditor* widget =  ( LiteEditor*)dw->widget();
     if( widget ) {
         edbee::TextDocument* doc = widget->textDocument();
 

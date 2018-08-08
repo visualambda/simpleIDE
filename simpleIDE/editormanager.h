@@ -14,6 +14,7 @@ class TextEditorWidget;
 //class TextEditorDocument;
 }
 
+class LiteEditor;
 class QMenu;
 class MainWindow;
 
@@ -50,7 +51,7 @@ public:
 
     virtual void activeCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory = false);
 
-    void setupEditor( edbee::TextEditorWidget* editor, const QString& fileName );
+    void setupEditor(  LiteEditor* editor, const QString& fileName );
 
     void updateCombox(ads::CDockWidget* dw);
 
