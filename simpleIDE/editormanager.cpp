@@ -248,6 +248,7 @@ void EditorManager::zoomChanged()
 
 void EditorManager::reArrange()
 {
+    return ;
     if(/*!_hasResetLayout   &&*/ _dockManager->openedDockAreas().count()== 2)
     {
 
