@@ -216,23 +216,24 @@ void Application::initApplication()
     _mainWindow->statusBar()->addPermanentWidget( _mainWindow->themeComboRef_);
 
 
-    _mainWindow->zoomComboRef_->blockSignals(true);
+//    _mainWindow->zoomComboRef_->blockSignals(true);
 
-    QStringList sl;
-    for( int i=1, cnt = 20; i<=cnt; ++i ) {
-         sl<<(QString("%1%").arg(i*10));
-    }
-    qSort(sl.begin(), sl.end(),
-          [](QString a,  QString b) -> bool {
-                return a.split("%")[0].toDouble()  < b.split("%")[0].toDouble() ; });
-    QStringListModel *model = new QStringListModel();
-    model->setStringList(sl);
+//    QStringList sl;
+//    for( int i=1, cnt = 20; i<=cnt; ++i ) {
+//         sl<<(QString("%1%").arg(i*10));
+//    }
+//    qSort(sl.begin(), sl.end(),
+//          [](QString a,  QString b) -> bool {
+//                return a.split("%")[0].toDouble()  < b.split("%")[0].toDouble() ; });
+//    QStringListModel *model = new QStringListModel();
+//    model->setStringList(sl);
 
 
-    _mainWindow->zoomComboRef_->setModel(model);
-    _mainWindow->zoomComboRef_->setCurrentText("100%");
-    _mainWindow->zoomComboRef_->blockSignals(false);
+//    _mainWindow->zoomComboRef_->setModel(model);
+//    _mainWindow->zoomComboRef_->setCurrentText("100%");
+//    _mainWindow->zoomComboRef_->blockSignals(false);
 
+    _editorManager->zoom(settings()->value(EDITOR_FONTZOOM, 1.0).toFloat());
 
     _mainWindow->statusBar()->addPermanentWidget( _mainWindow->zoomComboRef_);
 

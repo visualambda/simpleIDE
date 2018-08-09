@@ -171,7 +171,9 @@ void EditorManager::zoom(float x)
     for( int i=1, cnt = 20; i<=cnt; ++i ) {
          sl<<(QString("%1%").arg(i*10));
     }
-    sl<<(QString("%1%").arg(z));
+    QString toInsert = QString("%1%").arg(z);
+    if(!sl.contains(toInsert))
+        sl<<toInsert;
     qSort(sl.begin(), sl.end(),
           [](QString a,  QString b) -> bool {
                 return a.split("%")[0].toDouble()  < b.split("%")[0].toDouble() ; });

@@ -5,6 +5,7 @@
 #include "edbee/views/components/textmargincomponent.h"
 #include "liteeditor.h"
 #include <QScrollBar>
+#include <QDebug>
 #include "liteeditor_global.h"
 static float _zoom = 1000.f;
 static float _zoomP = 1000.f;
@@ -67,7 +68,8 @@ void LiteEditor::zoomOut(int range)
 void LiteEditor::zoom(float x)
 {
     QFont font = this->font();
-
+    float tmp = font.pointSizeF();
+    qDebug()<<tmp;
     float defaultSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12.0).toFloat();
 
     float y = defaultSize * x;
