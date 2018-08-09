@@ -210,6 +210,7 @@ void EditorManager::zoomChanged()
     QString sz = _mainWindow->zoomComboRef_->currentText();
     float fz = sz.split("%")[0].toDouble();
     float x = fz / 100.0f;
+    m_liteApp->settings()->setValue(EDITOR_FONTZOOM,x);
     zoom(x);
 //    foreach (ads::CDockContainerWidget* dc, _dockManager->dockContainers())
 //    {
