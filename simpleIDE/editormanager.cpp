@@ -267,7 +267,8 @@ void EditorManager::reArrange()
                             ads::CDockSplitter* Splitter = ads::internal::findParent< ads::CDockSplitter* >(areaW);
                             QSize sz = _mainWindow->size();
                             int width = sz.width();
-                            Splitter->setSizes(QList<int>() << width/5 << width-width/5);
+                            int p = 8;
+                            Splitter->setSizes(QList<int>() << width/p << width-width/p);
                             Splitter->setStretchFactor(0,0);
                         }
                     }
