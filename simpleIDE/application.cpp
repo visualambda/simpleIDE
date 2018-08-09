@@ -133,6 +133,8 @@ void Application::initApplication()
     ads::CDockWidget* ProjectExplorerDocker = new ads::CDockWidget(QString("Project Explorer"));
     ProjectExplorerDocker->setWidget(_mfw->widget());
     ProjectExplorerDocker->setObjectName(ProjectExplorerDocker->windowTitle());
+    ProjectExplorerDocker->dockType = ads::CDockWidget::dockType::dockProjectExplorer;
+
 
     ads::CDockAreaWidget*  ProjectExplorerArea = _dockManager->addDockWidget(ads::LeftDockWidgetArea, ProjectExplorerDocker);
     _mainWindow->menuView()->addAction(ProjectExplorerDocker->toggleViewAction());

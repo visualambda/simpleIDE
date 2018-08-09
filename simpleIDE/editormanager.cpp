@@ -5,6 +5,7 @@
 #include "DockManager.h"
 #include "DockWidget.h"
 #include "DockAreaWidget.h"
+#include "DockSplitter.h"
 
 #include "QComboBox"
 #include <QDomDocument>
@@ -46,7 +47,7 @@ void EditorManager::onDockmanagerDockAreasAdded()
 void EditorManager::onDockmanagerDockAreasRemoved()
 {
 //      _hasResetLayout = false;
-    //       reArrange();
+           reArrange();
 }
 
 ads::CDockWidget *EditorManager::getCurActiveDockWidget()
@@ -246,24 +247,50 @@ void EditorManager::zoomChanged()
 //    _mainWindow->zoomComboRef_->setModel(model);
 }
 
+
+
 void EditorManager::reArrange()
 {
-    return ;
-    if(/*!_hasResetLayout   &&*/ _dockManager->openedDockAreas().count()== 2)
+    foreach (ads::CDockContainerWidget* dc, _dockManager->dockContainers())
     {
-
-        std::string str = _dockManager->saveState().toStdString();
-//        QMessageBox::question(0, QString::number( _dockManager->openedDockAreas().at(0)->size().width()), QString::fromStdString(str));
-        QString newxml = getNewXml(QString::fromStdString(str),
-                                   _dockManager->openedDockAreas().at(0)->size().width(),
-                                   _dockManager->openedDockAreas().at(1)->size().width());
-        if(newxml != "")
-        {
-//            _hasResetLayout = true;
-        }
-        _dockManager->restoreState(newxml.toLocal8Bit());
-//        QMessageBox::question(0, "", newxml);
+            QList<ads::CDockAreaWidget*> oda = dc->openedDockAreas();
+            foreach (ads::CDockAreaWidget* daw, oda)
+            {
+                QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
+                foreach (ads::CDockWidget* daw, odws)
+                {
+                    if(daw->dockType == ads::CDockWidget::dockType::dockProjectExplorer)
+                    {
+                        ads::CDockAreaWidget * areaW = daw->dockAreaWidget();
+                        if(areaW)
+                        {
+                            ads::CDockSplitter* Splitter = ads::internal::findParent< ads::CDockSplitter* >(areaW);
+                            QSize sz = _mainWindow->size();
+                            int width = sz.width();
+                            Splitter->setSizes(QList<int>() << width/5 << width-width/5);
+                            Splitter->setStretchFactor(0,0);
+                        }
+                    }
+                }
+            }
     }
+
+    return ;
+//    if(/*!_hasResetLayout   &&*/ _dockManager->openedDockAreas().count()== 2)
+//    {
+
+//        std::string str = _dockManager->saveState().toStdString();
+//        QMessageBox::question(0, QString::number( _dockManager->openedDockAreas().at(0)->size().width()), QString::fromStdString(str));
+//        QString newxml = getNewXml(QString::fromStdString(str),
+//                                   _dockManager->openedDockAreas().at(0)->size().width(),
+//                                   _dockManager->openedDockAreas().at(1)->size().width());
+//        if(newxml != "")
+//        {
+//            _hasResetLayout = true;
+//        }
+//        _dockManager->restoreState(newxml.toLocal8Bit());
+//        QMessageBox::question(0, "", newxml);
+//    }
 
 }
 

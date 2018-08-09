@@ -27,6 +27,8 @@ public:
 
      QMenu* menuView();
 
+     virtual void resizeEvent(QResizeEvent* event);
+
 public:
      QComboBox* grammarComboRef_ {nullptr};
 

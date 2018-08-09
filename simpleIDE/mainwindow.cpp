@@ -61,4 +61,21 @@ QMenu *MainWindow::menuView()
     return this->ui->menuView;
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+
+    //    ads::CDockSplitter* Splitter = ads::internal::findParent< ads::CDockSplitter* >(ProjectExplorerDocker);
+    //     QSize sz = _mainWindow->size();
+    //     int width = sz.width();
+    //     Splitter->setSizes(QList<int>() << width/15 << width-width/15);
+//         ads::CDockSplitter* Splitter = ads::internal::findParent< ads::CDockSplitter* >(ProjectExplorerDocker);
+//               QSize sz = _mainWindow->size();
+//               int width = sz.width();
+//               Splitter->setSizes(QList<int>() << width/13 << width-width/13);
+//               Splitter->setStretchFactor(0,0); //可以控制不自动调整
+//    //           Splitter->setStretchFactor(1,1);
+
+
+}
+
 
