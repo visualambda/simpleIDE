@@ -59,6 +59,11 @@ public:
     ads::CDockWidget* getEditor(QString filePath);
 
     void reArrange();
+
+    void zoom(float x);
+
+public:
+
 protected:
     ads::CDockManager * _dockManager;
     QMenu * _menu;

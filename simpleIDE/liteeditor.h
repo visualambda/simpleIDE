@@ -14,17 +14,19 @@ class LiteEditor : public edbee::TextEditorWidget
 public:
     LiteEditor(IApplication *app);
 
-
     void zoomIn(int range = 1);
     void zoomOut(int range = 1);
 
+    void zoom(float x);
+    virtual void resizeEvent(QResizeEvent* event);
 
 protected:
   void wheelEvent(QWheelEvent *e);
-
+  void mouseZoom(int range);
 protected:
     IApplication * m_liteApp;
-
+signals:
+    void requestFontZoom(float);
 
 public:
 

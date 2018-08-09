@@ -39,26 +39,29 @@ public:
 public:
     virtual EdbeeConfig* config() const;
     virtual IEditorManager * getEditorManager();
-
+    virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString());
+    virtual QSettings *settings();
 protected:
     void registerCustomEditorCommands();
 
 private:
-    QString appDataPath_;           ///< The application data path
-    QString userDataPath_;
+    QString appDataPath_{""};           ///< The application data path
+    QString userDataPath_{""};
 
 
-    EdbeeConfig* config_;
-    MainWindow * _mainWindow;
+    EdbeeConfig* config_{nullptr};
+    MainWindow * _mainWindow{nullptr};
 
-    MultiFolderWindow *_mfw;
+    MultiFolderWindow *_mfw{nullptr};
 
 
-    ads::CDockManager * _dockManager;
+    ads::CDockManager * _dockManager{nullptr};
 
-    IEditorManager * _editorManager;
+    IEditorManager * _editorManager{nullptr};
 
-    QSplashScreen * splash;
+    QSplashScreen * splash{nullptr};
+
+    QSettings       *m_settings {nullptr};
 
 };
 

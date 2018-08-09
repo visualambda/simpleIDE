@@ -3,7 +3,7 @@
 
 
 #include <QObject>
-
+#include <QSettings>
 class IEditorManager;
 class EdbeeConfig;
 class IApplication : public QObject
@@ -15,8 +15,8 @@ public:
     virtual EdbeeConfig* config() const = 0;
 
     virtual IEditorManager* getEditorManager() = 0;
-
-
+    virtual void sendBroadcast(const QString &module, const QString &id, const QString &param = QString())=0;
+    virtual QSettings* settings() = 0;
 };
 
 
@@ -50,6 +50,7 @@ public:
 
     virtual void activeCurrentEditor(QWidget *editor, QString filename, QString filePath, bool ignoreNavigationHistory = false) = 0;
 
+    virtual void zoom(float x) = 0;
 
 protected:
     IApplication * m_liteApp;

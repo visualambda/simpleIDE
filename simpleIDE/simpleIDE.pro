@@ -58,7 +58,8 @@ HEADERS += \
     folderView/symboltreeview.h \
     interfaces/api.h \
     editormanager.h \
-    liteeditor.h
+    liteeditor.h \
+    liteeditor_global.h
 
 FORMS += \
         mainwindow.ui

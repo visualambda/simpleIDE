@@ -5,7 +5,7 @@
 #include "edbee/views/components/textmargincomponent.h"
 #include "liteeditor.h"
 #include <QScrollBar>
-
+#include "liteeditor_global.h"
 static float _zoom = 1000.f;
 static float _zoomP = 1000.f;
 
@@ -14,32 +14,40 @@ LiteEditor::LiteEditor(IApplication *app)
     m_liteApp = app;
 
     this->verticalScrollBar()->installEventFilter(this);
+
+
 }
 
-void LiteEditor::zoomIn(int range)
+
+void LiteEditor::mouseZoom(int range)
 {
     _zoom += range;
 
-    if (_zoom <= 10) {
-        _zoom = 10;
-        return;
-    }
+    if (_zoom <= 10)
+         _zoom = 10;
+
+    float x = _zoom / _zoomP;
+
+    m_liteApp->settings()->setValue(EDITOR_FONTZOOM,x);
+    m_liteApp->sendBroadcast("liteeditor","font",/*this->filePath()*/"");
+}
 
 
-    QFont font = this->font();
-    int _size = font.pointSize();
+void LiteEditor::zoomIn(int range)
+{
+     mouseZoom(range);
 
-    float x = _size;
-    x = 12.f * _zoom / _zoomP;
+//    QFont font = this->font();
+
+//    float x = 12.f * _zoom / _zoomP;
 
 
-    font.setPointSizeF(x);
-    this->setFont(font);
-    this->fullUpdate();
+//    font.setPointSizeF(x);
+//    this->setFont(font);
+//    this->fullUpdate();
 
 //    QFont f;
 //    int ds = f.pixelSize();
-
 
 //    font.setPixelSize(/*ds + range*/50);
 
@@ -53,24 +61,28 @@ void LiteEditor::zoomIn(int range)
 
 void LiteEditor::zoomOut(int range)
 {
-    _zoom += range;
+    mouseZoom(range);
+}
 
-    if (_zoom <= 10) {
-         _zoom = 10;
-        return;
-    }
-
-
+void LiteEditor::zoom(float x)
+{
     QFont font = this->font();
-    int _size = font.pointSize();
 
-    float x = _size;
-    x = 12.0 * _zoom / _zoomP;
+    float defaultSize = m_liteApp->settings()->value(EDITOR_FONTSIZE,12.0).toFloat();
 
+    float y = defaultSize * x;
 
-    font.setPointSizeF(x);
+    font.setPointSizeF(y);
     this->setFont(font);
     this->fullUpdate();
+}
+
+void LiteEditor::resizeEvent(QResizeEvent *event)
+{
+    edbee::TextEditorWidget::resizeEvent(event);
+
+    float x = m_liteApp->settings()->value(EDITOR_FONTZOOM,1.0).toFloat();
+    zoom(x);
 }
 
 

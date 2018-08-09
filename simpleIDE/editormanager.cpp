@@ -12,6 +12,9 @@
 #include <QFileInfo>
 #include <QMenu>
 #include <QMessageBox>
+#include <QStringList>
+#include <QStringListModel>
+#include <QSettings>
 
 #include "edbee/edbee.h"
 #include "edbee/models/textdocument.h"
@@ -30,7 +33,7 @@
 #include "edbee/views/texttheme.h"
 
 
-
+#include "liteeditor_global.h"
 
 
 QString getNewXml(QString xml, int oldw1, int oldw2);
@@ -148,6 +151,7 @@ void EditorManager::themeChanged()
        if( widget ) {
            QString name = _mainWindow->themeComboRef_->currentText();
            if( !name.isEmpty() ) {
+               m_liteApp->settings()->setValue(EDITOR_THEME, name);
                widget->textRenderer()->setThemeByName(name);
                widget->updateComponents();
                widget->textRenderer()->invalidateCaches();
@@ -155,10 +159,88 @@ void EditorManager::themeChanged()
        }
   }
 }
+void EditorManager::zoom(float x)
+{
+    float y = x * 100;
+    int z = y;
 
+
+    _mainWindow->zoomComboRef_->blockSignals(true);
+
+    QStringList sl;
+    for( int i=1, cnt = 20; i<=cnt; ++i ) {
+         sl<<(QString("%1%").arg(i*10));
+    }
+    sl<<(QString("%1%").arg(z));
+    qSort(sl.begin(), sl.end(),
+          [](QString a,  QString b) -> bool {
+                return a.split("%")[0].toDouble()  < b.split("%")[0].toDouble() ; });
+    QStringListModel *model = new QStringListModel();
+    model->setStringList(sl);
+
+    _mainWindow->zoomComboRef_->setModel(model);
+    _mainWindow->zoomComboRef_->setCurrentText((QString("%1%").arg(z)));
+    _mainWindow->zoomComboRef_->blockSignals(false);
+
+
+
+    foreach (ads::CDockContainerWidget* dc, _dockManager->dockContainers())
+    {
+
+            QList<ads::CDockAreaWidget*> oda = dc->openedDockAreas();
+            foreach (ads::CDockAreaWidget* daw, oda)
+            {
+                QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
+                foreach (ads::CDockWidget* daw, odws)
+                {
+                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+                    {
+                      LiteEditor* w = ( LiteEditor*) daw->widget();
+                      w->zoom(x);
+                    }
+                }
+            }
+    }
+}
 void EditorManager::zoomChanged()
 {
 
+    QString sz = _mainWindow->zoomComboRef_->currentText();
+    float fz = sz.split("%")[0].toDouble();
+    float x = fz / 100.0f;
+    zoom(x);
+//    foreach (ads::CDockContainerWidget* dc, _dockManager->dockContainers())
+//    {
+
+//            QList<ads::CDockAreaWidget*> oda = dc->openedDockAreas();
+//            foreach (ads::CDockAreaWidget* daw, oda)
+//            {
+//                QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
+//                foreach (ads::CDockWidget* daw, odws)
+//                {
+//                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+//                    {
+//                      LiteEditor* w = ( LiteEditor*) daw->widget();
+//                      w->zoom(x);
+//                    }
+//                }
+//            }
+//    }
+
+
+
+//    QStringList sl;
+//    for( int i=1, cnt = 20; i<=cnt; ++i ) {
+//         sl<<(QString("%1%").arg(i*10));
+//    }
+//    qSort(sl.begin(), sl.end(),
+//          [](QString a,  QString b) -> bool {
+//                return a.split("%")[0].toDouble()  < b.split("%")[0].toDouble() ; });
+//    QStringListModel *model = new QStringListModel();
+//    model->setStringList(sl);
+
+
+//    _mainWindow->zoomComboRef_->setModel(model);
 }
 
 void EditorManager::reArrange()
@@ -181,6 +263,8 @@ void EditorManager::reArrange()
 
 }
 
+
+
 EditorManager::EditorManager(ads::CDockManager * dm, IApplication *app, MainWindow * mw)
 {
     _dockManager = dm;
@@ -199,8 +283,7 @@ EditorManager::EditorManager(ads::CDockManager * dm, IApplication *app, MainWind
     connect( _mainWindow->encodingComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(encodingChanged()) );
     connect( _mainWindow->grammarComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(grammarChanged()) );
     connect( _mainWindow->themeComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(themeChanged()) );
-    connect( _mainWindow->zoomComboRef_, SIGNAL(currentIndexChanged(int)), SLOT(themeChanged()) );
-
+    connect( _mainWindow->zoomComboRef_, SIGNAL(currentIndexChanged(int)),  SLOT(zoomChanged() )) ;
 
 }
 

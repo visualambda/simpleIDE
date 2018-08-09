@@ -34,8 +34,11 @@
 #include <QDesktopWidget>
 #include <QSplashScreen>
 #include <QThread>
-#include "mainwindow.h"
+#include <QDebug>
 
+#include <QStringListModel>
+#include "mainwindow.h"
+#include "liteeditor_global.h"
 Application::Application(int &argc, char **argv)
      : QApplication( argc, argv ), // IApplication(),
        _mainWindow(0)
@@ -74,6 +77,9 @@ void Application::initApplication()
         appDataPath_ = qApp->applicationDirPath() + "/data/";
     #endif
     userDataPath_   = QStandardPaths::writableLocation( QStandardPaths::DataLocation) + "/";
+
+
+    m_settings = new QSettings(appDataPath_+"/config/liteide.ini", QSettings::IniFormat);
 
 
     // configure the edbee component to use the default paths
@@ -174,22 +180,59 @@ void Application::initApplication()
     _mainWindow->statusBar()->addPermanentWidget( _mainWindow->encodingComboRef_);
 
 
+    QString ts = "Solarized (Light)";
 
+    if(this->settings()->contains(EDITOR_THEME))
+    {
+          ts =this->settings()->value(EDITOR_THEME).toString();
+    }
+    else
+    {
+        this->settings()->setValue(EDITOR_THEME, ts);
+
+    }
+
+    bool find = false;
      edbee::TextThemeManager* themeManager = edbee::Edbee::instance()->themeManager();
      _mainWindow->themeComboRef_->blockSignals(true);
      for( int i=0, cnt = themeManager->themeCount(); i<cnt; ++i ) {
+         QString tmp =themeManager->themeName(i);
+         if(tmp == ts)
+         {
+            find = true;
+
+         }
          _mainWindow->themeComboRef_->addItem(themeManager->themeName(i));
      }
+
+    if(!find)
+        this->settings()->remove(EDITOR_THEME);
+    else
+        _mainWindow->themeComboRef_->setCurrentText(ts);
+
+
+
      _mainWindow->themeComboRef_->blockSignals(false);
     _mainWindow->statusBar()->addPermanentWidget( _mainWindow->themeComboRef_);
 
 
     _mainWindow->zoomComboRef_->blockSignals(true);
+
+    QStringList sl;
     for( int i=1, cnt = 20; i<=cnt; ++i ) {
-        _mainWindow->zoomComboRef_->addItem(QString("%1%").arg(i*10));
+         sl<<(QString("%1%").arg(i*10));
     }
-    _mainWindow->zoomComboRef_->blockSignals(false);
+    qSort(sl.begin(), sl.end(),
+          [](QString a,  QString b) -> bool {
+                return a.split("%")[0].toDouble()  < b.split("%")[0].toDouble() ; });
+    QStringListModel *model = new QStringListModel();
+    model->setStringList(sl);
+
+
+    _mainWindow->zoomComboRef_->setModel(model);
     _mainWindow->zoomComboRef_->setCurrentText("100%");
+    _mainWindow->zoomComboRef_->blockSignals(false);
+
 
     _mainWindow->statusBar()->addPermanentWidget( _mainWindow->zoomComboRef_);
 
@@ -259,6 +302,20 @@ const char *Application::osNameString()
 IEditorManager *Application::getEditorManager()
 {
     return _editorManager;
+}
+
+void Application::sendBroadcast(const QString &module, const QString &id, const QString &param)
+{
+    if(module == "liteeditor" && id == "font")
+    {
+        float x = this->settings()->value(EDITOR_FONTZOOM,1.0).toFloat();
+        this->getEditorManager()->zoom(x);
+    }
+}
+
+QSettings *Application::settings()
+{
+    return m_settings;
 }
 
 void Application::registerCustomEditorCommands()
