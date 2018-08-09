@@ -264,12 +264,25 @@ void EditorManager::reArrange()
                         ads::CDockAreaWidget * areaW = daw->dockAreaWidget();
                         if(areaW)
                         {
+                            int p = 8;
                             ads::CDockSplitter* Splitter = ads::internal::findParent< ads::CDockSplitter* >(areaW);
                             QSize sz = _mainWindow->size();
                             int width = sz.width();
-                            int p = 8;
-                            Splitter->setSizes(QList<int>() << width/p << width-width/p);
+
+
+                            int count = Splitter->count();
+                            QList<int> sizes;
+                            sizes << width/p;
+                            int left_size = width-width/p;
                             Splitter->setStretchFactor(0,0);
+                            for (int i = 1; i < count; i++) {
+                                sizes << left_size;
+                                Splitter->setStretchFactor(i,1);
+                            }
+                            Splitter->setSizes(sizes);
+
+//                            Splitter->setSizes(QList<int>() << width/p << width-width/p);
+//                            Splitter->setStretchFactor(0,0);
                         }
                     }
                 }
