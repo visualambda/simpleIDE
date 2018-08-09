@@ -270,14 +270,18 @@ void EditorManager::reArrange()
                             int width = sz.width();
 
 
+                            int index = Splitter->indexOf(areaW);
                             int count = Splitter->count();
                             QList<int> sizes;
-                            sizes << width/p;
                             int left_size = width-width/p;
-                            Splitter->setStretchFactor(0,0);
-                            for (int i = 1; i < count; i++) {
-                                sizes << left_size;
-                                Splitter->setStretchFactor(i,1);
+                            for (int i = 0; i < count; i++) {
+                                if (i == index) {
+                                    sizes << width/p;
+                                    Splitter->setStretchFactor(i,0);
+                                } else {
+                                    sizes << left_size;
+                                    Splitter->setStretchFactor(i,1);
+                                }
                             }
                             Splitter->setSizes(sizes);
 
