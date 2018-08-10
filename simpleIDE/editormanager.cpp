@@ -247,10 +247,18 @@ void EditorManager::zoomChanged()
 //    _mainWindow->zoomComboRef_->setModel(model);
 }
 
-
+void setStretchFactorH(QSplitter * splitter, int index, int stretch)
+{
+    QWidget *widget = splitter->widget(index);
+    QSizePolicy policy = widget->sizePolicy();
+    policy.setHorizontalStretch(stretch);
+//    policy.setVerticalStretch(stretch);
+    widget->setSizePolicy(policy);
+}
 
 void EditorManager::reArrange()
 {
+//    return ;
     foreach (ads::CDockContainerWidget* dc, _dockManager->dockContainers())
     {
             QList<ads::CDockAreaWidget*> oda = dc->openedDockAreas();
@@ -269,6 +277,9 @@ void EditorManager::reArrange()
                             QSize sz = _mainWindow->size();
                             int width = sz.width();
 
+                            Qt::Orientation o = Splitter->orientation();
+
+
 
                             int index = Splitter->indexOf(areaW);
                             int count = Splitter->count();
@@ -277,10 +288,12 @@ void EditorManager::reArrange()
                             for (int i = 0; i < count; i++) {
                                 if (i == index) {
                                     sizes << width/p;
-                                    Splitter->setStretchFactor(i,0);
+//                                    Splitter->setStretchFactor(i,0);
+                                    setStretchFactorH(Splitter, i, 0);
                                 } else {
                                     sizes << left_size;
-                                    Splitter->setStretchFactor(i,1);
+//                                    Splitter->setStretchFactor(i,1);
+                                    setStretchFactorH(Splitter, i, 1);
                                 }
                             }
                             Splitter->setSizes(sizes);
