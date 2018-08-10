@@ -390,6 +390,11 @@ unsigned int CDockAreaWidget::zOrderIndex() const
     return d->zOrderIndex;
 }
 
+void CDockAreaWidget::inczOrderIndex()
+{
+    d->zOrderIndex = ++zOrderCounter;
+}
+
 
 bool CDockAreaWidget::event(QEvent *e)
 {
@@ -596,7 +601,7 @@ void CDockAreaWidget::setCurrentIndex(int index)
 	}
 
 	d->ContentsLayout->setCurrentIndex(index);
-	d->ContentsLayout->currentWidget()->show();
+    d->ContentsLayout->currentWidget()->show();
 	emit currentChanged(index);
 }
 

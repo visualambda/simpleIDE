@@ -37,7 +37,7 @@
 
 
 
-
+#include <QDebug>
 
 ads::CDockWidget *EditorManager::getCurActiveDockWidget()
 {
@@ -269,7 +269,15 @@ void EditorManager::zoomChanged()
 //    model->setStringList(sl);
 
 
-//    _mainWindow->zoomComboRef_->setModel(model);
+    //    _mainWindow->zoomComboRef_->setModel(model);
+}
+
+void EditorManager::focusChanged(QString title, int isIn)
+{
+//    QMessageBox::question(0, " EditorManager::focusChanged", " EditorManager::focusChanged");
+    qDebug()<<title<<" fcousChanged";
+
+    updateCombox(getCurActiveDockWidget());
 }
 
 
@@ -334,7 +342,10 @@ QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeT
             // create the widget and serialize the file
 
             LiteEditor* widget = new  LiteEditor(this->m_liteApp);
+            widget->setObjectName(fileInfo.filePath());
             m_liteApp->config()->applyToWidget( widget );
+
+            connect(widget, SIGNAL(focusChanged(QString,int)), this, SLOT(focusChanged(QString,int)));
 
 
             edbee::TextDocumentSerializer serializer( widget->textDocument() );

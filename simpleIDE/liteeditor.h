@@ -4,18 +4,20 @@
 
 #include <interfaces/api.h>
 
+#include "edbee/texteditorwidget.h"
 #include <QWheelEvent>
-namespace edbee {
-class TextEditorWidget;
-//class TextEditorDocument;
-}
+//namespace edbee {
+//class TextEditorWidget;
+////class TextEditorDocument;
+//}
 class LiteEditor : public edbee::TextEditorWidget
 {
+    Q_OBJECT
 public:
     LiteEditor(IApplication *app);
 
-    void zoomIn(int range = 1);
-    void zoomOut(int range = 1);
+//    void zoomIn(int range = 1);
+//    void zoomOut(int range = 1);
 
     void zoom(float x);
     virtual void resizeEvent(QResizeEvent* event);
@@ -25,32 +27,11 @@ protected:
   void mouseZoom(int range);
 protected:
     IApplication * m_liteApp;
-signals:
-    void requestFontZoom(float);
 
 public:
-
-    /*
-    bool eventFilter(QObject* , QEvent* evt)
-     {
-         if (evt->type() == QEvent::Wheel ||
-             evt->type() == QEvent::MouseButtonPress ||
-             evt->type() == QEvent::MouseButtonRelease ||
-             evt->type() == QEvent::MouseButtonDblClick
-             )
-         {
-             // ignore the event (this effectively
-             // makes it "skip" one object)
-             evt->ignore();
-         }
-         // return false to continue event propagation
-         // for all events
-         return false;
-     }
-    */
-
     bool eventFilter(QObject* obj, QEvent* e);
-
+signals:
+    void focusChanged(QString title, int isIn);// in 1 out 0.
 
 };
 

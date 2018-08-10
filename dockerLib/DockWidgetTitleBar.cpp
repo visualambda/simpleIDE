@@ -221,7 +221,7 @@ CDockWidgetTitleBar::~CDockWidgetTitleBar()
 void CDockWidgetTitleBar::mousePressEvent(QMouseEvent* ev)
 {
 	if (ev->button() == Qt::LeftButton)
-	{
+    {
 		qDebug() << "CDockWidgetTitleBar::mousePressEvent";
 		ev->accept();
         d->DragStartMousePosition = ev->pos();
@@ -259,6 +259,19 @@ void CDockWidgetTitleBar::mouseReleaseEvent(QMouseEvent* ev)
 
     d->DragStartMousePosition = QPoint();
     d->DragState = DraggingInactive;
+
+    d->DockArea->inczOrderIndex();
+//    modify
+     CDockWidget* d = this->dockWidget();
+     if(d)
+     {
+         QWidget* w = d->widget();
+         if(w)
+         {
+             w->setFocus();
+         }
+     }
+
 	QFrame::mouseReleaseEvent(ev);
 }
 

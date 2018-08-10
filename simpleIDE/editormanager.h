@@ -30,7 +30,7 @@ private slots:
     void grammarChanged();
     void themeChanged();
     void zoomChanged();
-
+    void focusChanged(QString title, int isIn);
 public:
 
     EditorManager(ads::CDockManager * dm,  IApplication *app, MainWindow * mw);

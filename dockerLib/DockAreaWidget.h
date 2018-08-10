@@ -89,6 +89,8 @@ public:
      */
     virtual unsigned int zOrderIndex() const;
 
+    virtual void inczOrderIndex();
+
 
 	/**
 	 * Returns the dock container widget this dock area widget belongs to or 0

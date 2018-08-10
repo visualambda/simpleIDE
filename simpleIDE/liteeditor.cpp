@@ -1,12 +1,17 @@
 
 
-#include "edbee/texteditorwidget.h"
+
 #include "edbee/views/components/texteditorcomponent.h"
 #include "edbee/views/components/textmargincomponent.h"
 #include "liteeditor.h"
 #include <QScrollBar>
 #include <QDebug>
 #include "liteeditor_global.h"
+
+#include "DockWidget.h"
+#include "DockAreaWidget.h"
+#include "ads_globals.h"
+
 static float _zoom = 1000.f;
 static float _zoomP = 1000.f;
 
@@ -34,36 +39,36 @@ void LiteEditor::mouseZoom(int range)
 }
 
 
-void LiteEditor::zoomIn(int range)
-{
-     mouseZoom(range);
+//void LiteEditor::zoomIn(int range)
+//{
+//     mouseZoom(range);
 
-//    QFont font = this->font();
+////    QFont font = this->font();
 
-//    float x = 12.f * _zoom / _zoomP;
-
-
-//    font.setPointSizeF(x);
-//    this->setFont(font);
-//    this->fullUpdate();
-
-//    QFont f;
-//    int ds = f.pixelSize();
-
-//    font.setPixelSize(/*ds + range*/50);
-
-//    this->textEditorComponent()->setFont(font);
-
-//    this->textMarginComponent()->setFont(font);
+////    float x = 12.f * _zoom / _zoomP;
 
 
+////    font.setPointSizeF(x);
+////    this->setFont(font);
+////    this->fullUpdate();
 
-}
+////    QFont f;
+////    int ds = f.pixelSize();
 
-void LiteEditor::zoomOut(int range)
-{
-    mouseZoom(range);
-}
+////    font.setPixelSize(/*ds + range*/50);
+
+////    this->textEditorComponent()->setFont(font);
+
+////    this->textMarginComponent()->setFont(font);
+
+
+
+//}
+
+//void LiteEditor::zoomOut(int range)
+//{
+//    mouseZoom(range);
+//}
 
 void LiteEditor::zoom(float x)
 {
@@ -91,20 +96,42 @@ void LiteEditor::resizeEvent(QResizeEvent *event)
 void LiteEditor::wheelEvent(QWheelEvent *e)
 {
     return;
-    if (/*m_scrollWheelZooming &&*/ 1) {
-        const int delta = e->delta();
-        if (delta < 0)
-            zoomOut(delta);
-        else if (delta > 0)
-            zoomIn(delta);
-        return ;
-    }
-    edbee::TextEditorWidget::wheelEvent(e);
+//    if (/*m_scrollWheelZooming &&*/ 1) {
+//        const int delta = e->delta();
+//        if (delta < 0)
+//            zoomOut(delta);
+//        else if (delta > 0)
+//            zoomIn(delta);
+//        return ;
+//    }
+//    edbee::TextEditorWidget::wheelEvent(e);
 
 }
 
 bool LiteEditor::eventFilter(QObject *obj, QEvent *e)
 {
+    if(e->type()== QEvent::FocusIn)
+    {
+        ads::CDockWidget* dw = ads::internal::findParent<ads::CDockWidget*>(this);
+        if(dw)
+        {
+            ads::CDockAreaWidget * daw = dw->dockAreaWidget();
+            if(daw)
+            {
+                daw->inczOrderIndex();
+            }
+        }
+
+        emit focusChanged(this->objectName(), 1);// in 1 out 0.
+//        qDebug()<<this->objectName()<< " in";
+    }
+
+    if(e->type()== QEvent::FocusOut)
+    {
+//        emit focusChanged(this->objectName(), 0);
+//        qDebug()<<this->objectName()<< " out";
+    }
+
    if (  e->type() == QEvent::Wheel)
     {
         QWheelEvent* we = static_cast<QWheelEvent*>(e);
@@ -113,12 +140,11 @@ bool LiteEditor::eventFilter(QObject *obj, QEvent *e)
                 (we->modifiers() & Qt::ControlModifier))
         {
 //             wheelEvent(we);
-
-            const int delta = we->delta();
-            if (delta < 0)
-                zoomOut(delta);
-            else if (delta > 0)
-                zoomIn(delta);
+            mouseZoom(we->delta());
+//            if (delta < 0)
+//                zoomOut(delta);
+//            else if (delta > 0)
+//                zoomIn(delta);
 
              return true;
         }
