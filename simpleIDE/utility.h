@@ -2,6 +2,7 @@
 #define UTILITY_H
 
 #include <QSplitter>
+
 class utility
 {
 public:
@@ -10,4 +11,5 @@ public:
 
 void setStretchFactorH(QSplitter * splitter, int index, int stretch);
 
+QString getNewXml(QString xml, int oldw1, int oldw2);
 #endif // UTILITY_H
