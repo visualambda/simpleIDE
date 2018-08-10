@@ -39,7 +39,9 @@ SOURCES += \
     folderView/symboltreeview.cpp \
     interfaces/api.cpp \
     editormanager.cpp \
-    liteeditor.cpp
+    liteeditor.cpp \
+    projectexplorermanager.cpp \
+    utility.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -59,7 +61,9 @@ HEADERS += \
     interfaces/api.h \
     editormanager.h \
     liteeditor.h \
-    liteeditor_global.h
+    liteeditor_global.h \
+    projectexplorermanager.h \
+    utility.h
 
 FORMS += \
         mainwindow.ui

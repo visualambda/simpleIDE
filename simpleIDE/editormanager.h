@@ -20,12 +20,7 @@ class MainWindow;
 
 class EditorManager : public IEditorManager
 {
-        Q_OBJECT
-
-
-private slots:
-    void onDockmanagerDockAreasAdded();
-    void onDockmanagerDockAreasRemoved();
+    Q_OBJECT
 
     ads::CDockWidget* getCurActiveDockWidget();
 
@@ -58,7 +53,6 @@ public:
 
     ads::CDockWidget* getEditor(QString filePath);
 
-    void reArrange();
 
     void zoom(float x);
 

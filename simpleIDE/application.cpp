@@ -22,6 +22,7 @@
 #include "DockWidget.h"
 
 #include "editormanager.h"
+#include "projectexplorermanager.h"
 #include "application.h"
 
 #include <QComboBox>
@@ -143,7 +144,7 @@ void Application::initApplication()
 
     _editorManager = new EditorManager(_dockManager, this, this->_mainWindow);
 
-
+    _projectExplorerManager = new ProjectExplorerManager(_dockManager, this, this->_mainWindow);
 
 
     edbee::TextGrammarManager* gr = edbee::Edbee::instance()->grammarManager();

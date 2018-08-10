@@ -58,6 +58,7 @@ private:
     ads::CDockManager * _dockManager{nullptr};
 
     IEditorManager * _editorManager{nullptr};
+    IProjectExplorerManager * _projectExplorerManager {nullptr};
 
     QSplashScreen * splash{nullptr};
 

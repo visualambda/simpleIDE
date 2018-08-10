@@ -58,6 +58,23 @@ protected:
 };
 
 
+class IProjectExplorerManager : public QObject
+{
+    Q_OBJECT
+public:
+    IProjectExplorerManager( IApplication *app, QObject *parent = 0) : QObject(parent)
+    {
+        m_liteApp = app;
+    }
+
+    virtual ~IProjectExplorerManager(){}
+
+
+
+protected:
+    IApplication * m_liteApp;
+};
+
 
 
 
