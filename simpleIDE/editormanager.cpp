@@ -82,6 +82,9 @@ ads::CDockWidget *EditorManager::getCurActiveDockWidget()
 
 
 
+
+
+
 void EditorManager::encodingChanged()
 {
     ads::CDockWidget * dw = getCurActiveDockWidget();
@@ -132,22 +135,55 @@ void EditorManager::grammarChanged()
     }
 }
 
+
+
+QList<ads::CDockWidget*> EditorManager::getAllDockWidget()
+{
+    QList<ads::CDockWidget*> dwl;
+    foreach (ads::CDockContainerWidget* dc, _dockManager->dockContainers())
+    {
+            QList<ads::CDockAreaWidget*> oda = dc->openedDockAreas();
+            foreach (ads::CDockAreaWidget* daw, oda) {
+                QList<ads::CDockWidget*> odws = daw->dockWidgets() ;
+                foreach (ads::CDockWidget* daw, odws)
+                {
+                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+                    {
+                        dwl.append(daw);
+
+                    }
+                }
+            }
+    }
+    return dwl;
+
+}
+
+
 void EditorManager::themeChanged()
 {
-  ads::CDockWidget * dw = getCurActiveDockWidget();
-  if(dw)
-  {
-        LiteEditor* widget = ( LiteEditor* ) dw->widget();
-       if( widget ) {
-           QString name = _mainWindow->themeComboRef_->currentText();
-           if( !name.isEmpty() ) {
-               m_liteApp->settings()->setValue(EDITOR_THEME, name);
-               widget->textRenderer()->setThemeByName(name);
-               widget->updateComponents();
-               widget->textRenderer()->invalidateCaches();
+//  ads::CDockWidget * dw = getCurActiveDockWidget();
+  QList<ads::CDockWidget*>  dwl= getAllDockWidget();
+  foreach (ads::CDockWidget* dw, dwl) {
+      if(dw)
+      {
+            LiteEditor* widget = ( LiteEditor* ) dw->widget();
+           if( widget ) {
+               QString name = _mainWindow->themeComboRef_->currentText();
+               QString curThemeName = widget->textRenderer()->themeName();
+               if( !name.isEmpty() && name != curThemeName) {
+                   m_liteApp->settings()->setValue(EDITOR_THEME, name);
+                   widget->textRenderer()->setThemeByName(name);
+                   widget->updateComponents();
+                   widget->textRenderer()->invalidateCaches();
+                   widget->fullUpdate();
+
+               }
            }
-       }
+      }
   }
+
+
 }
 void EditorManager::zoom(float x)
 {

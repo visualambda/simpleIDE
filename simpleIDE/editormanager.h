@@ -11,6 +11,7 @@ class CDockWidget;
 
 namespace edbee {
 class TextEditorWidget;
+class CDockWidget;
 //class TextEditorDocument;
 }
 
@@ -21,9 +22,9 @@ class MainWindow;
 class EditorManager : public IEditorManager
 {
     Q_OBJECT
-
+private slots:
     ads::CDockWidget* getCurActiveDockWidget();
-
+    QList<ads::CDockWidget*> getAllDockWidget();
     void encodingChanged();
     void lineEndingChanged();
     void grammarChanged();
