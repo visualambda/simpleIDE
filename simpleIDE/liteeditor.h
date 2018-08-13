@@ -20,6 +20,10 @@ public:
 //    void zoomOut(int range = 1);
 
     void zoom(float x);
+
+    bool loadFile(const QString& filename);
+
+
     virtual void resizeEvent(QResizeEvent* event);
 
 protected:

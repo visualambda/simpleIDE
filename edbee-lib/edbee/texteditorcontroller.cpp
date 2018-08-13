@@ -58,6 +58,9 @@ TextEditorController::TextEditorController( TextEditorWidget* widget, QObject *p
     , textSearcher_(0)
     , autoScrollToCaret_(AutoScrollAlways)
     , borderedTextRanges_(0)
+
+    //sq2
+    , squiggleTextRanges_(0)
 {
 
     // create the keymap
@@ -80,6 +83,9 @@ TextEditorController::TextEditorController( TextEditorWidget* widget, QObject *p
 TextEditorController::~TextEditorController()
 {
     delete borderedTextRanges_;
+    //sq3
+    delete squiggleTextRanges_;
+
     delete textSearcher_;
     delete textRenderer_;
     delete textCaretCache_;
@@ -144,6 +150,13 @@ void TextEditorController::setTextDocument(TextDocument* doc)
 
         delete borderedTextRanges_;
         borderedTextRanges_ = new DynamicTextRangeSet(textDocument());
+
+
+        //sq4
+        delete squiggleTextRanges_;
+        //sq5
+        squiggleTextRanges_ = new DynamicTextRangeSet(textDocument());
+
 
 
         textDocumentRef_->textUndoStack()->registerContoller(this);
@@ -258,6 +271,12 @@ TextRenderer*TextEditorController::textRenderer() const
 TextRangeSet *TextEditorController::borderedTextRanges() const
 {
     return borderedTextRanges_;
+}
+
+TextRangeSet *TextEditorController::squiggleTextRanges() const
+{
+    //sq7
+   return squiggleTextRanges_;
 }
 
 

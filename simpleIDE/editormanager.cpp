@@ -19,7 +19,7 @@
 #include "edbee/edbee.h"
 #include "edbee/models/textdocument.h"
 #include "edbee/models/textgrammar.h"
-#include "edbee/io/textdocumentserializer.h"
+
 #include "edbee/texteditorwidget.h"
 #include "liteeditor.h"
 
@@ -337,7 +337,6 @@ QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeT
                 return nullptr;
             }
 
-            QFile file(filename);
 
             // create the widget and serialize the file
 
@@ -348,13 +347,12 @@ QWidget *EditorManager::openEditor(const QString &filename, const QString &mimeT
             connect(widget, SIGNAL(focusChanged(QString,int)), this, SLOT(focusChanged(QString,int)));
 
 
-            edbee::TextDocumentSerializer serializer( widget->textDocument() );
-            if( !serializer.load( &file ) ) {
-                QMessageBox::warning(nullptr, tr("Error opening file"), tr("Error opening file:\n%1").arg(serializer.errorString()) );
+            if(!widget->loadFile(filename))
+            {
                 delete widget;
                 return nullptr;
             }
-//            addEditorTab( widget, fileInfo.filePath() );
+
             setupEditor(widget, fileInfo.filePath());
 
             activeCurrentEditor(widget, fileInfo.fileName(), fileInfo.filePath());

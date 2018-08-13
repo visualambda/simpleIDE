@@ -70,6 +70,9 @@ public:
     TextRenderer* textRenderer() const;
     TextRangeSet* borderedTextRanges() const;
 
+    //sq6
+    TextRangeSet *squiggleTextRanges() const;
+
     void setKeyMap( TextEditorKeyMap* keyMap );
     void giveKeyMap( TextEditorKeyMap* keyMap );
     TextEditorKeyMap* keyMap() const;
@@ -164,6 +167,9 @@ private:
 
     // extra highlight text
     TextRangeSet* borderedTextRanges_;       ///< Extra marked text ranges
+
+    //sq1
+    TextRangeSet* squiggleTextRanges_;
 };
 
 } // edbee

@@ -215,7 +215,7 @@ void Application::initApplication()
 
 
 
-     _mainWindow->themeComboRef_->blockSignals(false);
+    _mainWindow->themeComboRef_->blockSignals(false);
     _mainWindow->statusBar()->addPermanentWidget( _mainWindow->themeComboRef_);
 
 

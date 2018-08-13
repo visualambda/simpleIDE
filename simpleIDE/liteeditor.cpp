@@ -1,11 +1,22 @@
 
-
-
 #include "edbee/views/components/texteditorcomponent.h"
 #include "edbee/views/components/textmargincomponent.h"
+
+
+#include "edbee/models/textautocompleteprovider.h"
+#include "edbee/models/textdocument.h"
+#include "edbee/models/textrange.h"
+
+#include "edbee/texteditorcontroller.h"
+
+#include "edbee/io/textdocumentserializer.h"
+
 #include "liteeditor.h"
-#include <QScrollBar>
+
+#include <QMessageBox>
 #include <QDebug>
+#include <QScrollBar>
+
 #include "liteeditor_global.h"
 
 #include "DockWidget.h"
@@ -18,10 +29,16 @@ static float _zoomP = 1000.f;
 LiteEditor::LiteEditor(IApplication *app)
 {
     m_liteApp = app;
-
     this->verticalScrollBar()->installEventFilter(this);
 
 
+//test auto complete
+    edbee::StringTextAutoCompleteProvider* provider = new edbee::StringTextAutoCompleteProvider();
+    provider->add("const");
+    provider->add("class");
+    provider->add("compare");
+
+    this->textDocument()->autoCompleteProviderList()->giveProvider(provider);
 }
 
 
@@ -82,6 +99,30 @@ void LiteEditor::zoom(float x)
     font.setPointSizeF(y);
     this->setFont(font);
     this->fullUpdate();
+}
+
+bool LiteEditor::loadFile(const QString & filename)
+{
+    QFile file(filename);
+
+    edbee::TextDocumentSerializer serializer( this->textDocument() );
+    if( !serializer.load( &file ) ) {
+        QMessageBox::warning(nullptr, tr("Error opening file"), tr("Error opening file:\n%1").arg(serializer.errorString()) );
+        return false;
+    }
+
+
+    //test squigglly text test
+        edbee::TextEditorController* controller = this->controller();
+
+        edbee::TextRangeSet * trs = controller->squiggleTextRanges();
+        trs->clear();
+        trs->addRange(edbee::TextRange(5, 8));
+//        int * x = &(trs->range(0).anchor_);
+        controller->update();
+
+
+    return true;
 }
 
 void LiteEditor::resizeEvent(QResizeEvent *event)

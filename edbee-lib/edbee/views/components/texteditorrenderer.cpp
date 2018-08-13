@@ -63,6 +63,8 @@ void TextEditorRenderer::render(QPainter *painter)
         renderLineSeparator( painter, line );
         renderLineText( painter, line );
         renderLineBorderedRanges( painter, line );
+        //sq11
+        renderSquigglyLine(painter, line);
     }
 
     renderCarets(painter);
@@ -153,9 +155,96 @@ void TextEditorRenderer::renderLineBorderedRanges(QPainter *painter,int line)
 //            painter->strok(startX, line*lineHeight + rect.top(), endX - startX, rect.height(),  themeRef_->selectionColor() ); //QColor::fromRgb(0xDD, 0x88, 0xEE) );
         }
     }
-//PROF_END
+    //PROF_END
 }
 
+
+//sq10
+void getSquigglyLine(QPainterPath & path, float startX, float endX,  float yOffset, float period,  float amplititude)
+{
+
+    QPoint oldP = QPoint(startX, yOffset);
+    for(int t=0 ; t < endX; t++)
+    {
+        float x = startX + t;
+        float angle = 2.f * 3.141592653 * std::fmod(x, period) / period;
+
+        float y = yOffset + amplititude   * std::sinf(angle);
+
+        if(t!= 0)
+        {
+            path.lineTo(QPoint(x, y));
+            oldP = QPoint(x, y);
+        }
+        else
+        {
+             path.moveTo(oldP);
+        }
+
+
+
+    }
+
+
+}
+
+
+//sq9
+void TextEditorRenderer::renderSquigglyLine(QPainter *painter, int line, QColor color)
+{
+    TextDocument* doc = renderer()->textDocument();
+    TextRangeSet* sel = renderer()->controller()->squiggleTextRanges();
+    int lineHeight = renderer()->lineHeight();
+
+//    QPen pen(themeRef_->foregroundColor(), 0.5);
+
+    QPen pen(Qt::red, 1.);
+    painter->setRenderHint(QPainter::Antialiasing);
+
+    int firstRangeIdx=0;
+    int lastRangeIdx=0;
+/// TODO: improve ranges at line by calling rangesForOffsets first for only the visible offsets!
+    if( sel->rangesAtLine( line, firstRangeIdx, lastRangeIdx ) ) {
+
+        QTextLayout* textLayout = renderer()->textLayoutForLine(line);
+        QRectF rect = textLayout->boundingRect();
+        QTextLine textLine = textLayout->lineAt(0);
+
+        int lastLineColumn = doc->lineLength(line);
+
+        // draw all 'ranges' on this line
+        for( int rangeIdx = firstRangeIdx; rangeIdx <= lastRangeIdx; ++rangeIdx ) {
+            TextRange& range = sel->range(rangeIdx);
+            int startColumn = doc->columnFromOffsetAndLine( range.min(), line );
+            int endColumn   = doc->columnFromOffsetAndLine( range.max(), line );
+
+            int startX = textLine.cursorToX( startColumn ); //
+            int endX   = textLine.cursorToX( endColumn );
+
+            if( range.length() > 0 && endColumn+1 >= lastLineColumn) endX += 3;
+
+            QPainterPath path;
+
+            getSquigglyLine(path, startX, endX,
+                            (line+1.f)*lineHeight + rect.top(), // yoffset
+                            5.0,                               // period
+                            lineHeight/9.) ;                               // amplititude
+
+
+//            path.moveTo(startX, (line+1)*lineHeight + rect.top());
+//            path.quadTo((startX + endX)/ 2.f,                         //control point
+//                        (line)*lineHeight + rect.top(), //control point
+//                         endX,                                        //end point
+//                        (line+1)*lineHeight + rect.top());              //end point
+
+//            path.addRoundedRect(startX, line*lineHeight + rect.top(), endX - startX, rect.height(),5,5);
+            painter->strokePath(path, pen);
+//            painter->strok(startX, line*lineHeight + rect.top(), endX - startX, rect.height(),  themeRef_->selectionColor() ); //QColor::fromRgb(0xDD, 0x88, 0xEE) );
+        }
+    }
+
+
+}
 
 
 void TextEditorRenderer::renderLineSeparator(QPainter *painter,int line)
