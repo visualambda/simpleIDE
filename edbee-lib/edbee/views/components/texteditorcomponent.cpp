@@ -274,6 +274,12 @@ void TextEditorComponent::keyPressEvent(QKeyEvent* event)
 //        qlog_info() << "[[[ found command:" << command << "]]";
         controller()->executeCommand( command );
         lastKeySequence_ = QKeySequence();
+
+        //add am 2
+        if(command == "del_left")
+        {
+            emit textKeyPressed();
+        }
         return;
     }
 

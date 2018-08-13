@@ -139,6 +139,11 @@ bool TextEditorAutoCompleteComponent::eventFilter(QObject *obj, QEvent *event)
             }
         }
 
+        //add am 1
+        if(key->key() == Qt::Key_Backspace)
+        {
+             return QObject::eventFilter(obj, event);
+        }
         // escape key
         switch( key->key() ) {
             case Qt::Key_Escape:
