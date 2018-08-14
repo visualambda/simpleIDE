@@ -18,7 +18,7 @@
 
 #include "edbee/debug.h"
 
-
+#include <cmath>
 namespace edbee {
 
 static const int ShadowWidth=5;
