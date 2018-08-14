@@ -46,7 +46,7 @@ void ProjectExplorerManager::reArrange()
                 QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
                 foreach (ads::CDockWidget* daw, odws)
                 {
-                    if(daw->dockType == ads::CDockWidget::dockType::dockProjectExplorer)
+                    if(daw->_dockType == ads::CDockWidget::dockType::dockProjectExplorer)
                     {
                         ads::CDockAreaWidget * areaW = daw->dockAreaWidget();
                         if(areaW)

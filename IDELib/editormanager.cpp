@@ -56,7 +56,7 @@ ads::CDockWidget *EditorManager::getCurActiveDockWidget()
                 QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
                 foreach (ads::CDockWidget* daw, odws)
                 {
-                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+                    if(daw->_dockType == ads::CDockWidget::dockType::dockEditor)
                     {
                         canDockEditor = true;
                         break;
@@ -147,7 +147,7 @@ QList<ads::CDockWidget*> EditorManager::getAllDockWidget()
                 QList<ads::CDockWidget*> odws = daw->dockWidgets() ;
                 foreach (ads::CDockWidget* daw, odws)
                 {
-                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+                    if(daw->_dockType == ads::CDockWidget::dockType::dockEditor)
                     {
                         dwl.append(daw);
 
@@ -221,7 +221,7 @@ void EditorManager::zoom(float x)
                 QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
                 foreach (ads::CDockWidget* daw, odws)
                 {
-                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+                    if(daw->_dockType == ads::CDockWidget::dockType::dockEditor)
                     {
                       LiteEditor* w = ( LiteEditor*) daw->widget();
                       w->zoom(x);
@@ -433,7 +433,7 @@ void EditorManager::activeCurrentEditor(QWidget *editor, QString filename, QStri
                 QList<ads::CDockWidget*> odws = daw->openedDockWidgets() ;
                 foreach (ads::CDockWidget* daw, odws)
                 {
-                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor)
+                    if(daw->_dockType == ads::CDockWidget::dockType::dockEditor)
                     {
                         canDockEditor = true;
                         break;
@@ -453,7 +453,7 @@ void EditorManager::activeCurrentEditor(QWidget *editor, QString filename, QStri
 
 
     ads::CDockWidget* EditorDocker = new ads::CDockWidget(filename);
-    EditorDocker->dockType = ads::CDockWidget::dockType::dockEditor;
+    EditorDocker->_dockType = ads::CDockWidget::dockType::dockEditor;
     EditorDocker->setWidget(w);
     EditorDocker->setObjectName(/*EditorDocker->windowTitle()*/filePath);
 
@@ -502,7 +502,7 @@ ads::CDockWidget *EditorManager::getEditor(QString filePath)
                 QList<ads::CDockWidget*> odws = daw->dockWidgets() ;
                 foreach (ads::CDockWidget* daw, odws)
                 {
-                    if(daw->dockType == ads::CDockWidget::dockType::dockEditor &&
+                    if(daw->_dockType == ads::CDockWidget::dockType::dockEditor &&
                             daw->objectName() == filePath)
                     {
                         return daw;

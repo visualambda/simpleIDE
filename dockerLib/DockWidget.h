@@ -124,7 +124,7 @@ public:
         dockEditor
     };
 
-    int dockType = CDockWidget::dockType::dockNone;
+    int _dockType = CDockWidget::dockType::dockNone;
 
 	/**
 	 * This mode configures the behavior of the toggle view action.

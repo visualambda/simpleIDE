@@ -169,7 +169,7 @@ void getSquigglyLine(QPainterPath & path, float startX, float endX,  float yOffs
         float x = startX + t;
         float angle = 2.f * 3.141592653 * std::fmod(x, period) / period;
 
-        float y = yOffset + amplititude   * std::sinf(angle);
+        float y = yOffset + amplititude   * std::sin(angle);
 
         if(t!= 0)
         {
