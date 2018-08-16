@@ -6,7 +6,7 @@
 #pragma once
 
 #include <QWidget>
-
+#include <QMap>
 class QEvent;
 class QFont;
 class QLinearGradient;
@@ -79,6 +79,12 @@ protected:
     virtual void renderCaretMarkers( QPainter* painter, int startLine, int endLine, int width );
     virtual void renderLineNumber( QPainter* painter, int startLine, int endLine, int width );
 
+
+    //bp2
+   int lineNumberWdith(int curLine) const;
+   void renderBreakPoint(QPainter* painter, int startLine, int endLine , int width);
+
+
     virtual void mouseMoveEvent(QMouseEvent* event);
     virtual void mousePressEvent(QMouseEvent* event);
     virtual void mouseDoubleClickEvent(QMouseEvent *);
@@ -106,6 +112,10 @@ private:
     TextEditorWidget* editorRef_;               ///< The text-editor widget
     TextMarginComponentDelegate* delegate_;     ///< The 'owned' text delegate
     TextMarginComponentDelegate* delegateRef_;  ///< The delegate reference
+
+    //bp1
+    QMap<int, int> _breakPoints; // line  state 0 disable  1 enable
+
 };
 
 } // edbee

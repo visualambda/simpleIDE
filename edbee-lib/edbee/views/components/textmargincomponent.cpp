@@ -271,12 +271,42 @@ void TextMarginComponent::paintEvent(QPaintEvent* event)
 
     delegate()->renderBefore( &painter, startLine, endLine, size.width() );
     renderCaretMarkers( &painter, startLine, endLine, size.width() );
+
+    //bp4
+    renderBreakPoint( &painter, startLine, endLine, size.width() );
+
     renderLineNumber( &painter, startLine, endLine, size.width() );
     delegate()->renderAfter( &painter, startLine, endLine, size.width() );
 
     renderer()->renderEnd( paintRect );
     painter.translate(0, top_);
 
+}
+
+void TextMarginComponent::renderBreakPoint(QPainter* painter, int startLine, int endLine , int width)
+{
+    //bp4
+//    int lineNumberWdith_ = lineNumberWdith(line);
+
+    int lineHeight = renderer()->lineHeight();
+    QRect marginRect(0,0,width-MarginPaddingRight,lineHeight);
+
+    for(QMap<int, int>::iterator i = _breakPoints.begin(); i != _breakPoints.end(); i++)
+    {
+        int line = i.key();
+        int marker = i.value();
+
+        if(  (line >= startLine || line < endLine ) && marker == 1)
+        {
+            int y = renderer()->yPosForLine(line);
+            marginRect.moveTop(y);
+            painter->fillRect( marginRect, Qt::red);
+        }
+        else
+        {
+             continue;
+        }
+    }
 }
 
 
@@ -354,6 +384,26 @@ void TextMarginComponent::mousePressEvent(QMouseEvent* event)
 {
     int y = event->y() + top_;
     int line = renderer()->lineIndexForYpos( y );
+
+
+    //bp3
+   if(_breakPoints.contains(line))
+   {
+         if(_breakPoints[line] == 0)
+         {
+           _breakPoints[line] = 1;
+         }
+         else if(_breakPoints[line] == 1)
+         {
+           _breakPoints[line] = 0;
+         }
+   }
+   else
+   {
+       _breakPoints[line] = 1;
+   }
+
+
 
     delegate()->mousePressEvent( line, event );
     QWidget::mousePressEvent(event);
